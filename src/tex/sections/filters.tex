@@ -1,14 +1,14 @@
 \section{Filters and Instrument Throughput}\label{sec:filters}
 
-VAMPIRES has five standard filters, four narrowband filters, an open broadband filter, the dichroic filters in the multiband optic, and two neutral density filters. The filter curves are compiled from manufacturer data and available openly. The Open filter is the widest and is constrained by the AO188 beamsplitter and the PyWFS pickoff. The standard filters are all \SI{50}{\nm}-wide, but the 775-50 filter is truncated due to overlap with the typical PyWFS pickoff. The multiband filters are created from consecutive transmissions/reflections through the stack of dichroics, and therefore the light transmitted through all filters will be more attenuated than the light reflecting off the first filter. The effective filter curves are $\sim$\SI{50}{\nm} wide and have minor leakage between some fields ($<$5\%).
+VAMPIRES has five standard filters, four narrowband filters, an open broadband filter, the dichroic filters in the multiband optic, and two neutral density filters. The filter curves are compiled from manufacturer data and available openly. The Open filter is the widest and is constrained by the AO188 beamsplitter and the PyWFS pickoff. The standard filters are all \qty{50}{\nm}-wide, but the 775-50 filter is truncated due to overlap with the typical PyWFS pickoff. The multiband filters are created from consecutive transmissions/reflections through the stack of dichroics, and therefore the light transmitted through all filters will be more attenuated than the light reflecting off the first filter. The effective filter curves are $\unitm$\qty{50}{\nm} wide and have minor leakage between some fields ($<$5\%).
 
-The narrowband filters are deployed in pairs for spectral differential imaging (NB-SDI). The first pair of filters uses a \SI{1}{\nm} H$\alpha$ emission line filter with a \SI{2}{\nm} continuum filter, and the second uses a set of \SI{3}{\nm} SII doublet and continuum filters.
+The narrowband filters are deployed in pairs for spectral differential imaging (NB-SDI). The first pair of filters uses a \qty{1}{\nm} H$\alpha$ emission line filter with a \qty{2}{\nm} continuum filter, and the second uses a set of \qty{3}{\nm} SII doublet and continuum filters.
 
 \subsection{Absolute Flux Calibration}
 
-During commissioning spectrophotometric standard stars were observed in each filter with the non-polarizing beamsplitter. The standard spectra for each star was used for calibrating photometric zero points in \si{Jy} and \si{\electron/\second} as well as the instrument throughput. We used an empirical model for the atmospheric extinction \citep{buton_atmospheric_2013} which drives our uncertainties in absolute flux calibration. The filter data are summarized in \autoref{tbl:filters}.
+During commissioning spectrophotometric standard stars were observed in each filter with the non-polarizing beamsplitter. The standard spectra for each star was used for calibrating photometric zero points in \unit{Jy} and \unit{\electron/\second} as well as the instrument throughput. We used an empirical model for the atmospheric extinction \citep{buton_atmospheric_2013} which drives our uncertainties in absolute flux calibration. The filter data are summarized in \autoref{tbl:filters}.
 
-The absolute flux calibration is summarized by the $C_{FD}$ coefficient, following \citet{gordon_james_2022}. This flux density conversion factor allows translation between data units and \si{Jy}. To use this factor the calibrated images need converted to instrumental flux with the gain and exposure time. Once in units of \si{\electron/s} apply the conversion factor to get to calibrated flux in \si{Jy}. To convert to surface brightness, divide by the area of a pixel (\SI{3.6e-5}{sq. arc/\pixel}). For Vega magnitudes, instead convert the corrected flux in \si{\electron/s} to instrumental magnitudes and correct with the appropriate zero point magnitude-
+The absolute flux calibration is summarized by the $C_{FD}$ coefficient, following \citet{gordon_james_2022}. This flux density conversion factor allows translation between data units and \unit{Jy}. To use this factor the calibrated images need converted to instrumental flux with the gain and exposure time. Once in units of \unit{\electron/s} apply the conversion factor to get to calibrated flux in \unit{Jy}. To convert to surface brightness, divide by the area of a pixel (\qty{3.6e-5}{sq. arc/\pixel}). For Vega magnitudes, instead convert the corrected flux in \unit{\electron/s} to instrumental magnitudes and correct with the appropriate zero point magnitude-
 \begin{equation}
     m^\mathrm{filt}=-2.5\log{\left(f\right)} + \mathrm{ZP}_\mathrm{filt}    
 \end{equation}
@@ -52,17 +52,17 @@ HD 19445 & G2V & 8.06 & \num{7.904+-0.003} & \\
     \multicolumn{3}{c}{Zero Point} &
     \colhead{$C_{FD}$} \\
     &
-    \colhead{(\si{\nm})} &
-    \colhead{(\si{\nm})} &
-    \colhead{(\si{\nm})} &
-    \colhead{(\si{\nm})} &
+    \colhead{(\unit{\nm})} &
+    \colhead{(\unit{\nm})} &
+    \colhead{(\unit{\nm})} &
+    \colhead{(\unit{\nm})} &
     &
     \colhead{(\%)} &
     \colhead{(\%)} &
     \colhead{(mag)} &
-    \colhead{(\si{\electron/s})} &
-    \colhead{(\si{Jy})} &
-    \colhead{(\si{Jy.s/\electron})}
+    \colhead{(\unit{\electron/s})} &
+    \colhead{(\unit{Jy})} &
+    \colhead{(\unit{Jy.s/\electron})}
 }
 \tablecaption{VAMPIRES filter information. Minimum and maximum wavelengths represent 50\% relative throughput. Zero points, relative throughput, and conversion factors estimated from spectrophotometric standard observations on 2023/08/31 and all assume no beamsplitter.\label{tbl:filters}}
 \startdata

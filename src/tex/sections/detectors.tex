@@ -1,10 +1,10 @@
 \section{Detectors}\label{sec:detectors}
 
-For our upgrades we deployed two custom-modified \textit{Hamamatsu ORCA-Quest} qCMOS detectors\footnote{\url{https://www.hamamatsu.com/us/en/product/cameras/qcmos-cameras/C15550-20UP.html}}. These detectors were chosen for their fast readout ($\sim$500 Hz at 512x512), low read noise ($\sim$ 0.2 - 0.4 $e^-$ RMS), and high dynamic range ($\sim$ 85 - 90 \si{\decibel}). We modified the cameras to be compatible with the telescope glycol cooling loop which keeps the detectors at \SIrange{-45}{-40}{\celsius} without creating turbulence in the instrument from air cooling.
+For our upgrades we deployed two custom-modified \textit{Hamamatsu ORCA-Quest} qCMOS detectors\footnote{\url{https://www.hamamatsu.com/us/en/product/cameras/qcmos-cameras/C15550-20UP.html}}. These detectors were chosen for their fast readout ($\unitm$500 Hz at 512x512), low read noise ($\unitm$ 0.2 - 0.4 $e^-$ RMS), and high dynamic range ($\unitm$ 85 - 90 \unit{\decibel}). We modified the cameras to be compatible with the telescope glycol cooling loop which keeps the detectors at \qtyrange{-45}{-40}{\celsius} without creating turbulence in the instrument from air cooling.
 
-The detectors have two primary readout modes: the full-speed ``FAST'' mode, and the slower, but more sensitive, ``SLOW'' mode. In ``SLOW'' mode the registers are able to use the reduced readout rate to reach $\sim$0.2 $e^-$ RMS read noise. In ``FAST'' mode there is an electronic shutter that allows detector integration times (DIT) of \SI{7.2}{\micro\second} - \SI{1800}{\second}. The ``SLOW`` mode the DIT are limited to $\sim >$\SI{50}{\milli\second} depending on the camera crop. Because the detectors have rolling-shutter readout, the framerate is limited by the number of rows read and the duty cycle and become very low at the shortest DITs. In addition, when synchronizing the two detectors together the external trigger mode reduces framerates and duty cycle, below 50\% in some scenarios.
+The detectors have two primary readout modes: the full-speed ``FAST'' mode, and the slower, but more sensitive, ``SLOW'' mode. In ``SLOW'' mode the registers are able to use the reduced readout rate to reach $\unitm$0.2 $e^-$ RMS read noise. In ``FAST'' mode there is an electronic shutter that allows detector integration times (DIT) of \qty{7.2}{\micro\second} - \qty{1800}{\second}. The ``SLOW`` mode the DIT are limited to $\unitm >$\qty{50}{\milli\second} depending on the camera crop. Because the detectors have rolling-shutter readout, the framerate is limited by the number of rows read and the duty cycle and become very low at the shortest DITs. In addition, when synchronizing the two detectors together the external trigger mode reduces framerates and duty cycle, below 50\% in some scenarios.
 
-We measured a photon transfer curve using a calibration flat field source for both detectors in both readout modes using a non-polarizing beamsplitter cube. We removed the fixed-pattern noise through frame-differencing before performing a linear fit between the average signal and the signal variance. From this fit we extract the gain in \si{\electron/\second}. We measure the readout noise from the standard deviation of a bias frame and convert to \si{\electron} with the gain. We observe that the full well is greater than the maximum bit-depth, so the detectors only saturate at $2^{16}$ \si{adu}. During commissioning we also took dark frames with the detector caps covered. For data with significant signal, we did a linear fit of the signal to the exposure time to get the average dark current. We report our results in \autoref{tbl:detectors}.
+We measured a photon transfer curve using a calibration flat field source for both detectors in both readout modes using a non-polarizing beamsplitter cube. We removed the fixed-pattern noise through frame-differencing before performing a linear fit between the average signal and the signal variance. From this fit we extract the gain in \unit{\electron/\second}. We measure the readout noise from the standard deviation of a bias frame and convert to \unit{\electron} with the gain. We observe that the full well is greater than the maximum bit-depth, so the detectors only saturate at $2^{16}$ \unit{adu}. During commissioning we also took dark frames with the detector caps covered. For data with significant signal, we did a linear fit of the signal to the exposure time to get the average dark current. We report our results in \autoref{tbl:detectors}.
 
 
 \begin{deluxetable}{cccccc}
@@ -17,12 +17,12 @@ We measured a photon transfer curve using a calibration flat field source for bo
     \colhead{DR} \\
      &
      &
-    \colhead{(\si{\electron/\adu})} &
-    \colhead{(\si{\electron})} &
-    \colhead{(\si{\electron/\second/\pixel})} &
-    \colhead{(\si{\decibel})}
+    \colhead{(\unit{\electron/\adu})} &
+    \colhead{(\unit{\electron})} &
+    \colhead{(\unit{\electron/\second/\pixel})} &
+    \colhead{(\unit{\decibel})}
 }
-\tablecaption{VAMPIRES detector characteristics. Dynamic range (DR) derived from max signal ($2^{16}$ \si{\adu}) in \si{\electron} divided by the readout noise.\label{tbl:detectors}}
+\tablecaption{VAMPIRES detector characteristics. Dynamic range (DR) derived from max signal ($2^{16}$ \unit{\adu}) in \unit{\electron} divided by the readout noise.\label{tbl:detectors}}
 \startdata
 VCAM1 & FAST & 0.103 & 0.40 & \num{3.6e-3} & 85 \\
 VCAM1 & SLOW & 0.105 & 0.25 & \num{3.6e-3} & 90 \\
@@ -31,4 +31,4 @@ VCAM2 & SLOW & 0.105 & 0.22 & \num{3.6e-3} & 90 \\
 \enddata
 \end{deluxetable}
 
-Our detectors are some of the most sensitive available commercially today, and compared to electron-multiplication technologies the calibration and operation of the detectors is much simpler. In a 536 by 536 pixel window the fixed-pattern noise is $\sim$TODO\%, so we recommend flat-fielding to correct for the pixel-to-pixel gain variations. Bias frames are quite structured due to the CMOS architecture, so we also recommend bias or sky-background frames for subtracting the structured offset. Other than that, the detectors are virtually free of cosmetics so we only apply bad-pixel correction to long exposures for cosmic-ray rejection. In ``SLOW'' mode we are readout-noise-limited until DIT$>$\SI{13}{\second} at which point the detectors are limited by the shot-noise of the dark signal.
+Our detectors are some of the most sensitive available commercially today, and compared to electron-multiplication technologies the calibration and operation of the detectors is much simpler. In a 536 by 536 pixel window the fixed-pattern noise is $\unitm$TODO\%, so we recommend flat-fielding to correct for the pixel-to-pixel gain variations. Bias frames are quite structured due to the CMOS architecture, so we also recommend bias or sky-background frames for subtracting the structured offset. Other than that, the detectors are virtually free of cosmetics so we only apply bad-pixel correction to long exposures for cosmic-ray rejection. In ``SLOW'' mode we are readout-noise-limited until DIT$>$\qty{13}{\second} at which point the detectors are limited by the shot-noise of the dark signal.
