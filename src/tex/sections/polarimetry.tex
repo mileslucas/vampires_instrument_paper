@@ -1,0 +1,40 @@
+\section{Polarimetry}\label{sec:polarimetry}
+
+VAMPIRES is capable of polarimetry through the use of a broadband half-wave plate (HWP) and a wire-grid polarizing beamsplitter cube. This puts orthogonal polarization states on each detector which can be subtracted to measure linear polarization \citep{kuhn_imaging_2001}. To measure the two linear Stokes quantities ($Q$ and $U$) we modulate the HWP at angles \ang{0}, \ang{45}, \ang{22.5}, \ang{67.5}, allowing double-differencing to remove a significant portion of instrumental polarization.
+
+For observations with DIT $<$ \SI{1}{\second} a fast achromatic ferro-electric liquid crystal (FLC) device can be inserted into the beam and synchronously modulated with every exposure. In this mode we can more effectively subtract the signals from fast-moving speckles by triple-differencing with the FLC modulation \citep{norris_vampires_2015}. VAMPIRES also uses two quarter-wave plates (QWP) for correcting the static instrumental birefringence, in particular from the periscope in SCExAO.
+
+Polarimetric measurements are limited by instrumental polarization due to the many inclined surfaces and reflections in the common path of VAMPIRES. It is a well-established technique to model and remove the instrumental effects using Mueller calculus \citep{holstein_polarimetric_2020,joost_t_hart_full_2021}. For VAMPIRES we use internal calibrations with a halogen flat lamp and linear polarizer after the telescope M3 as a polarized source. We modulate the facility HWP and image rotator and create sum and difference images from both detectors in order to fit our Mueller matrix model for each VAMPIRES filter.  These calibrations are set up to be highly-automated using the python control code. 
+
+\subsection{Polarimetric Spectral Differential Imaging}
+
+A new mode was developed for VAMPIRES to enable polarimetry alongside spectral differential imaging (SDI). The control algorithm switches the differential filter wheel once per HWP position. By following the standard double- or triple-differencing polarimetric procedure for each differential wheel position we create two Stokes cubes. Each stokes cube will either be a positive or negative copy of the narrowband flux, which can be combined with subtraction. An example demonstrating double-difference polarimetry for two HWP positions with the H$\alpha$ filter pair is shown in \autoref{eqn:psdi} (each tuple represents the HWP position and the narrowband filter for each camera).
+
+\begin{equation}
+    \label{eqn:psdi}
+    \begin{rcases}
+        \begin{rcases}
+            \begin{rcases}
+                +Q, \mathrm{H}\alpha  \\
+                +Q, \mathrm{H}\alpha\mathrm{-Cont} \\
+            \end{rcases} &  +Q, +\mathrm{H}\alpha \\
+            \begin{rcases}
+                -Q, \mathrm{H}\alpha  \\
+                -Q, \mathrm{H}\alpha\mathrm{-Cont} \\
+            \end{rcases} &  -Q, +\mathrm{H}\alpha \\
+        \end{rcases} & Q, +\mathrm{H}\alpha \\
+            \begin{rcases}
+            \begin{rcases}
+                +Q, \mathrm{H}\alpha\mathrm{-Cont} \\
+                +Q, \mathrm{H}\alpha  \\
+            \end{rcases} & +Q, -\mathrm{H}\alpha \\
+            \begin{rcases}
+                -Q, \mathrm{H}\alpha\mathrm{-Cont} \\
+                -Q, \mathrm{H}\alpha  \\
+            \end{rcases} & -Q, -\mathrm{H}\alpha \\
+        \end{rcases} & Q, -\mathrm{H}\alpha \\
+    \end{rcases} Q, \mathrm{H}\alpha
+\end{equation}
+
+
+Polarimetric SDI (PSDI) will allow direct measurement of the polarized fraction of narrowband emission, which is particularly interesting for H$\alpha$ imaging of circumstellar disks. For example, the H$\alpha$ emission around AB Aur may be from a forming protoplanet \citep{currie_images_2022}, in which case the emission should be unpolarized. If the H$\alpha$ emission is polarized this points to different hypothesis, such as stellar emission scattering off dust grains \citep{zhou_uv-optical_2023}. This technique has been tested with an internal calibration source and future observations will be used to demonstrate our method on-sky.

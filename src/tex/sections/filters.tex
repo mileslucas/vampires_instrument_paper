@@ -1,0 +1,87 @@
+\section{Filters and Instrument Throughput}\label{sec:filters}
+
+VAMPIRES has five standard filters, four narrowband filters, an open broadband filter, the dichroic filters in the multiband optic, and two neutral density filters. The filter curves are compiled from manufacturer data and available openly. The Open filter is the widest and is constrained by the AO188 beamsplitter and the PyWFS pickoff. The standard filters are all \SI{50}{\nm}-wide, but the 775-50 filter is truncated due to overlap with the typical PyWFS pickoff. The multiband filters are created from consecutive transmissions/reflections through the stack of dichroics, and therefore the light transmitted through all filters will be more attenuated than the light reflecting off the first filter. The effective filter curves are $\sim$\SI{50}{\nm} wide and have minor leakage between some fields ($<$5\%).
+
+The narrowband filters are deployed in pairs for spectral differential imaging (NB-SDI). The first pair of filters uses a \SI{1}{\nm} H$\alpha$ emission line filter with a \SI{2}{\nm} continuum filter, and the second uses a set of \SI{3}{\nm} SII doublet and continuum filters.
+
+\subsection{Absolute Flux Calibration}
+
+During commissioning spectrophotometric standard stars were observed in each filter with the non-polarizing beamsplitter. The standard spectra for each star was used for calibrating photometric zero points in \si{Jy} and \si{\electron/\second} as well as the instrument throughput. We used an empirical model for the atmospheric extinction \citep{buton_atmospheric_2013} which drives our uncertainties in absolute flux calibration. The filter data are summarized in \autoref{tbl:filters}.
+
+The absolute flux calibration is summarized by the $C_{FD}$ coefficient, following \citet{gordon_james_2022}. This flux density conversion factor allows translation between data units and \si{Jy}. To use this factor the calibrated images need converted to instrumental flux with the gain and exposure time. Once in units of \si{\electron/s} apply the conversion factor to get to calibrated flux in \si{Jy}. To convert to surface brightness, divide by the area of a pixel (\SI{3.6e-5}{sq. arc/\pixel}). For Vega magnitudes, instead convert the corrected flux in \si{\electron/s} to instrumental magnitudes and correct with the appropriate zero point magnitude-
+\begin{equation}
+    m^\mathrm{filt}=-2.5\log{\left(f\right)} + \mathrm{ZP}_\mathrm{filt}    
+\end{equation}
+or, equivalently-
+\begin{equation}
+    m^\mathrm{filt}=-2.5\log{\left(f/f_\mathrm{ZP}\right)}
+\end{equation}
+and to convert to surface brightness subtract the pixel area in square arcseconds converted to magnitudes-
+\begin{equation}
+    SB^\mathrm{filt} = m^\mathrm{filt} - 2\cdot 2.5\log{\left(ps\right)} = \left(m^\mathrm{filt} + 11.1\right)~\mathrm{mag/ sq.arc}
+\end{equation}
+
+These zero points and conversion factors are limited in their accuracy due to the ever-changing transmission of the telescope due to mirror coating degradation, dust build-up, and from differences in atmospheric conditions and wavefront correction night-to-night. For applications which require the highest photometric precision, doing \textit{in situ} photometry of an object or planning to observe a photometric standard with a calibrated spectrum at multiple airmasses will always provide better accuracy than these figures.
+
+
+\begin{deluxetable}{ccccl}
+\tablehead{
+    \colhead{Object} &
+    \colhead{Sp. Type} &
+    \colhead{V (mag)} &
+    \colhead{G (mag)} &
+    \colhead{Ref.}
+}
+\tablecaption{Spectrophotometric standards used for photometric calibration.\label{tbl:specphot}}
+\startdata
+HD 15318 & B9III & 4.30 & \num{4.255+-0.004} & \\
+HD 19445 & G2V & 8.06 & \num{7.904+-0.003} & \\
+\enddata
+\end{deluxetable}
+
+\begin{deluxetable*}{ccccccccccccc}
+\tablehead{
+    \multirow{2}{*}{Filter} &
+    \colhead{$\lambda_\mathrm{cen}$} &
+    \colhead{$\lambda_\mathrm{min}$} &
+    \colhead{$\lambda_\mathrm{max}$} &
+    \colhead{FWHM} &
+    \multirow{2}{*}{$\Delta\lambda/\lambda$} &
+    \colhead{Inst. Trans.} &
+    \colhead{$\mathrm{QE}_\mathrm{ave}$} &
+    \multicolumn{3}{c}{Zero Point} &
+    \colhead{$C_{FD}$} \\
+    &
+    \colhead{(\si{\nm})} &
+    \colhead{(\si{\nm})} &
+    \colhead{(\si{\nm})} &
+    \colhead{(\si{\nm})} &
+    &
+    \colhead{(\%)} &
+    \colhead{(\%)} &
+    \colhead{(mag)} &
+    \colhead{(\si{\electron/s})} &
+    \colhead{(\si{Jy})} &
+    \colhead{(\si{Jy.s/\electron})}
+}
+\tablecaption{VAMPIRES filter information. Minimum and maximum wavelengths represent 50\% relative throughput. Zero points, relative throughput, and conversion factors estimated from spectrophotometric standard observations on 2023/08/31 and all assume no beamsplitter.\label{tbl:filters}}
+\startdata
+Open & 580 & 776 & 680 & 196 & 0.30 & 6.4 & 67 & 25.7 & \num{1.9e10} & 3550 & \num{1.9e-7} \\
+625-50 & 601 & 649 & 625 & 49 & 0.08 & 4.4 & 74 & 24.0 & \num{4.1e9} & 3440 & \num{8.4e-7} \\
+675-50 & 651 & 699 & 675 & 49 & 0.07 & 8.0 & 67 & 24.4 & \num{5.6e9} & 2990 & \num{5.4e-7} \\
+725-50 & 700 & 749 & 725 & 49 & 0.07 & 11 & 61 & 24.5 & \num{6.4e9} & 2800 & \num{4.4e-7} \\
+750-50 & 724 & 776 & 748 & 48 & 0.06 & 10 & 58 & 24.3 & \num{5.4e9} & 2680 & \num{5.2e-7} \\
+775-50 & 750 & 776 & 763 & 26 & 0.03 & 6.6 & 56 & 22.8 & \num{1.4e9} & 2610 & \num{2.0e-6} \\
+\tableline
+F610 & 580 & 645 & 614 & 65 & 0.11 & 3.1 & 76 & 23.8 & \num{3.3e9} & 3560 & \num{1.1e-6} \\
+F670 & 646 & 695 & 670 & 49 & 0.07 & 7.0 & 67 & 24.1 & \num{4.4e9} & 3040 & \num{6.9e-7} \\
+F720 & 696 & 745 & 721 & 50 & 0.07 & 9.0 & 61 & 24.4 & \num{6.0e9} & 2860 & \num{4.8e-7} \\
+F760 & 746 & 776 & 761 & 30 & 0.04 & 6.0 & 57 & 23.6 & \num{2.7e9} & 5210 & \num{2.0e-6} \\
+\tableline
+H$\alpha$ & 655.9 & 656.7 & 656.3 & 0.8 & 0.0012 & 4.9 & 69 & & & & \num{3.8e-5} \\
+H$\alpha$-Cont & 646.7 & 648.6 & 647.6 & 1.9 & 0.0029 & 5.4 & 70 & & & & \num{1.3e-5} \\
+SII & 671.2 & 674.1 & 672.7 & 2.9 & 0.0043 & 8.6 & 67 & 21.4 & \num{3.6e8} & 3090 & \num{8.6e-6} \\
+SII-Cont & 680.0 & 683.0 & 681.5 & 3.0 & 0.0044 & 8.5 & 66 & 21.3 & \num{3.4e8} & 3035 & \num{8.8e-6} \\
+% 625-50\\
+\enddata
+\end{deluxetable*}
