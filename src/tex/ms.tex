@@ -3,8 +3,17 @@
 \usepackage{showyourwork}
 \usepackage{multirow}
 \usepackage{mathtools}
-\usepackage{hyperref}
 \usepackage{savesym}
+% redefine deluxetable for compatibility with the array package.
+\let\oldenddeluxetable\enddeluxetable
+\let\olddeluxetable\deluxetable
+\makeatletter
+\renewenvironment{deluxetable}[1]{
+\olddeluxetable{[#1]}
+\def\pt@format{#1}%
+}{\oldenddeluxetable}
+\makeatother
+
 \let\tablenum\relax
 \usepackage{siunitx}[=v2]
 
