@@ -7,10 +7,10 @@
 \let\tablenum\relax
 \usepackage{siunitx}[=v2]
 % redefine deluxetable for compatibility with the array package.
-\let\oldenddeluxetable\enddeluxetable
-\let\olddeluxetable\deluxetable
+\let\oldenddeluxetable\endxdeluxetable
+\let\olddeluxetable\xdeluxetable
 \makeatletter
-\renewenvironment{deluxetable}[1]{
+\renewenvironment{xdeluxetable}[1]{
 \olddeluxetable{[#1]}
 \def\pt@format{\string#1}%
 }{\oldenddeluxetable}
