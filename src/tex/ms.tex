@@ -8,6 +8,16 @@
 \savesymbol{tablenum}
 \usepackage{siunitx}[=v2]
 \restoresymbol{SIX}{tablenum}
+% redefine deluxetable for compatibility with the array package.
+\let\oldenddeluxetable\enddeluxetable
+\let\olddeluxetable\deluxetable
+\makeatletter
+\renewenvironment{deluxetable}[1]{
+\olddeluxetable{[#1]}
+\def\pt@format{#1}%
+}{\oldenddeluxetable}
+\makeatother
+
 
 \DeclareSIUnit{\mas}{mas}
 \DeclareSIUnit{\electron}{e^-}
