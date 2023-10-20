@@ -2,10 +2,10 @@
 
 VAMPIRES is equipped with four Lyot-style coronagraphs with various focal plane mask sizes and a new vector-vortex phase mask. The focal plane masks are mounted in a precise translation stage for fine alignment due to the lack of a dedicated tip-tilt mirror for VAMPIRES. The four Lyot-style focal plane masks were designed to be partially transmissive (design 0.1\%; actual 0.6\%) circular dots with inner working angles (IWA) corresponding to roughly two, three, five, and seven resolution elements (2, 3, 5, and 7 $\lambda/D$) in radius.
 
-A new set of Lyot focal plane masks were made for VAMPIRES for our upgrades so that each mask has a \qty{3}{\arcsecond}x\qty{3}{\arcsecond} fieldstop. These masks were constructed the same as \citet{lucas_visible-light_2022}, however we note that there were small changes in the IWA of the masks. The mask IWAs were measured by rastering the SCExAO internal calibration source across the focal plane mask and using a conversion factor for the encoder plate scale (\qty{1.1}{\arcsecond\per\milli\meter}). We normalize the throughput to the peak flux of the PSF far from the mask and measure the IWA where this normalized throughput is 0.5 (50\%).
+A new set of Lyot focal plane masks were made for VAMPIRES for our upgrades so that each mask has a \SI{3}{\arcsecond}x\SI{3}{\arcsecond} fieldstop. These masks were constructed the same as \citet{lucas_visible-light_2022}, however we note that there were small changes in the IWA of the masks. The mask IWAs were measured by rastering the SCExAO internal calibration source across the focal plane mask and using a conversion factor for the encoder plate scale (\SI{1.1}{\arcsecond\per\milli\meter}). We normalize the throughput to the peak flux of the PSF far from the mask and measure the IWA where this normalized throughput is 0.5 (50\%).
 
 \begin{deluxetable}{ccc}
-\tablehead{\colhead{Name} & \colhead{Radius (\unit{\micron})} & \colhead{IWA (\unit{\mas})}}
+\tablehead{\colhead{Name} & \colhead{Radius (\si{\micron})} & \colhead{IWA (\si{\mas})}}
 \tablecaption{VAMPIRES coronagraph mask specifications.\label{tbl:coronagraph}}
 \startdata
 CLC-2 & 46 & 37 \\
@@ -21,9 +21,9 @@ The VAMPIRES pupil mask wheel currently houses one Lyot stop for rejecting the l
 
 \subsection{Calibration Speckles}
 
-VAMPIRES uses the SCExAO deformable mirror to create calibration speckles (``astrogrid'') for precise astrometry and photometry of the star behind the coronagraph mask \citep{sahoo_precision_2020}. The calibration speckles are typically configured to produce an ``X'' with separations of 11.2, 15.9, 31.8 $\lambda/D$. The relative photometry of the calibration speckles were measured for each instrument filter, for each of the above separations, and for five DM probe amplitudes from \qtyrange{10}{50}{\nano\meter} using the SCExAO internal source. 
+VAMPIRES uses the SCExAO deformable mirror to create calibration speckles (``astrogrid'') for precise astrometry and photometry of the star behind the coronagraph mask \citep{sahoo_precision_2020}. The calibration speckles are typically configured to produce an ``X'' with separations of 11.2, 15.9, 31.8 $\lambda/D$. The relative photometry of the calibration speckles were measured for each instrument filter, for each of the above separations, and for five DM probe amplitudes from \SIrange{10}{50}{\nano\meter} using the SCExAO internal source. 
 
-We used a collapsed image without calibration speckles as the PSF model to convolve with our images for PSF photometry. The relative flux is measured by taking the peaks of the convolved calibration speckles divided by the peak of the on-axis PSF. We fit bivariate quadratic functions of probe amplitude and wavelength to the relative PSF photometry (\autoref{eqn:astrogrid}). We note that these functions are only valid for a single astrogrid pattern due to the DM influence function and for DM amplitudes below 1 radian RMS wavefront distortion ($\unitm$\qty{95}{\nano\meter}). They also may vary with AO loop speed, but we do not characterize that here. We also fit the coefficients for the ``waffle'' spots passively created by the gridding of the DM. We report our model fits in \autoref{tbl:astrogrid}.
+We used a collapsed image without calibration speckles as the PSF model to convolve with our images for PSF photometry. The relative flux is measured by taking the peaks of the convolved calibration speckles divided by the peak of the on-axis PSF. We fit bivariate quadratic functions of probe amplitude and wavelength to the relative PSF photometry (\autoref{eqn:astrogrid}). We note that these functions are only valid for a single astrogrid pattern due to the DM influence function and for DM amplitudes below 1 radian RMS wavefront distortion ($\sim$\SI{95}{\nano\meter}). They also may vary with AO loop speed, but we do not characterize that here. We also fit the coefficients for the ``waffle'' spots passively created by the gridding of the DM. We report our model fits in \autoref{tbl:astrogrid}.
 \begin{equation}
     \label{eqn:astrogrid}
     \frac{f_{c}}{f_*}\left( \lambda, A_{DM} | c \right) = c \cdot A_{DM}^2 / \lambda^2
@@ -31,7 +31,7 @@ We used a collapsed image without calibration speckles as the PSF model to convo
 
 \begin{deluxetable}{ccc}
 \tablehead{\colhead{Pattern} & \colhead{Separation ($\lambda/D$)} & \colhead{c}}
-\tablecaption{Astrogrid relative photometry model fits at \qty{1}{\kilo\hertz} modulation speed.\label{tbl:astrogrid}}
+\tablecaption{Astrogrid relative photometry model fits at \SI{1}{\kilo\hertz} modulation speed.\label{tbl:astrogrid}}
 \startdata
 XYdiag & 11.2 & \\
 XYdiag & 15.9 & \\
@@ -41,14 +41,14 @@ Passive & 45.0 & \\
 \enddata
 \end{deluxetable}
 
-We can use these fits to ensure the calibration speckles are not prohibitively bright during observations. For example, to aim for a relative contrast of $10^{-3}$ we would use an amplitude of $\unitm$\qty{999}{\nano\meter}. This is well-matched to the peak flux of the CLC-5 coronagraph. For the CLC-3 coronagraph mask we would use a slightly brighter TODO.
+We can use these fits to ensure the calibration speckles are not prohibitively bright during observations. For example, to aim for a relative contrast of $10^{-3}$ we would use an amplitude of $\sim$\SI{999}{\nano\meter}. This is well-matched to the peak flux of the CLC-5 coronagraph. For the CLC-3 coronagraph mask we would use a slightly brighter TODO.
 
 \subsection{Performance: On-Sky Contrast Curves}
 
 We have measured the surface brightness profiles and contrast curves for the CLC-3 and CLC-5 coronagraph masks. Data were obtained from observations of HD 102438 and GL 758 (HD 182488). The data were processed using dark subtraction and flat correction. The data were taken in the multiband-imaging mode so for each field the astrogrid calibration speckles were used to register the frame and we combined the coregistered and median-collapsed frames into a spectral cube. We use the aperture photometry of the calibration speckles for flux conversion to contrast using the relative scaling factors (\autoref{eqn:astrogrid},\autoref{tbl:astrogrid}).
 
-The surface brightness profiles are plotted in TODO. We used TODO algorithm for modeling the PSF for each wavelength. The 1$\unitgma$ small-sample statistics corrected contrast curves \citep{mawet_fundamental_2014} are plotted in TODO. We also calculate the double-SDI contrast curve after radially scaling each field by its wavelength and subtracting the median frame before rescaling and collapsing.
+The surface brightness profiles are plotted in TODO. We used TODO algorithm for modeling the PSF for each wavelength. The 1$\sigma$ small-sample statistics corrected contrast curves \citep{mawet_fundamental_2014} are plotted in TODO. We also calculate the double-SDI contrast curve after radially scaling each field by its wavelength and subtracting the median frame before rescaling and collapsing.
 
 \subsection{Advanced Coronagraphy}
 
-As a high-contrast testbed SCExAO seeks to push wavefront control and coronagraphy to its limits. Two experimental additions have been made to VAMPIRES that will be studied and made available to observers in future semesters. The first of these is a double-grating vector vortex coronagraph (DGVVC; PI: Doelman, D.). This will be the first visible-light phase mask coronagraph deployed on SCExAO which will push the visible contrast limits of VAMPIRES. The second is a redundant apodized pupil mask (RAP; PI: Leboullex, L.) which creates a static dark hole that is robust to low-wind effect up to $\unitm$\qty{1}{rad} RMS wavefront error.
+As a high-contrast testbed SCExAO seeks to push wavefront control and coronagraphy to its limits. Two experimental additions have been made to VAMPIRES that will be studied and made available to observers in future semesters. The first of these is a double-grating vector vortex coronagraph (DGVVC; PI: Doelman, D.). This will be the first visible-light phase mask coronagraph deployed on SCExAO which will push the visible contrast limits of VAMPIRES. The second is a redundant apodized pupil mask (RAP; PI: Leboullex, L.) which creates a static dark hole that is robust to low-wind effect up to $\sim$\SI{1}{rad} RMS wavefront error.
