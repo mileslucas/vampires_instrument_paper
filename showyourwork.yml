@@ -55,8 +55,6 @@ overleaf:
   # List of files to pull from Overleaf
   pull:
     - src/tex/ms.tex
-    - src/tex/siunitx.sty
-    - src/tex/expl3.sty
     - src/tex/bib.bib
     - src/tex/authors.tex
     - src/tex/acknowledgements.tex
