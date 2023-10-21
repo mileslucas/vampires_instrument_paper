@@ -4,6 +4,13 @@ VAMPIRES has five standard filters, four narrowband filters, an open broadband f
 
 The narrowband filters are deployed in pairs for spectral differential imaging (NB-SDI). The first pair of filters uses a \SI{1}{\nm} H$\alpha$ emission line filter with a \SI{2}{\nm} continuum filter, and the second uses a set of \SI{3}{\nm} SII doublet and continuum filters.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{figures/filter_curves.pdf}
+    \script{scripts/filter_curves.py}
+    \caption{VAMPIRES filter transmission curves. All curves are normalized to the ``Open'' filter, which is the bandpass created from the dichroics upstream of VAMPIRES.\label{fig:filters}}
+\end{figure}
+
 \subsection{Absolute Flux Calibration}
 
 During commissioning spectrophotometric standard stars were observed in each filter with the non-polarizing beamsplitter. The standard spectra for each star was used for calibrating photometric zero points in \si{Jy} and \si{\electron/\second} as well as the instrument throughput. We used an empirical model for the atmospheric extinction \citep{buton_atmospheric_2013} which drives our uncertainties in absolute flux calibration. The filter data are summarized in \autoref{tbl:filters}.
