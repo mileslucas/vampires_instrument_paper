@@ -4,6 +4,9 @@ VAMPIRES is equipped with four Lyot-style coronagraphs with various focal plane 
 
 A new set of Lyot focal plane masks were made for VAMPIRES for our upgrades so that each mask has a \SI{3}{\arcsecond}x\SI{3}{\arcsecond} fieldstop. These masks were constructed the same as \citet{lucas_visible-light_2022}, however we note that there were small changes in the IWA of the masks. The mask IWAs were measured by rastering the SCExAO internal calibration source across the focal plane mask and using a conversion factor for the encoder plate scale (\SI{1.1}{\arcsecond\per\milli\meter}). We normalize the throughput to the peak flux of the PSF far from the mask and measure the IWA where this normalized throughput is 0.5 (50\%).
 
+The VAMPIRES pupil mask wheel currently houses one Lyot stop for rejecting the light diffracted by the focal plane mask \citep{lucas_visible-light_2022}. This mask is coated with gold for high reflectivity, aiding alignment with the pupil camera. We measured the total flux reflected by a protected silver mirror and compared it to the light reflected by the Lyot stop. Using the SCExAO internal source we measured a geometric pupil throughput of 63\%.
+
+
 \begin{deluxetable}{ccc}
 \tablehead{\colhead{Name} & \colhead{Radius (\si{\micron})} & \colhead{IWA (\si{\mas})}}
 \tablecaption{VAMPIRES coronagraph mask specifications.\label{tbl:coronagraph}}
@@ -17,13 +20,11 @@ DGVVC & 7\tablenotemark{*} &  \\
 \tablenotetext{*}{The radius of the DGVVC is the radius of the central defect amplitude mask.}
 \end{deluxetable}
 
-The VAMPIRES pupil mask wheel currently houses one Lyot stop for rejecting the light diffracted off the focal plane mask \citep{lucas_visible-light_2022}. This mask is coated with gold for high reflectivity, aiding alignment with the pupil camera. We measured the total flux reflected by a protected silver mirror and compared it to the light reflected (rejected) by the Lyot stop. Using the SCExAO internal source we measured a geometric pupil throughput of 63\%.
-
 \subsection{Calibration Speckles}
 
 VAMPIRES uses the SCExAO deformable mirror to create calibration speckles (``astrogrid'') for precise astrometry and photometry of the star behind the coronagraph mask \citep{sahoo_precision_2020}. The calibration speckles are typically configured to produce an ``X'' with separations of 11.2, 15.9, 31.8 $\lambda/D$. The relative photometry of the calibration speckles were measured for each instrument filter, for each of the above separations, and for five DM probe amplitudes from \SIrange{10}{50}{\nano\meter} using the SCExAO internal source. 
 
-We used a collapsed image without calibration speckles as the PSF model to convolve with our images for PSF photometry. The relative flux is measured by taking the peaks of the convolved calibration speckles divided by the peak of the on-axis PSF. We fit bivariate quadratic functions of probe amplitude and wavelength to the relative PSF photometry (\autoref{eqn:astrogrid}). We note that these functions are only valid for a single astrogrid pattern due to the DM influence function and for DM amplitudes below 1 radian RMS wavefront distortion ($\sim$\SI{95}{\nano\meter}). They also may vary with AO loop speed, but we do not characterize that here. We also fit the coefficients for the ``waffle'' spots passively created by the gridding of the DM. We report our model fits in \autoref{tbl:astrogrid}.
+We used a collapsed image without calibration speckles as the PSF model to convolve with our images for PSF photometry. The relative flux is measured by taking the peaks of the convolved calibration speckles divided by the peak of the on-axis PSF. We fit bivariate quadratic functions of probe amplitude and wavelength to the relative PSF photometry (\autoref{eqn:astrogrid}). We note that these functions are only valid for a single astrogrid pattern due to the DM influence function and for DM amplitudes below 1 radian wavefront distortion ($\sim$\SI{95}{\nano\meter}). They also may vary with AO loop speed, but we do not characterize that here. We also fit the coefficients for the ``waffle'' spots passively created by the gridding of the DM. We report our model fits in \autoref{tbl:astrogrid}.
 \begin{equation}
     \label{eqn:astrogrid}
     \frac{f_{c}}{f_*}\left( \lambda, A_{DM} | c \right) = c \cdot A_{DM}^2 / \lambda^2

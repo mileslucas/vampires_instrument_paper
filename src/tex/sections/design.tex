@@ -13,7 +13,7 @@ The light from AO188 is split with a dichroic beamsplitter which transmits red t
 
 Once the light is on the visible bench of SCExAO it encounters a series of pickoffs for routing the light to various modules of SCExAO. The first is the pickoff for the visible pyramid wavefront sensor (PyWFS), which has multiple filters for sending more or less light to the wavefront sensor to assure sufficient S/N during observations. Typically an \SI{800}{\nano\meter} dichroic filter is used, which effectively cuts off light below $\lambda <$\SI{775}{\nano\meter} due to its \ang{20} tilt. Then the light passes through a fieldstop that houses the suite of Lyot coronagraph masks (\autoref{sec:coronagraphy}) as well as a \SI{3}{\arcsecond}x\SI{3}{\arcsecond} fieldstop. After the fieldstop are two pickoffs for the fiber-fed instrument FIRST. These pickoffs typically use non-polarizing gray beamsplitters which allows simultaneous observations in VAMPIRES with appropriate focus shifts.
 
-Finally, the remaining light (\SIrange{600}{775}{\nano\meter}) reaches the VAMPIRES collimating lens, after which is a deployable ferroelectric liquid crystal (FLC), a wheel for pupil-plane optics, and a standard filter wheel. The pupil wheel houses sparse aperture masks, neutral-density (ND) filters, and the coronagraph Lyot stops. This wheel is at $\sim$\ang{10} so that light reflected off the masks can be imaged by a separate pupil-viewing camera. The standard filter wheel houses five \SI{50}{\nano\meter}-wide bandpass filters for standard imaging as well as an empty slot for broadband observations, After this filter wheel is a separate baffle for the VAMPIRES fore-optics to reduce scattered light from motor encoders and electronic devices on the SCExAO bench. 
+Finally, the remaining light (\SIrange{600}{775}{\nano\meter}) reaches the VAMPIRES collimating lens, after which is a deployable ferroelectric liquid crystal (FLC), a wheel for pupil-plane optics, and a standard filter wheel. The pupil wheel houses sparse aperture masks, neutral-density (ND) filters, and the coronagraph Lyot stops. This wheel is at $\sim$\ang{6} so that light reflected off the masks can be imaged by a separate pupil-viewing camera. The standard filter wheel houses five \SI{50}{\nano\meter}-wide bandpass filters for standard imaging as well as an empty slot for broadband observations, After this filter wheel is a separate baffle for the VAMPIRES fore-optics to reduce scattered light from motor encoders and electronic devices on the SCExAO bench. 
 
 The beam then reaches a newly-developed multiband imaging (MBI) optic. This optic uses multiple dichroics and low, but unique, angles-of-incidence (AOI) to split broadband light into multiple fields imaged on the detector. Our design uses three shortpass dichroic filters with a mirror at the back creating four $\sim$\SI{50}{\nano\meter} fields roughly matching the standard bandpass filters. This optic can be rotated \ang{180} to place a mirror in the beam, instead, creating a single image. In both cases the light bounces off a fold mirror before reaching a removable pupil-imaging lens and the objective lens.
 
@@ -27,7 +27,7 @@ As the light is focusing it passes through the beamsplitter wheel, which has a n
 }
 \tablecaption{VAMPIRES specifications.\label{tbl:specs}}
 \startdata
-Diff. Limit & \SI{15.6}{\mas} at \SI{600}{\nm}\\
+Diff. Limit & \SI{16.5}{\mas} at \SI{625}{\nm}, \SI{20.1}{\mas} at \SI{760}{\nm}\\
 FOV & \SI{3}{\arcsecond} x \SI{3}{\arcsecond} \\
 Plate Scale & \SI{6.01}{\mas} \\
 Inst. PA & \ang{-41.4} \\
