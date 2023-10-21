@@ -106,4 +106,4 @@ axes[3].xaxis.set_major_locator(FixedLocator([672.2, 676.9, 681.5]))
 # for ax in axes[2:]:
 
 # save output
-fig.savefig(paths.figures / "filter_curves.pdf", bbox_inches="tight", dpi=300)
+fig.savefig(paths.figures / "filter_curves.pdf", dpi=300)
