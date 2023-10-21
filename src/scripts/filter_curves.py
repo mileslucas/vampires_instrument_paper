@@ -60,7 +60,7 @@ for i, filt in enumerate(VAMPIRES_STD_FILTERS):
     else:
         color = cmap[filt]
     plot_filter(axes[0], waveset, sp_elem, filt, color=color, space=space)
-axes[0].format(ylim=(-0.02, 1.25))
+axes[0].format(ylim=(-0.02, 1.25), title="Standard Filters", titleloc="ul")
 
 # plot MBI filters
 cycle = pro.Colormap("fire")(np.linspace(0.4, 0.9, len(VAMPIRES_MBI_FILTERS)))
@@ -69,7 +69,7 @@ for i, filt in enumerate(VAMPIRES_MBI_FILTERS):
     sp_elem = load_vampires_filter(filt)
     space = 0.03
     plot_filter(axes[1], waveset, sp_elem, filt, color=cmap[filt], space=space)
-axes[1].format(ylim=(-0.02, 1.15))
+axes[1].format(ylim=(-0.02, 1.15), title="MBI Filters", titleloc="ul")
 
 # plot NB filters
 cycle = pro.Colormap("fire")(np.linspace(0.4, 0.8, len(VAMPIRES_NB_FILTERS)))
@@ -93,10 +93,10 @@ for i, filt in enumerate(VAMPIRES_NB_FILTERS):
         # plot_ave=False,
     )
 axes[2:].format(ylim=(-0.02, 1.15), xlabel=r"$\lambda$ (nm)")
-axes[2].format(xlim=(643, 660))
-axes[3].format(xlim=(668, 686))
+axes[2].format(xlim=(644, 660), title=r"H$\alpha$", titleloc="uc")
+axes[3].format(xlim=(668, 686), title=r"SII", titleloc="uc")
 axes[:2].format(xlim=(575, 780))
-axes.format(ylabel="transmission")
+axes.format(ylabel="transmission", titlesize=9)
 
 for ax in axes:
     ax.yaxis.set_major_locator(MaxNLocator(nbins=6, prune="both"))
