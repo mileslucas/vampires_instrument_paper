@@ -102,7 +102,7 @@ for ax in axes:
     ax.yaxis.set_major_locator(MaxNLocator(nbins=6, prune="both"))
 
 axes[2].xaxis.set_major_locator(FixedLocator([647.6, 652.0, 656.3]))
-axes[3].xaxis.set_major_locator(FixedLocator([672.7, 676.3, 681.5]))
+axes[3].xaxis.set_major_locator(FixedLocator([672.7, 677.1, 681.5]))
 # for ax in axes[2:]:
 
 # save output
