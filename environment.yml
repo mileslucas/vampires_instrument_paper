@@ -1,6 +1,10 @@
+name: vamp_inst_paper
 dependencies:
+  - conda-forge::astropy=5.3.4
   - conda-forge::numpy=1.19.2
   - conda-forge::pip=21.0.1
   - conda-forge::python=3.9
   - pip:
       - matplotlib==3.4.3
+      - proplot==0.9.7
+      - -e /Users/mileslucas/dev/python/scexao_etc
