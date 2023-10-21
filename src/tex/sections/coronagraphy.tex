@@ -30,6 +30,8 @@ We used a collapsed image without calibration speckles as the PSF model to convo
     \frac{f_{c}}{f_*}\left( \lambda, A_{DM} | c \right) = c \cdot A_{DM}^2 / \lambda^2
 \end{equation}
 
+We can use these fits to ensure the calibration speckles are not prohibitively bright during observations. For example, to aim for a relative contrast of $10^{-3}$ we would use an amplitude of $\sim$\SI{999}{\nano\meter}. This is well-matched to the peak flux of the CLC-5 coronagraph. For the CLC-3 coronagraph mask we would use a slightly brighter TODO.
+
 \begin{deluxetable}{ccc}
 \tablehead{\colhead{Pattern} & \colhead{Separation ($\lambda/D$)} & \colhead{c}}
 \tablecaption{Astrogrid relative photometry model fits at \SI{1}{\kilo\hertz} modulation speed.\label{tbl:astrogrid}}
@@ -41,8 +43,6 @@ XYdiag & 31.8 & \\
 Passive & 45.0 & \\
 \enddata
 \end{deluxetable}
-
-We can use these fits to ensure the calibration speckles are not prohibitively bright during observations. For example, to aim for a relative contrast of $10^{-3}$ we would use an amplitude of $\sim$\SI{999}{\nano\meter}. This is well-matched to the peak flux of the CLC-5 coronagraph. For the CLC-3 coronagraph mask we would use a slightly brighter TODO.
 
 \subsection{Performance: On-Sky Contrast Curves}
 

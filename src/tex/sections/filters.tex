@@ -2,15 +2,15 @@
 
 VAMPIRES has five standard filters, four narrowband filters, an open broadband filter, the dichroic filters in the multiband optic, and two neutral density filters. The filter curves are compiled from manufacturer data and available openly. 
 
-The Open filter is the widest and is constrained by the AO188 beamsplitter and the PyWFS pickoff. The standard filters are all \SI{50}{\nm}-wide bandpass filters, but the 775-50 bandpass is truncated due to overlap with the most commonly used PyWFS pickoff. The multiband filters come from consecutive transmissions/reflections through the stack of dichroics, and therefore the light transmitted through all filters will be more attenuated than the light reflecting off the first filter. The effective filter curves are $\sim$\SI{50}{\nm} wide and have minor leakage ($<$5\%) between some fields due to the imperfect dichroic transmissions.
+The Open filter is the widest and is constrained by the AO188 beamsplitter and the PyWFS pickoff. The standard filters are all \SI{50}{\nm}-wide bandpass filters, but the 775-50 bandpass is truncated due to overlap with the most commonly used PyWFS pickoff. The multiband filters come from consecutive transmissions/reflections through the stack of dichroics, and therefore the light transmitted through all filters will be more attenuated than the light reflecting off the first filter. The effective filter curves are $\sim$\SI{50}{\nm} wide and have minor leakage ($<$5\%) between some fields due to the imperfect dichroic transmissions. We also correct for the $\sim$\ang{10} AOI of the dichroic stack.
 
-The narrowband filters are deployed in pairs for spectral differential imaging (NB-SDI). The first pair of filters uses a \SI{1}{\nm} H$\alpha$ emission line filter with a \SI{2}{\nm} continuum filter, and the second uses a set of \SI{3}{\nm} SII doublet and continuum filters. All filter transmission curves are shown in \autoref{fig:filters} and summarized in \autoref{tbl:filters}.
+The narrowband filters are deployed in pairs for spectral differential imaging ($\Delta\lambda/\lambda=$\num{0.013}). The first pair of filters uses a \SI{1}{\nm} H$\alpha$ emission line filter with a \SI{2}{\nm} continuum filter, and the second uses a set of \SI{3}{\nm} SII doublet and continuum filters. All filter transmission curves are shown in \autoref{fig:filters} and summarized in \autoref{tbl:filters}.
 
 \begin{figure}
     \centering
     \script{filter_curves.py}
     \includegraphics[width=\columnwidth]{figures/filter_curves.pdf}
-    \caption{VAMPIRES filter transmission curves. All curves are normalized to the ``Open'' filter, which is the bandpass created from the dichroics upstream of VAMPIRES. The average wavelength ($\lambda_{ave}$) for each filter is shown with a vertical dashed line.\label{fig:filters}}
+    \caption{VAMPIRES filter transmission curves. All curves are normalized to the ``Open'' filter, which is the bandpass created from the dichroics upstream of VAMPIRES. The average wavelength for each filter is shown with a vertical dashed line.\label{fig:filters}}
 \end{figure}
 
 \subsection{Absolute Flux Calibration}
