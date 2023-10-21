@@ -13,7 +13,7 @@ from matplotlib.ticker import MaxNLocator, FixedLocator
 fig, axes = pro.subplots(
     [[1, 1], [2, 2], [3, 4]],
     width="3.5in",
-    height="4.5in",
+    height="5in",
     wspace=0,
     hspace=(0, 2),
     sharex=1,
