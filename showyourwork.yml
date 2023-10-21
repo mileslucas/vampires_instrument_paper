@@ -70,6 +70,7 @@ overleaf:
     - src/tex/sections/observing_log.tex
     - src/tex/sections/polarimetry.tex
     - src/tex/sections/science_applications.tex
+    - src/tex/sections/processing.tex
 
 # Always require all input files to be present on disk for workflow to pass?
 require_inputs: true
