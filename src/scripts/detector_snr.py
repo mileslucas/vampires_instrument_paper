@@ -66,16 +66,8 @@ def get_cmos_dr(mode: str = "slow"):
     return 20 * np.log10(fullwell / rn_e)
     
 # set min photons where qCMOS SLOW S/N == 1 (RN limited)
-# s/n = photons / np.sqrt(photons * qe + rn**2)
-# 1 = photons / np.sqrt(photons * qe + rn**2)
-# 1 = photons**2 / (photons * qe + rn**2)
-# photons**2 = photons * qe + rn**2
-# photons**2 - photons * qe - rn**2 = 0
-# (photons - qe / 2)**2 + (-rn**2 - qe**2 / 4) = 0
-# (photons - qe / 2)**2 = qe**2 / 4 + rn**2
-# photons - qe/2 = np.sqrt(qe**2/4 + rn**2)
 min_photons = 0.5 / 0.678 * (1 + np.hypot(1, 2 * 0.235))
-photons = np.geomspace(min_photons, 1e6, 1000)
+photons = np.geomspace(min_photons, 1e6, 10000)
 
 fig, axes = pro.subplots(nrows=2, width="3.5in", refheight="1.5in")
 
