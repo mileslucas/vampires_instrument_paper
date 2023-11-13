@@ -48,7 +48,7 @@ def get_cmos_snr(photons, texp, mode: str = "slow"):
 
 photons = np.geomspace(1e-1, 1e6, 1000)
 
-fig, axes = pro.subplots(nrows=2, width="3.5in", refheight="1.5in")
+fig, axes = pro.subplots(nrows=2, width="3.5in", height="3.5in")
 
 
 for i, texp in enumerate((0.1, 60)):
@@ -74,7 +74,7 @@ axes.format(
 fig.savefig(paths.figures / "detector_snr.pdf", dpi=300)
 
 
-fig, axes = pro.subplots(nrows=2, width="3.5in", refheight="1.5in")
+fig, axes = pro.subplots(nrows=2, width="3.5in", height="3.5in")
 
 for i, texp in enumerate((0.1, 60)):
     benchmark = get_emccd_snr(photons / texp, texp)
