@@ -47,9 +47,8 @@ def get_cmos_snr(photons, texp, mode: str = "slow"):
 
 photons = np.geomspace(1e-1, 1e6, 1000)
 
-fig, axes = pro.subplots(nrows=2, width="3.5in", refheight="1.75in", sharey=0)
+fig, axes = pro.subplots(nrows=2, width="3.5in", refheight="1.75in")
 
-pro.rc["cycle"] = "ggplot"
 
 for i, texp in enumerate((0.1, 100)):
     axes[i].plot(photons, get_cmos_snr(photons / texp, texp, mode="slow"), c="C0", label="CMOS (SLOW)", zorder=10)
@@ -74,7 +73,7 @@ fig.savefig(paths.figures / "detector_snr.pdf", dpi=300)
 
 
 
-fig, axes = pro.subplots(nrows=2, width="3.5in", refheight="1.75in", sharey=0)
+fig, axes = pro.subplots(nrows=2, width="3.5in", refheight="1.75in")
 # fig, axes = pro.subplots(ncols=2, width="7in")
 
 for i, texp in enumerate((0.1, 100)):
