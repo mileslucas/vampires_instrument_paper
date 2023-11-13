@@ -65,8 +65,16 @@ def get_cmos_dr(mode: str = "slow"):
         fullwell = 2**16 * 0.105
     return 20 * np.log10(fullwell / rn_e)
     
-# set min photons where EMCCD g=300 S/N == 1 (RN limited)
-min_photons = 2 * (1 / 0.85**2 - (89/300)**2)
+# set min photons where qCMOS SLOW S/N == 1 (RN limited)
+# s/n = photons / np.sqrt(photons * qe + rn**2)
+# 1 = photons / np.sqrt(photons * qe + rn**2)
+# 1 = photons**2 / (photons * qe + rn**2)
+# photons**2 = photons * qe + rn**2
+# photons**2 - photons * qe - rn**2 = 0
+# (photons - qe / 2)**2 + (-rn**2 - qe**2 / 4) = 0
+# (photons - qe / 2)**2 = qe**2 / 4 + rn**2
+# photons - qe/2 = np.sqrt(qe**2/4 + rn**2)
+min_photons = 0.5 / 0.678 * (1 + np.hypot(1, 2 * 0.235))
 photons = np.geomspace(min_photons, 1e6, 1000)
 
 fig, axes = pro.subplots(nrows=2, width="3.5in", refheight="1.5in")
@@ -105,7 +113,7 @@ fig.savefig(paths.figures / "detector_snr.pdf", dpi=300)
 fig, axes = pro.subplots(nrows=2, width="3.5in", refheight="1.5in")
 
 for i, texp in enumerate((0.1, 100)):
-    benchmark = get_emccd_snr(photons / texp, texp)
+    benchmark = get_cmos_snr(photons / texp, texp, mode="slow")
     axes[i].plot(photons, get_cmos_snr(photons / texp, texp, mode="slow") / benchmark, c="C0", label="CMOS (SLOW)", zorder=10)
     axes[i].plot(photons, get_cmos_snr(photons / texp, texp, mode="fast") / benchmark, c="C0", ls="--", label="CMOS (FAST)", zorder=9)
     axes[i].plot(photons, get_emccd_snr(photons / texp, texp) / benchmark, c="C3", label="EMCCD (g=300)")
@@ -120,7 +128,6 @@ axes.format(
     ylabel="Relative S/N",
     xscale="log",
     xformatter="log",
-    ylim=(0, 1.5)
 )
 
 # save output
