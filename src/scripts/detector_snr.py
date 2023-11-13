@@ -2,8 +2,7 @@ import paths
 import proplot as pro
 import numpy as np
 
-pro.rc["legend.fontsize"] = 8
-pro.rc["cycle"] = "538"
+pro.rc["legend.fontsize"] = 7
 
 
 def get_ccd_snr(photons, texp):
@@ -91,7 +90,8 @@ axes.format(
     xlabel="photons/pixel",
     ylabel="Relative S/N",
     xscale="log",
-    xformatter="log"
+    xformatter="log",
+    ylim=(0, 1.5)
 )
 
 # save output
