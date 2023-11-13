@@ -47,14 +47,14 @@ def get_cmos_snr(photons, texp, mode: str = "slow"):
 
 photons = np.geomspace(1e-1, 1e6, 1000)
 
-fig, axes = pro.subplots(nrows=2, width="3.5in", height="3.5in")
+fig, axes = pro.subplots(nrows=2, width="3.5in", refheight="1.5in")
 
 
-for i, texp in enumerate((0.1, 60)):
+for i, texp in enumerate((0.1, 100)):
     axes[i].plot(photons, get_cmos_snr(photons / texp, texp, mode="slow"), c="C0", label="CMOS (SLOW)", zorder=10)
     axes[i].plot(photons, get_cmos_snr(photons / texp, texp, mode="fast"), c="C0", ls="--", label="CMOS (FAST)", zorder=9)
-    axes[i].plot(photons, get_emccd_snr(photons / texp, texp), c="C1", label="CCD (EM=300)")
-    axes[i].plot(photons, get_ccd_snr(photons / texp, texp), c="C1", ls="--", label="CCD (EM=0)")
+    axes[i].plot(photons, get_emccd_snr(photons / texp, texp), c="C1", label="EMCCD (g=300)")
+    axes[i].plot(photons, get_ccd_snr(photons / texp, texp), c="C1", ls="--", label="EMCCD (g=0)")
     axes[i].format(
         title=f"DIT={texp} s",
         ylim=(1e-1, None)
@@ -73,14 +73,14 @@ axes.format(
 fig.savefig(paths.figures / "detector_snr.pdf", dpi=300)
 
 
-fig, axes = pro.subplots(nrows=2, width="3.5in", height="3.5in")
+fig, axes = pro.subplots(nrows=2, width="3.5in", refheight="1.5in")
 
-for i, texp in enumerate((0.1, 60)):
+for i, texp in enumerate((0.1, 100)):
     benchmark = get_emccd_snr(photons / texp, texp)
     axes[i].plot(photons, get_cmos_snr(photons / texp, texp, mode="slow") / benchmark, c="C0", label="CMOS (SLOW)", zorder=10)
     axes[i].plot(photons, get_cmos_snr(photons / texp, texp, mode="fast") / benchmark, c="C0", ls="--", label="CMOS (FAST)", zorder=9)
-    axes[i].plot(photons, get_emccd_snr(photons / texp, texp) / benchmark, c="C1", label="CCD (EM=300)")
-    axes[i].plot(photons, get_ccd_snr(photons / texp, texp) / benchmark, c="C1", ls="--", label="CCD (EM=0)")
+    axes[i].plot(photons, get_emccd_snr(photons / texp, texp) / benchmark, c="C1", label="EMCCD (g=300)")
+    axes[i].plot(photons, get_ccd_snr(photons / texp, texp) / benchmark, c="C1", ls="--", label="EMCCD (g=0)")
     axes[i].format(
         title=f"DIT={texp} s"
     )
