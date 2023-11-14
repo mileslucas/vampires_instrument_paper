@@ -10,7 +10,7 @@ The detectors have rolling-shutter readout that exposes four pixel rows at a tim
 
 We measured a photon transfer curve using a calibration flat field source for both detectors in both readout modes using a non-polarizing beamsplitter cube. We removed the fixed-pattern noise through frame-differencing before performing a linear fit between the average signal and the signal variance \citep{stefanov_cmos_2022}. 
 \begin{equation}
-    \sigma^2\left(\mu\right) = \frac{\mu}{k} + \sigma^2_{RN}
+    \sigma^2\left(\mu | k, \sigma_{RN}\right) = \frac{\mu}{k} + \sigma^2_{RN}
 \end{equation}
 From this fit we extract the gain ($k$) in \si{\electron/adu} from the slope of the line. We measure the readout noise from the standard deviation of a bias frame and convert to \si{\electron} with the gain. We observe that the full well (\SI{7000}{\electron}) is greater than the maximum bit-depth with our measured detector gain. The detector photoresponse is linear over the entire dynamic range and saturates at $2^{16}$ \si{adu}. During commissioning we also took dark frames with the detector caps covered. For data with significant signal, we performed a linear fit of the signal to the exposure time to get the average dark current per pixel. We report our results in \autoref{tbl:detectors}.
 
