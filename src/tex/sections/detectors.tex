@@ -61,4 +61,28 @@ VCAM2 & SLOW & 0.105 & 0.22 & \num{3.6e-3} & 90 \\
 
 \subsection{Astrometric Calibration}
 
-TODO
+The astrometric calibration is used to determine the instrument rotation angle and pixel plate scale. We determine our calibration solution using a culmination of visual binaries (\autoref{tbl:binaries}) and correlate those solutions to the pinhole mask in SCExAO. This way future observers can use the pinhole mask calibration data taken off-sky as an absolute astrometric reference.
+
+
+\begin{deluxetable}{cccccl}
+\tablehead{
+    \multirow{2}{*}{\colhead{Object}} &
+    \colhead{$t_\mathrm{obs}$} &
+    \colhead{$\rho$} &
+    \colhead{$\theta$} &
+    \colhead{$\Delta m$} &
+    \multirow{2}{*}{\colhead{Ref.}} \\
+    &
+    \colhead{(MJD)} &
+    \colhead{(mas)} &
+    \colhead{(\textdegree)} &
+    \colhead{(V mag)} &
+}
+\tablecaption{Visual binaries used for astrometric calibration. The ephemeris (separation and position angle) are reported for the average observation time of the data.\label{tbl:binaries}}
+\startdata
+Albireo (a,c) & 0 & 400 & 0 & 2.30 & \\
+21 Oph & 0 & 400 & 0 & 2.30 & \\
+21 Oph & 0 & 400 & 0 & 2.30 & \\
+Algol (a,c) & 0 & 400 & 0 & 2.30 & \\
+\enddata
+\end{deluxetable}
