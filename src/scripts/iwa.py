@@ -17,7 +17,7 @@ names = {
     "clc3": "CLC-3",
     "clc5": "CLC-5",
     "clc7": "CLC-7",
-    "dgvvc": "dgVVC",
+    "dgvvc": "DGVVC",
 }
 cycle = pro.Colormap("boreal")(np.linspace(0.3, 0.7, len(names)))
 colors = {k: col for k, col in zip(names.keys(), cycle)}
@@ -59,10 +59,13 @@ for key in names.keys():
     iwa = (iwa_pos + iwa_neg) / 2
 
     # find center of masked assuming it is symmetric
-    # based on IWA crossings
-    rad_pos = np.where(flux[mask_pos] >= 0.5)[0][0]
-    rad_neg = np.where(flux[mask_neg][::-1] >= 0.5)[0][0]
-    offset = (rad_pos + rad_neg) / 2 # should be close to 0 since rad_neg is <0
+    # based on where the 15% crossings are
+    idx_pos = np.where(flux_norm[mask_pos] >= 0.15)[0][0]
+    idx_neg = np.where(flux_norm[mask_neg][::-1] >= 0.15)[0][0]
+    rad_pos = radii[mask_pos][idx_pos]
+    rad_neg = radii[mask_neg][::-1][idx_neg]
+     # should be close to 0 since rad_neg is <0
+    offset = (rad_pos + rad_neg) / 2
     radii_centered = radii - offset
 
     # finally, take average of negative and positive radii
@@ -71,7 +74,7 @@ for key in names.keys():
     flux_iter = zip(flux_norm[mask_pos], flux_norm[mask_neg][::-1])
     rad_iter = zip(radii_centered[mask_pos], radii_centered[mask_neg][::-1])
 
-    radii_ave = np.array([np.mean(np.abs(radii)) for radii in rad_iter])
+    radii_ave = np.array([np.mean(np.abs(r)) for r in rad_iter])
     flux_ave = np.array([np.mean(flux) for flux in flux_iter])
     # plot data
     axes[0].plot(
@@ -92,7 +95,7 @@ axes.format(
     grid=True,
     xlabel="Separation (mas)",
     ylabel="Normalized throughput",
-    xlim=(0, 260)
+    xlim=(0, 255)
 )
 
 # save output
