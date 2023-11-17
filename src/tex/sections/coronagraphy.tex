@@ -13,12 +13,19 @@ The VAMPIRES pupil mask wheel currently houses one Lyot stop for rejecting the l
 \startdata
 CLC-2 & 46 & 37 \\
 CLC-3 & 69 & 59 \\
-CLC-5 & 116 & 104 \\
+CLC-5 & 116 & 105 \\
 CLC-7 & 148 & 150 \\
-DGVVC & 7\tablenotemark{*} &  \\
+DGVVC & 7\tablenotemark{*} & 61 \\
 \enddata
-\tablenotetext{*}{The radius of the DGVVC is the radius of the central defect amplitude mask.}
+\tablenotetext{*}{The radius of the DGVVC is the radius of the amplitude mask obscuring the central defect in the phase mask.}
 \end{deluxetable}
+
+\begin{figure}
+    \centering
+    \script{iwa.py}
+    \includegraphics{figures/coronagraph_iwa.pdf}
+    \caption{Normalized off-axis throughput for the various coronagraph masks in VAMPIRES. The throughputs are normalized so the minimum flux is 0 and the maximum flux is 1. The inner working angle (IWA) is marked with vertical dotted lines at the point where the throughput reaches 50\%.\label{fig:iwa}}
+\end{figure}
 
 \subsection{Calibration Speckles}
 
