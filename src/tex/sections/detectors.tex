@@ -33,7 +33,7 @@ Overall, our detectors are some of the most sensitive available commercially tod
     \colhead{(\si{\electron/\second/\pixel})} &
     \colhead{(\si{\decibel})}
 }
-\tablecaption{VAMPIRES detector characteristics. Dynamic range (DR) derived from max signal ($2^{16}$ \si{\adu} $\approx$ \SI{6800}{\electron}) divided by the readout noise.\label{tbl:detectors}}
+\tablecaption{VAMPIRES detector characteristics. The input-referred dynamic range (DR) is derived from max signal ($2^{16}$ \si{\adu} $\approx$ \SI{6800}{\electron}) divided by the readout noise.\label{tbl:detectors}}
 \startdata
 VCAM1 & FAST & 0.103 & 0.40 & \num{3.6e-3} & 85 \\
 VCAM1 & SLOW & 0.105 & 0.25 & \num{3.6e-3} & 90 \\
@@ -61,28 +61,55 @@ VCAM2 & SLOW & 0.105 & 0.22 & \num{3.6e-3} & 90 \\
 
 \subsection{Astrometric Calibration}
 
-The astrometric calibration is used to determine the instrument rotation angle and pixel plate scale. We determine our calibration solution using a culmination of visual binaries (\autoref{tbl:binaries}) and correlate those solutions to the pinhole mask in SCExAO. This way future observers can use the pinhole mask calibration data taken off-sky as an absolute astrometric reference.
+The astrometric calibration is used to determine the instrument rotation angle and pixel plate scale. We determine our calibration solution using visual binaries and correlate those solutions to the pinhole mask in SCExAO. This way future observers can use the pinhole mask calibration data taken off-sky as an absolute astrometric reference. 
 
+For our observations we observed three visual binaries (Albireo, 21 Oph, and Algol), but we only use one set of data due to systematic errors in two of the data sets. During our observations of Albireo there was significant optical vignetting due to a misplaced wheel in the pupil plane and our observations of Algol are very defocused. Thankfully we have multiple nights of data from 21 Oph in all filters, including the multiband mode. We also attempted to use a globular cluster (M5), but the lack of good guide stars for the adaptive optics system made our images too seeing limited and too low S/N for accurate astrometry.
 
-\begin{deluxetable}{cccccl}
+\begin{deluxetable}{ccccl}
 \tablehead{
     \multirow{2}{*}{Object} &
     \colhead{$t_\mathrm{obs}$} &
     \colhead{$\rho$} &
     \colhead{$\theta$} &
-    \colhead{$\Delta m$} &
     \multirow{2}{*}{Ref.} \\
     &
     \colhead{(MJD)} &
-    \colhead{(mas)} &
+    \colhead{($^{\prime\prime}$)} &
     \colhead{(\textdegree)} &
-    \colhead{(V mag)} &
 }
-\tablecaption{Visual binaries used for astrometric calibration. The ephemeris (separation and position angle) are reported for the average observation time of the data.\label{tbl:binaries}}
+\tablecaption{Visual binaries used for astrometric calibration. The ephemeris (separation, $\rho$, and position angle East of North, $\theta$) are reported for the average observation time of the data.\label{tbl:binaries}}
 \startdata
-Albireo (a,c) & 0 & 400 & 0 & 2.30 & \\
-21 Oph & 0 & 400 & 0 & 2.30 & \\
-21 Oph & 0 & 400 & 0 & 2.30 & \\
-Algol (a,c) & 0 & 400 & 0 & 2.30 & \\
+\multirow{2}{*}{21 Oph} & 60132.26 & \num{0.8\pm0.039} & \num{-53.0\pm3.1} & [1] \\
+ & 60135.24 & \num{0.8\pm0.039} & \num{-53.0\pm3.1} & [1] \\
+\enddata
+\tablerefs{[1]: \cite{docobo_new_2007,docobo_iau_2017}}
+\end{deluxetable}
+
+We reduced our images of 21 Oph using typical dark subtraction and derotated the images by their parallactic angle. We then mean-combined the derotated images and calculated the phase auto-correlation, \textit{a la} speckle interferometry, forward-propagating the statistical uncertainties. We used a parabolic fit to the peak in the corellelogram created by the secondary component to determine the relative offset from the primary component. We bootstrap resampled the phase corellelograms \num{100} times to determine the uncertainty in these centroids.
+From there we computed the separation and position angle of the secondary and compared to the ephemerides computed using published orbital elements \citep{docobo_new_2007,docobo_iau_2017}. This gives us the detector plate scale in \si{mas/px} and the parallactic angle offset in degrees, which are shown in \autoref{tbl:astrometry}.
+
+We describe the instrument angle as the pupil rotation of the instrument with respect to the AO188 optical bench, where the image rotator zero point is calibrated. For on-sky observations, this is calculated by
+\begin{equation}
+    \theta_\mathrm{inst} = 180\text{\textdegree} - \theta_\mathrm{PAP} - \theta_\mathrm{off}
+\end{equation}
+where $\theta_\mathrm{PAP}$ is the static image rotator pupil offset of \ang{-39} to align with the SCExAO entrance pupil.
+
+\begin{deluxetable}{cccc}
+\tablehead{
+    \multirow{2}{*}{Cam} &
+    \colhead{px. scale} &
+    \colhead{$\theta_\mathrm{off}$} &
+    \colhead{$\theta_\mathrm{inst}$} \\
+    &
+    \colhead{(mas/px)} &
+    \colhead{(\textdegree)} &
+    \colhead{(\textdegree)}
+}
+\tablecaption{Astrometric characteristics of VAMPIRES from observations of 21 Oph on 2023 \formatdate{7}{7}{2023} and \formatdate{10}{7}{2023}.\label{tbl:astrometry}}
+\startdata
+VCAM1 & \num{6.01\pm0.29} & \num{79.5\pm3.1} & \num{139.5\pm3.1} \\
+VCAM2 & \num{6.02\pm0.29} & \num{80.5\pm3.1} & \num{138.5\pm3.1} \\
 \enddata
 \end{deluxetable}
+
+We separately characterized each camera and the use of the multiband imaging dichroics (MBI), although we did not see significant differences with or without the MBI dichroics. Pinhole mask data were obtained off-sky on the nights of our observations and were dark-subtracted and median-combined. Using the plate scale and parallactic angle offset fit previously we determine the relative spacing and rotation of the pinholes. These results are shown in \autoref{tbl:astrometry}. Our astrometric results are completely dominated by the statistical uncertainty in the binary orbital elements. Further analysis of binaries with high-quality orbital solutions or globular clusters with space-based data (e.g., from Hubble Space Telescope) are required for improved astrometry and are left for future work.
