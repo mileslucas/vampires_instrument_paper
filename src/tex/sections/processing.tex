@@ -1,3 +1,27 @@
 \section{Data Processing}\label{sec:processing}
 
-TODO
+A purpose-built data processing pipeline for VAMPIRES is under development (PI: M. Lucas) which we used for all reductions in this paper. This pipeline is designed to work with either generation of VAMPIRES data, and is publicly available with limited support for observers (pending the first major release)\footnote{\url{https://github.com/scexao-org/vampires_dpp}}. We describe our data processing briefly, below.
+
+First, we sort all the data by their data type and object. Then we prepare the calibration files. For VAMPIRES, we typically use sky background frames for simultaneous dark and sky subtraction, but off-sky dark frames can be used for the detector background signal as well. Depending on the proximity to the moon, the lunar phase, the airmass, and the integration time, there may or may not be any noticeable sky signal. We prepare background frames from either sky or dark frames and median-combine the individual cubes. If flats are available, flat frames will be made by first subtracting the background and then normalizing to a median value of unity. We determine the appropriate background file for each flat automatically with a heuristic that matches instrument state and minimizes the time difference.
+
+For multiband flats we have to apply an additional step because each multiband field requires a different normalization value. We accomplish this with a simple computer-vision algorithm that thresholds the image and detects edges that match the geometry of a rotated rectangle. We automatically determine the threshold by modifying it until it detects the expected number of fields (four for multiband, three for reduced multiband). This metadata is used to both measure and normalize each field, with all pixels outside the fields masked out.
+
+Next we calibrate the raw data optionally performing background subtraction, flat-field correction, and bad-pixel detection and imputation. We also add additional fields to the FITS header and normalize many metadata values to enable the pipeline to work on the different generations of data. If target coordinates and proper motions are provided, e.g., from GAIA \citep{gaia_collaboration_gaia_2016,gaia_collaboration_gaia_2018,gaia_collaboration_gaia_2021}, we calculate the precise proper motion-corrected coordinate and parallactic angle for each file. The calibrated data can be optionally saved, but is not by default to reduce the data volume of large datasets (like high-cadence multiband data, which can easily reach terabyte sizes).
+
+After calibration, we measure a number of statistics and centroids for each frame in each raw data cube. For non-coronagraphic data we use the central star, and for coronagraphic data we use the four astrogrid calibration speckles. We measure the peak value, sum, variance, and photometry in a cutout window around each PSF, which can later be used for analysis or frame-selection (lucky imaging). We also measure centroids using the center-of-mass, the peak index, a two-dimensional Gaussian model fit, and the phase cross-correlation offset compared to a synthetic instrument PSF. All of these statistics for each frame are saved to disk in the NPZ binary format as well as partially in the FITS headers for each file. We found the time spent measuring all of these metrics at once is saved many times over when experimenting with different centroiding algorithms or frame-selection criteria.
+
+We perform lucky imaging with the calibrated data and frame metrics by optionally discarding low-quality frames from each cube before shifting each frame according to the selected centroid metric and combining the frames together, typically using a pixel-by-pixel median. We optionally perform spectrophotometric calibration using synthetic photometry from a stellar model spectrum and published photometry, or from an absolutely-calibrated spectrum. These collapsed frames are saved to disk along with a table of their header values and are the primary data output of the pipeline. We also collect all the frames together and save in a single cube for each camera along with their derotation angles for ADI post-processing.
+
+For polarimetric data we then move onto creating the difference images and correcting for instrumental polarization. To do this we use a heuristic that matches data into appropriate sets for double- or triple-differencing. This allows us to use data that may not have been observed in a complete HWP cycle as long as there is enough complementary data close enough in time. We take these sets and produce individual Stokes cubes from the collapsed data, correcting for the different astrometric solution of each detector. After difference imaging, we optionally perform a Mueller-matrix correction on the Stokes cubes as well as additional instrumental-polarization correction using an aperture or annulus sum where there is no expected polarized signal. The coefficients for the Mueller-matrices can be idealized or can use calibrated values measured in \citet{zhang_characterizing_2023}. Finally, all the individual Stokes cubes are derotated to North up East left and median-combined. We save the resulting Stokes I, Q, U cube along with the radial Stokes parameters $Q_\phi$ and $U_\phi$, 
+\begin{align}
+    Q_\phi &= -Q\cos{\left(2\theta\right)} - U\sin{\left(2\theta\right)} \\
+    U_\phi &= Q\sin{\left(2\theta\right)} - U\cos{\left(2\theta\right)}
+\end{align}
+the degree of linear polarization
+\begin{equation}
+    \mathrm{PI} = \sqrt{Q^2 + U^2}
+\end{equation}
+and the angle of linear polarization
+\begin{equation}
+    \mathrm{AoLP} = \arctan{U / Q}
+\end{equation}

@@ -35,10 +35,10 @@ Overall, our detectors are some of the most sensitive available commercially tod
 }
 \tablecaption{VAMPIRES detector characteristics. The input-referred dynamic range (DR) is derived from max signal ($2^{16}$ \si{\adu} $\approx$ \SI{6800}{\electron}) divided by the readout noise.\label{tbl:detectors}}
 \startdata
-VCAM1 & FAST & 0.103 & 0.40 & \num{3.6e-3} & 85 \\
-VCAM1 & SLOW & 0.105 & 0.25 & \num{3.6e-3} & 90 \\
-VCAM2 & FAST & 0.103 & 0.40 & \num{3.6e-3} & 85 \\
-VCAM2 & SLOW & 0.105 & 0.22 & \num{3.6e-3} & 90 \\
+\multirow{2}{*}{VCAM1} & FAST & 0.103 & 0.40 & \num{3.6e-3} & 85 \\
+ & SLOW & 0.105 & 0.25 & \num{3.6e-3} & 90 \\
+\multirow{2}{*}{VCAM2} & FAST & 0.103 & 0.40 & \num{3.6e-3} & 85 \\
+ & SLOW & 0.105 & 0.22 & \num{3.6e-3} & 90 \\
 \enddata
 \end{deluxetable}
 
@@ -92,7 +92,7 @@ We describe the instrument angle as the pupil rotation of the instrument with re
 \begin{equation}
     \theta_\mathrm{inst} = \theta_\mathrm{off} + 180\text{\textdegree} - \theta_\mathrm{PAP}
 \end{equation}
-where $\theta_\mathrm{PAP}$ is the static image rotator pupil offset of \ang{-39} (to align with the SCExAO entrance pupil). We note a \ang{180} parity compared to the previous astrometric solution for the EM-CCDs \citep{currie_images_2022}, which is due to different readout directions of the detectors when mounted.
+where $\theta_\mathrm{PAP}$ is the static image rotator pupil offset of \ang{-39} (to align with the SCExAO entrance pupil). We note a \ang{180} parity compared to the previous astrometric solution for the EMCCDs \citep{currie_images_2022}.
 
 \begin{deluxetable}{cccc}
 \tablehead{
