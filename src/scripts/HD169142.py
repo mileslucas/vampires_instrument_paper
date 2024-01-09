@@ -37,7 +37,9 @@ Qphi_frames = stokes_cube[:, 3]
 vmin=0
 # vmax=np.nanmax(stokes_cube[:, 3])
 # vmax=np.nanpercentile(Qphi_frames, 99)
-
+bar_width_au = 25
+plx = 8.7053e-3  # "
+bar_width_arc = bar_width_au * plx  # "
 
 side_length = Qphi_frames.shape[-1] * plate_scale * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
@@ -51,14 +53,16 @@ for i in range(4):
     im = ax.imshow(frame, extent=ext, vmin=0)
     # ax.colorbar(im, loc="top")
     ax.text(0.025, 0.9, title, c="white", ha="left", fontsize=10, transform="axes")
-    # if ratio > 1:
-    #     ax.text(-0.45, 0.4, f"{ratio:.0f}x", c="white", ha="right", fontsize=8)
+    rect = patches.Rectangle([-0.5, -0.5], bar_width_arc, 1e-2, color="white")
+    ax.add_patch(rect)
+    ax.text(-0.5 + bar_width_arc/2, -0.45, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=7)
+
 for i in range(4):
     ax = axes[1, i]
     frame = Qphi_frames[i] * rs
     title = titles[i]
     # ratio = np.round(vmax / np.nanmax(frame))
-    vmax=np.nanmax(Qphi_frames[i]) * (0.2)**2
+    vmax=np.nanmax(Qphi_frames[i]) * (0.22)**2
     # vmax=None
     im = ax.imshow(frame, extent=ext, vmin=0, vmax=vmax)
     # ax.colorbar(im, loc="top")
@@ -77,6 +81,7 @@ for ax in axes:
     )
     circ = patches.Circle([0, 0], 109e-3, ec="white", fc="k", lw=1)
     ax.add_patch(circ)
+
 
 
 # fig.colorbar(im, loc="r", label=r"mJy / sq. arcsec")
