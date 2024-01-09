@@ -62,7 +62,7 @@ for i in range(4):
     frame = Qphi_frames[i] * rs
     title = titles[i]
     # ratio = np.round(vmax / np.nanmax(frame))
-    vmax=np.nanmax(Qphi_frames[i]) * (0.22)**2
+    vmax=np.nanmax(Qphi_frames[i]) * (0.2)**2
     # vmax=None
     im = ax.imshow(frame, extent=ext, vmin=0, vmax=vmax)
     # ax.colorbar(im, loc="top")
