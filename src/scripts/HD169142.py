@@ -7,6 +7,9 @@ from matplotlib import patches
 pro.rc["legend.fontsize"] = 7
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["cmap"] = "bone"
+pro.rc["cycle"] = "ggplot"
+pro.rc["axes.grid"] = False
+
 
 
 fig, axes = pro.subplots(
@@ -100,6 +103,33 @@ axes.format(
 #     ax.xaxis.set_major_locator(MaxNLocator(nbins=5, prune='both'))
 # axes[1:].format(xticks=[], yticks=[], ylabel="")
 fig.savefig(
-    paths.figures / f"20230707_HD169142_Qphi_mosaic.pdf",
+    paths.figures / "20230707_HD169142_Qphi_mosaic.pdf",
+    dpi=300,
+)
+
+### FLUX plots
+fig, axes = pro.subplots(nrows=2, width="3.5in", height="3.5in", sharey=0)
+
+sum_mask = rs < 1
+
+pdi_flux_sum = np.nansum(Qphi_frames * sum_mask, axis=(1, 2)) * header["PXAREA"]
+tot_flux_sum = np.nansum(stokes_cube[:, 0] * sum_mask, axis=(1, 2)) * header["PXAREA"]
+
+axes[0].plot([612, 670, 719, 760], pdi_flux_sum, c="C0", marker="o")
+axes[0].format(
+    xlabel="wavelength (nm)",
+    ylabel=r"$Q_\phi$ flux (mJy)",
+    grid=True
+)
+axes[1].plot([612, 670, 719, 760], pdi_flux_sum / tot_flux_sum * 100, c="C0", marker="o")
+axes[1].format(
+    ylabel=r"$Q_\phi/I_{tot}$ flux (%)",
+    # yformatter="",
+    grid=True
+)
+print((pdi_flux_sum / tot_flux_sum * 100).mean())
+axes.format(xlim=(600, 770))
+fig.savefig(
+    paths.figures / "20230707_HD169142_Qphi_flux.pdf",
     dpi=300,
 )
