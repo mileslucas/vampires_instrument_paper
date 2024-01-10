@@ -4,26 +4,38 @@ The VAMPIRES upgrades were tested on-sky from June to August 2023, some results 
 
 \subsection{HD 169142\label{sec:hd169142}}
 
-We observed the young star HD 169142, which is a known protoplanetary disk host, on \formatdate{7}{7}{2023}. We used the multiband imaging mode without the FLC (slow polarimetry mode) with the \SI{105}{\mas} Lyot coronagraph for XX hours, resulting in XX minutes of data- roughly a YY\% observing efficiency. We reduced this data as described in \autoref{sec:processing} with background subtraction and double-difference polarimetric reduction with an idealized Mueller-matrix correction. We used an annulus from \ang{;;0.24} to \ang{;;0.33} for removing residual instrumental polarization since this matches the expected region of the cavity of the disk. The $Q_\phi$ frames from each filter as well as the wavelength-collapsed frame are shown in TODO. We note that using an idealized Mueller matrix is not optimal, but future analysis will be done when the polarization characteristics for the upgraded instrument are fit.
+We observed the young star \textit{HD 169142}, which is a known protoplanetary disk host, on \formatdate{7}{7}{2023}. We used the multiband imaging mode without the FLC (slow polarimetry mode) with the \SI{105}{\mas} Lyot coronagraph for \SI{55}{minutes}, resulting in \SI{47}{minutes} of data- roughly an \SI{85}{\%} observing efficiency. We reduced this data as described in \autoref{sec:processing} with background subtraction and double-difference polarimetric reduction with an idealized Mueller-matrix correction. We used an annulus from \ang{;;0.24} to \ang{;;0.33} for removing residual instrumental polarization since this matches the expected region of the cavity of the disk \citep{bertrang_hd_2018}. We note that using an idealized Mueller matrix is not optimal, but future analysis will be done when the upgraded instrument polarization calibration is completed.
+
+The $Q_\phi$ frames from each filter, which we use to represent the polarized intensity, are shown in \autoref{fig:hd169142_mosaic}. The inner disk is visible at all wavelengths. We also show a version scaled by the squared stellocentric distance to normalize the stellar irradiation. The scaled version shows the large disk gap and the inner rim of the outer disk. We note that compared to images from \cite{bertrang_hd_2018} we have worse S/N and do not fully resolve the outer disk. However, our observations have smaller spectral bandwidth per image and use a fraction of the detector integration time (\SI{1}{s} versus \SIrange{6}{10}{s}). Future observations with longer detector integration times are needed to resolve the full disk structure.
 
 \begin{figure*}[t]
     \centering
     \script{HD169142.py}
     \includegraphics[width=\textwidth]{figures/20230707_HD169142_Qphi_mosaic.pdf}
-    \caption{\formatdate{7}{7}{2023} VAMPIRES observations of HD 169142 in multiband imaging mode. Each column represents one multiband filter. The top row is the Stokes $Q_\phi$ image in linear scale (different scale for each filter). The bottom row is  Stokes $Q_\phi\times r^2$, where $r$ is the stellocentric distance, to normalize the stellar irradiation (different scale for each filter).\label{fig:hd169142_mosaic}}
+    \caption{\formatdate{7}{7}{2023} VAMPIRES observations of \textit{HD 169142} in multiband imaging mode. Each column represents one multiband filter. The top row is the Stokes $Q_\phi$ image in linear scale (different scale for each filter). The bottom row is  Stokes $Q_\phi\times r^2$, where $r$ is the stellocentric distance to normalize the stellar irradiation (different scale for each filter). All data are rotated so that North is up and East is to the left.\label{fig:hd169142_mosaic}}
 \end{figure*}
 
-We take each $Q_\phi$ frame and integrate the flux out to \ang{;;1} and compare to the same flux value measured in the Stokes I frame. The relative fluxes for each filter are shown in TODO. The integrated partial-polarization of the disk roughly matches the expectations given similar measurements from TODO and TODO. These measurements give us color information about the scattering properties of the dust which can only be achieved in broadband filters over multiple observations, but we achieve in a single observing sequence thanks to the multiband imaging technique.
+We take each $Q_\phi$ frame and integrate the flux out to \ang{;;1} and compare to the same flux value measured in the Stokes I frame. The relative fluxes for each filter are shown in \autoref{fig:hd169142_flux}. The mean integrated partial-polarization of the disk, \SI{0.6}{\%}, roughly matches the expectations given similar measurements from TODO and TODO. 
 
 \begin{figure}
     \centering
     \script{HD169142.py}
     \includegraphics[width=\columnwidth]{figures/20230707_HD169142_Qphi_flux.pdf}
-    \caption{\formatdate{7}{7}{2023} VAMPIRES HD 169142 Integrated polarized flux (taken from $Q_\phi$ frame) and fractional polarized flux.\label{fig:hd169142_flux}}
+    \caption{\formatdate{7}{7}{2023} VAMPIRES \textit{HD 169142} Integrated polarized flux (taken from $Q_\phi$ frame) and fractional polarized flux.\label{fig:hd169142_flux}}
 \end{figure}
 
-In future work we plan to model and fit geometric disk profiles to analyze the scattering geometry of this disk, allowing a measurement of the scattering phase function of the dust at multiple wavelengths. This will enable estimation of disk scattering properties like the SLDKFJSLDKFJLSDKFJSLDKJFS.
+In future work we plan to model and fit geometric disk profiles to analyze the scattering geometry of this disk, allowing a measurement of the scattering phase function of the dust at multiple wavelengths. These measurements give us color information about the scattering properties of the dust which normally requires multiple observations for each filter, but we obtain them in a one observing sequence by using the multiband imaging technique.
 
 \subsection{R Aqr\label{sec:raqr}}
 
+We performed narrowband H$\alpha$ observations of the Mira variable \textit{R Aqr} on \formatdate{27}{6}{2023} with VAMPIRES. We decided to slightly increase our observing efficiency by not switching the differential filters between each camera- we were not concerned with non-common path aberrations for this short demonstration sequence.
+
+For each camera (and therefore each narrowband filter) we reduced the data following \autoref{sec:processing} with dark subtraction and phase cross-correlation centroiding. We derotate all images to North up East left before coadding with a pixel-by-pixel median. The collapsed images are shown in \autoref{fig:raqr}.
+
+\begin{figure}
+    \centering
+    \script{RAqr.py}
+    \includegraphics[width=\columnwidth]{figures/20230707_RAqr_Halpha.pdf}
+    \caption{\formatdate{28}{6}{2023} VAMPIRES \textit{R Aqr} Reduced images. (left) The H$\alpha$ filter image with arcsinh stretch showing the emission nebula. (right, top) The H$\alpha$ image showing the giant star and a bright emission clump. (right, bottom) The H$\alpha$-continuum image which only contains emission from the giant star.\label{fig:raqr}}
+\end{figure}
 \subsection{Neptune\label{sec:neptune}}
