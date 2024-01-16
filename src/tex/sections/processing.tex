@@ -14,9 +14,9 @@ We perform lucky imaging with the calibrated data and frame metrics by optionall
 
 For polarimetric data we then move onto creating the difference images and correcting for instrumental polarization. To do this we use a heuristic that matches data into appropriate sets for double- or triple-differencing. This allows us to use data that may not have been observed in a complete HWP cycle as long as there is enough complementary data close enough in time. We take these sets and produce individual Stokes cubes from the collapsed data, correcting for the different astrometric solution of each detector. After difference imaging, we optionally perform a Mueller-matrix correction on the Stokes cubes as well as additional instrumental-polarization correction using an aperture or annulus sum where there is no expected polarized signal. The coefficients for the Mueller-matrices can be idealized or can use calibrated values measured in \citet{zhang_characterizing_2023}. Finally, all the individual Stokes cubes are derotated to North up East left and median-combined. We save the resulting Stokes I, Q, U cube along with the radial Stokes parameters $Q_\phi$ and $U_\phi$ \citep{monnier_polarized_2019}, 
 \begin{align}
+    \label{eqn:radial_stokes}
     Q_\phi &= -Q\cos{\left(2\theta\right)} - U\sin{\left(2\theta\right)} \\
     U_\phi &= Q\sin{\left(2\theta\right)} - U\cos{\left(2\theta\right)}
-    \ref{eqn:radial_stokes}
 \end{align}
 the degree of linear polarization
 \begin{equation}
