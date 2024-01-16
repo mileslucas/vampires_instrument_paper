@@ -3,6 +3,7 @@ import proplot as pro
 import numpy as np
 from astropy.io import fits
 from matplotlib import patches
+from matplotlib.ticker import MaxNLocator
 
 pro.rc["legend.fontsize"] = 7
 pro.rc["legend.title_fontsize"] = 8
@@ -17,7 +18,7 @@ fig, axes = pro.subplots(
     nrows=2,
     width="7in",
     # height="2.5in",
-    space=0
+    space=0, hspace=0.25, sharey=1, sharex=1
 )
 
 stokes_path = paths.data / "20230707_HD169142_vampires_stokes_cube.fits"
@@ -70,6 +71,8 @@ for i in range(4):
     im = ax.imshow(frame, extent=ext, vmin=0, vmax=vmax)
     # ax.colorbar(im, loc="top")
 
+
+
 # coronagraph mask
 for ax in axes:
     ax.scatter(
@@ -86,9 +89,6 @@ for ax in axes:
     ax.add_patch(circ)
 
 
-
-# fig.colorbar(im, loc="r", label=r"mJy / sq. arcsec")
-
 ## sup title
 axes.format(
     xlim=(0.6, -0.6),
@@ -99,9 +99,14 @@ axes.format(
     xlabel='$\Delta$RA (")',
     ylabel='$\Delta$DEC (")',
 )
-# for ax in axes:
-#     ax.xaxis.set_major_locator(MaxNLocator(nbins=5, prune='both'))
-# axes[1:].format(xticks=[], yticks=[], ylabel="")
+
+for ax in axes:
+    ax.xaxis.set_major_locator(MaxNLocator(nbins=3, prune='both'))
+    ax.yaxis.set_major_locator(MaxNLocator(nbins=5, prune='both'))
+
+axes[:, 1:].format(yticks=[])
+axes[0, :].format(xticks=[])
+
 fig.savefig(
     paths.figures / "20230707_HD169142_Qphi_mosaic.pdf",
     dpi=300,
@@ -124,9 +129,9 @@ axes[0].format(
 axes[1].plot([612, 670, 719, 760], pdi_flux_sum / tot_flux_sum * 100, c="C0", marker="o")
 axes[1].format(
     ylabel=r"$Q_\phi/I_{tot}$ flux (%)",
-    # yformatter="",
     grid=True
 )
+
 print((pdi_flux_sum / tot_flux_sum * 100).mean())
 axes.format(xlim=(600, 770))
 fig.savefig(
