@@ -64,17 +64,17 @@ fig, axes = pro.subplots(ncols=2, space=0, width="3.5in")
 
 vmax=max(np.nanmax(halpha_frame), np.nanmax(hacont_frame))
 im = axes[0].imshow(halpha_frame, extent=ext, norm=simple_norm(halpha_frame, stretch="linear"), vmin=0, vmax=vmax)
-axes[0].text(0.97, 0.92, r"Halpha", transform="axes", c="white", ha="right", fontsize=8)
+axes[0].text(0.95, 0.9, r"Halpha", transform="axes", c="white", ha="right", fontsize=9)
 im = axes[1].imshow(hacont_frame, extent=ext, norm=simple_norm(hacont_frame, stretch="linear"), vmin=0, vmax=vmax)
-axes[1].text(0.97, 0.92, r"Ha-Cont", transform="axes", c="white", ha="right", fontsize=8)
+axes[1].text(0.95, 0.9, r"Ha-Cont", transform="axes", c="white", ha="right", fontsize=9)
 
-bar_width_au = 10
+bar_width_au = 20
 bar_width_arc = bar_width_au * plx # "
 
 for ax in axes:
-    rect = patches.Rectangle([-0.1, -0.1], bar_width_arc, 3e-3, color="white")
+    rect = patches.Rectangle([-0.11, -0.11], bar_width_arc, 3e-3, color="white")
     ax.add_patch(rect)
-    ax.text(-0.1 + bar_width_arc/2, -0.09, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=7)
+    ax.text(-0.11 + bar_width_arc/2, -0.1, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=8)
 
 # fig.colorbar(im, loc="r", label=r"mJy / sq. arcsec")
 
