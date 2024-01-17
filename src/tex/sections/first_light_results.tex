@@ -59,7 +59,7 @@ We calculate an alternative set of radial Stokes parameters, $Q_r$ and $U_r$, fo
     Q_r &= Q\cos{\left(2\theta\right)} + U\sin{\left(2\theta\right)} \\
     U_r &= -Q\sin{\left(2\theta\right)} + U\cos{\left(2\theta\right)}
 \end{align}
-For an optically thick planetary atmosphere like Neptune's, the most probable alignment of the electric field is radially (as opposed to azimuthally for \autoref{eqn:radial_stokes}), which makes $Q_r$ approximately equal to the polarized intensity. We expect $U_r$ to be minimized, at least to first order, and we attempt to correct residual polarization errors in our data by offsetting the angle, $\theta$, for the radial Stokes parameters in each filter. The required angle offset for each filter was \ang{21.3}, \and{5.6}, \ang{0.3}, and \ang{1.0}, respectively.
+For an optically thick planetary atmosphere like Neptune's, the most probable alignment of the electric field is radially (as opposed to azimuthally for \autoref{eqn:radial_stokes}), which makes $Q_r$ approximately equal to the polarized intensity. We expect $U_r$ to be minimized, at least to first order, and we attempt to correct residual polarization errors in our data by offsetting the angle, $\theta$, for the radial Stokes parameters in each filter. The required angle offset for each filter was \ang{21.3}, \ang{5.6}, \ang{0.3}, and \ang{1.0}, respectively.
 
 We show the corrected radial Stokes $Q_r$ frames and Stokes $I$ frames in \autoref{fig:neptune_mosaic}. We see clear limb polarization in all filters with little polarization in the center of the image and the maximum polarization at the edge. We see roughly equal polarization along the whole limb (as opposed to concentration at the poles or equator). We plot radial profiles of the $Q_r$, $I$, and $Q_r/I$ for each filter in \autoref{fig:neptune_flux}. The total intensity frames show some signs of a polar cloud along with some mild banding structures, especially in the F720 frame (disregarding any flat-field errors).
 
@@ -73,6 +73,6 @@ We show the corrected radial Stokes $Q_r$ frames and Stokes $I$ frames in \autor
 \begin{figure}[t]
     \centering
     \script{neptune.py}
-    \includegraphics[width=\textwidth]{figures/20230711_Neptune_flux.pdf}
+    \includegraphics[width=\columnwidth]{figures/20230711_Neptune_flux.pdf}
     \caption{\label{fig:neptune_flux}}
 \end{figure}
