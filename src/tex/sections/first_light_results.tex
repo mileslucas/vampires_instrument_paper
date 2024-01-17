@@ -48,11 +48,25 @@ For each camera (and therefore each narrowband filter) we reduced the data follo
 
 \subsection{Neptune\label{sec:neptune}}
 
-We observed gas giant \textit{Neptune} on \formatdate{11}{7}{2023} in the multiband imaging mode to test VAMPIRES capabilities for planetary astromony. \textit{Neptune} was a good target due to its angular diameter being within the VAMPIRES FOV ($<$\ang{;;3}) and without being too faint. The adaptive optics systems during this observation were not able to correct for wavefront errors with the typical performance due to the lack of a point-source guide star- rather using the extended planet itself as a guide star. In addition, this data requires slight modifications in the post-processing to address the unique features of a planetary image.
+We observed gas giant \textit{Neptune} on \formatdate{11}{7}{2023} in the multiband imaging mode to test VAMPIRES capabilities for planetary astromony. \textit{Neptune} was a good target due to its angular diameter being within the VAMPIRES FOV ($<$\ang{;;3}) and without being too faint. The adaptive optics systems during this observation were not able to correct for wavefront errors with the typical performance due to the lack of a point-source guide star- rather using the extended planet itself as a guide star. In addition, this data requires slight modifications in the post-processing to address the unique features of a planetary image. The adopted planetary information for these observations is shown in \autoref{tbl:neptune}
+
+\begin{deluxetable}{cl}
+\tablehead{
+    \colhead{Parameter} &
+    \colhead{Value}
+}
+\tablecaption{Planetary parameters for Neptune adopted in this study from JPL horizons.\label{tbl:neptune}}
+\startdata
+Apparent diameter & \ang{;;2.313102} \\
+North pole angle & \ang{318.0816} \\
+\enddata
+\tablereferences{\url{https://ssd.jpl.nasa.gov/horizons/}}
+\end{deluxetable}
+
 
 For processing, we attempted flat-field correction with some success. Multiband observations are uniquely difficult to flat field, because a single detector image has four images at different wavelengths, and therefore different intensities when illuminated with a calibration laser or flat lamp. We developed a simple computer-vision algorithm to fit rotated rectangles to each flat-field and normalizes each field with a local value. Unfortunately, in this data there was a bug in the data acquisition software which truncated all data to 15-bit unsigned integers, artificially saturating readout values greater than $2^{15}$. This has been fixed, but our calibration flats for the F720 filter from this epoch all suffer from this truncation leading to flat-field errors (as can be seen in \autoref{fig:neptune_mosaic}). We also discovered some imperfect flat-field correction of some dust features in other fields, likely due to small differences in the optical alignment of the glass fieldstop.
 
-We did not attempt to centroid this data, instead we registered each frame using the field positions fit during our flat-field procedure. Future work would benefit from more precise centroiding, perhaps using a radon transform to fit the disk position for each image. We use calibration factors from \autoref{tbl:filters} and the detector gain and exposure time to convert data from \si{adu} into units of \si{mJy/arcsec^2}. Similar to \autoref{sec:hd169142} we perform double-difference polarimetric reduction with an idealized Mueller-matrix correction. \citet{schmid_limb_2006} notes that the disk integrated $Q/I$ and $U/I$ frames for Neptune are effectively zero within systematic errors due to its radially-symmetric limb polarization, so we used an aperture the size of the planet ($R_p=$\ang{;;1.13}; \citet{schmid_limb_2006}) for instrument polarization measurement and correction. We derotate all Stokes images to north up and east left before combining with a pixel-by-pixel median. We noticed in this data that the Stokes Q and U frames do not perfectly align with the expected \ang{45} and \ang{0} nulls, respectively- especially at shorter wavelengths (F620, F670). We assume this is due to imperfect modeling of the instrumental polarization effects in the Mueller-matrix model, which is left to future work., Interestingly, we do not see this same effect for the disk observations of \autoref{sec:hd169142}.
+We did not attempt to centroid this data, instead we registered each frame using the field positions fit during our flat-field procedure. Future work would benefit from more precise centroiding, perhaps using a radon transform to fit the disk position for each image. We use calibration factors from \autoref{tbl:filters} and the detector gain and exposure time to convert data from \si{adu} into units of \si{Jy/arcsec^2}. Similar to \autoref{sec:hd169142} we perform double-difference polarimetric reduction with an idealized Mueller-matrix correction. \citet{schmid_limb_2006} notes that the disk integrated $Q/I$ and $U/I$ frames for Neptune are effectively zero within systematic errors due to its radially-symmetric limb polarization, so we used an aperture the size of the planet for instrument polarization measurement and correction. We derotate all Stokes images to north up and east left before combining with a pixel-by-pixel median. We noticed in this data that the Stokes Q and U frames do not perfectly align with the expected \ang{45} and \ang{0} nulls, respectively- especially at shorter wavelengths (F620, F670). We assume this is due to imperfect modeling of the instrumental polarization effects in the Mueller-matrix model, which is left to future work., Interestingly, we do not see this same effect for the disk observations of \autoref{sec:hd169142}.
 
 We calculate an alternative set of radial Stokes parameters, $Q_r$ and $U_r$, following \citet{schmid_limb_2006},
 \begin{align}
@@ -67,12 +81,12 @@ We show the corrected radial Stokes $Q_r$ frames and Stokes $I$ frames in \autor
     \centering
     \script{neptune.py}
     \includegraphics[width=\textwidth]{figures/20230711_Neptune_mosaic.pdf}
-    \caption{\formatdate{11}{7}{2023} VAMPIRES observations of \textit{Neptune} in multiband imaging mode. Each column represents one multiband filter. The top row is the Stokes $Q_r$ image in linear scale (different scale for each filter). The bottom row is Stokes $I$ (different scale for each filter). Note there are spurious features in the total intensity images due to flat-field errors (dust on optics). All data are rotated so that north is up and east is to the left.\label{fig:neptune_mosaic}}
+    \caption{\formatdate{11}{7}{2023} VAMPIRES observations of \textit{Neptune} in multiband imaging mode. Each column represents one multiband filter. All data are rotated so that north is up and east is to the left. The top row is the Stokes $Q_r$ image in linear scale (different scale for each filter). The bottom row is Stokes $I$ (different scale for each filter). The apparent diameter of the disk is shown with a dashed circle and the north polar axis is designated with an arrow (based on JPL horizons ephemerides). Note there are spurious features in the total intensity images due to flat-field errors (dust, etc.). \label{fig:neptune_mosaic}}
 \end{figure*}
 
 \begin{figure}[t]
     \centering
     \script{neptune.py}
     \includegraphics[width=\columnwidth]{figures/20230711_Neptune_flux.pdf}
-    \caption{\label{fig:neptune_flux}}
+    \caption{Radial profiles of polarimetric observations of Neptune. All profiles use apertures 10 pixels wide. (top) total intensity. (middle) radial stokes intensity. (bottom) the flux-weighted, \label{fig:neptune_flux}}
 \end{figure}
