@@ -8,10 +8,9 @@ from matplotlib.ticker import MaxNLocator
 pro.rc["legend.fontsize"] = 7
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["cmap"] = "bone"
+pro.rc["image.origin"] = "lower"
 pro.rc["cycle"] = "ggplot"
 pro.rc["axes.grid"] = False
-
-
 
 fig, axes = pro.subplots(
     ncols=4,
@@ -96,8 +95,8 @@ axes.format(
     # suptitle=f"2023/07/07 VAMPIRES HD 169142"
 )
 axes.format(
-    xlabel='$\Delta$RA (")',
-    ylabel='$\Delta$DEC (")',
+    xlabel=r'$\Delta$RA (")',
+    ylabel=r'$\Delta$DEC (")',
 )
 
 for ax in axes:

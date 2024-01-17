@@ -7,10 +7,9 @@ from astropy.visualization import simple_norm
 
 pro.rc["legend.fontsize"] = 7
 pro.rc["legend.title_fontsize"] = 8
+pro.rc["image.origin"] = "lower"
 pro.rc["cmap"] = "matter_r"
 pro.rc["axes.grid"] = False
-# pro.rc["cycle"] = "ggplot"
-
 
 fig, axes = pro.subplots(
     width="3.5in",
@@ -18,8 +17,6 @@ fig, axes = pro.subplots(
 
 halpha_frame, header = fits.getdata(paths.data / "20230707_RAqr_Halpha.fits", header=True)
 hacont_frame = fits.getdata(paths.data / "20230707_RAqr_Ha-cont.fits")
-halpha_frame = np.flipud(halpha_frame) 
-hacont_frame = np.flipud(hacont_frame) 
 halpha_frame = halpha_frame / header["EXPTIME"] * header["GAIN"] * 3.6e-5
 hacont_frame = hacont_frame / header["EXPTIME"] * header["GAIN"] * 1.6e-5
 plate_scale = header["PXSCALE"] # mas / px
@@ -51,8 +48,8 @@ axes.format(
     # suptitle=f"2023/07/07 VAMPIRES HD 169142"
 )
 axes.format(
-    xlabel='$\Delta$RA (")',
-    ylabel='$\Delta$DEC (")',
+    xlabel=r'$\Delta$RA (")',
+    ylabel=r'$\Delta$DEC (")',
 )
 # for ax in axes:
 #     ax.xaxis.set_major_locator(MaxNLocator(nbins=5, prune='both'))
@@ -67,11 +64,17 @@ fig, axes = pro.subplots(ncols=2, space=0, width="3.5in")
 
 vmax=max(np.nanmax(halpha_frame), np.nanmax(hacont_frame))
 im = axes[0].imshow(halpha_frame, extent=ext, norm=simple_norm(halpha_frame, stretch="linear"), vmin=0, vmax=vmax)
-axes[0].text(0.05, 0.05, r"Halpha", transform="axes", c="white", fontsize=9)
+axes[0].text(0.97, 0.92, r"Halpha", transform="axes", c="white", ha="right", fontsize=8)
 im = axes[1].imshow(hacont_frame, extent=ext, norm=simple_norm(hacont_frame, stretch="linear"), vmin=0, vmax=vmax)
-axes[1].text(0.05, 0.05, r"Ha-Cont", transform="axes", c="white", fontsize=9)
+axes[1].text(0.97, 0.92, r"Ha-Cont", transform="axes", c="white", ha="right", fontsize=8)
 
+bar_width_au = 10
+bar_width_arc = bar_width_au * plx # "
 
+for ax in axes:
+    rect = patches.Rectangle([-0.1, -0.1], bar_width_arc, 3e-3, color="white")
+    ax.add_patch(rect)
+    ax.text(-0.1 + bar_width_arc/2, -0.09, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=7)
 
 # fig.colorbar(im, loc="r", label=r"mJy / sq. arcsec")
 
@@ -82,8 +85,8 @@ axes.format(
     # suptitle=f"2023/07/07 VAMPIRES HD 169142"
 )
 axes.format(
-    xlabel='$\Delta$RA (")',
-    ylabel='$\Delta$DEC (")',
+    xticks=[],
+    yticks=[]
 )
 # for ax in axes:
 #     ax.xaxis.set_major_locator(MaxNLocator(nbins=5, prune='both'))

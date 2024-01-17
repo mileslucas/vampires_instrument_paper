@@ -3,16 +3,23 @@ import proplot as pro
 from astropy.io import fits
 import numpy as np
 from matplotlib.ticker import MaxNLocator
+from matplotlib import patches
 from photutils.profiles import RadialProfile
 from scipy.optimize import minimize_scalar
 
 pro.rc["cycle"] = "ggplot"
+pro.rc["image.origin"] = "lower"
 pro.rc["legend.fontsize"] = 6
 
 with fits.open(paths.data / "20230711_Neptune_stokes_cube.fits") as hdul:
     stokes_cube = hdul[0].data
     header = hdul[0].header
     stokes_err = hdul["ERR"].data
+
+## data from JPL horizons
+planet_diam = 2.313102 # arcsecond
+np_ang = 318.0816 # deg, not quite certain of origin but gonna try PA=360-np_ang
+surf_bright = 9.286 # mag / sq. arcsecond
 
 
 ny = stokes_cube.shape[-2]
@@ -49,7 +56,7 @@ side_length = stokes_cube.shape[-1] * plate_scale * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
 
 ## Plot and save
-Jy_fact = np.array((1.4e-6, 7e-7, 4.9e-7, 1.2e-6)) / header["PXAREA"] * 2 * 1e3 # mJy / sq.arcsec / (e-/s)
+Jy_fact = np.array((1.4e-6, 7e-7, 4.9e-7, 1.2e-6)) / header["PXAREA"] * 2 # Jy / sq.arcsec / (e-/s)
 calib_data = stokes_cube * Jy_fact[:, None, None, None]
 Qr_frames = calib_data[:, 3]
 I_frames = calib_data[:, 0]
@@ -69,18 +76,28 @@ for ax, frame, title in zip(axes[0, :], Qr_frames, titles):
     ax.text(0.025, 0.9, title, c="white", ha="left", fontsize=10, transform="axes")
 
 
+arrow_pa = np.deg2rad(360 - np_ang)
+arrow_r = planet_diam / 2 + 0.1
+arrow_x = arrow_r * np.sin(arrow_pa)
+arrow_y = arrow_r * np.cos(arrow_pa)
+
+
 # Intensity images
 for ax, frame in zip(axes[1, :], I_frames):
     im = ax.imshow(frame, extent=ext, cmap="matter_r", vmin=0)
 
+    circ = patches.Circle((0, 0), planet_diam/2, fill=False, ec="w", ls=":", lw=0.5)
+    ax.add_patch(circ)
+
+    ax.arrow(arrow_x, arrow_y, 0.15 * np.sin(arrow_pa), 0.15 * np.cos(arrow_pa), width=0.01, head_width=0.05, color="w", overhang=0.2, lw=0.1, length_includes_head=True)
 
 ## sup title
 axes.format(
     grid=False,
     xlim=(1.3, -1.3),
     ylim=(-1.3, 1.3),
-    xlabel='$\Delta$RA (")',
-    ylabel='$\Delta$DEC (")',
+    xlabel=r'$\Delta$RA (")',
+    ylabel=r'$\Delta$DEC (")',
     facecolor="k"
 )
 for ax in axes:
@@ -97,7 +114,7 @@ fig.savefig(
 
 
 ### FLUX plots
-fig, axes = pro.subplots(nrows=3, width="3.5in", height="4in", sharey=0, hspace=0)
+fig, axes = pro.subplots(nrows=3, width="3.5in", height="4.5in", sharey=0, hspace=0)
 cycle = pro.Colormap("fire")(np.linspace(0.4, 0.9, 4))
 
 ny = Qr_frames.shape[-2]
@@ -108,27 +125,26 @@ pxscale = header["PXSCALE"] / 1e3
 fwhm = 10
 radii = np.arange(0, 1.5 / pxscale, fwhm)
 for i in range(4):
-    Qr_prof = RadialProfile(Qr_frames[i] * header["PXAREA"], (center[1], center[0]), radii, error=Qr_err[i] * header["PXAREA"])
-    I_prof = RadialProfile(I_frames[i] * header["PXAREA"], (center[1], center[0]), radii, error=I_err[i] * header["PXAREA"])
+    Qr_prof = RadialProfile(Qr_frames[i], (center[1], center[0]), radii, error=Qr_err[i])
+    I_prof = RadialProfile(I_frames[i], (center[1], center[0]), radii, error=I_err[i])
 
     common = dict(ms=3, c=cycle[i], zorder=100+i)
     axes[0].plot(I_prof.radius * pxscale, I_prof.profile, m="o", label=titles[i], **common)
-    axes[1].plot(Qr_prof.radius * pxscale, Qr_prof.profile, m="s", **common)
+    axes[1].plot(Qr_prof.radius * pxscale, Qr_prof.profile * 1e3, m="s", **common)
     axes[2].plot(Qr_prof.radius * pxscale, Qr_prof.profile / I_prof.profile * 100, m="v", **common)
 
-
-[ax.axvline(1.12, color="0.3", ls="--", lw=1) for ax in axes]
-axes[2].text(0.8, 0.1, r"$R_{planet}$", transform="axes", color="0.3", fontsize=7, fontweight="bold", ha="left")
+[ax.axvline(planet_diam / 2, color="0.3", ls="--", lw=1) for ax in axes]
+axes[2].text(0.82, 0.1, r"$R_{planet}$", transform="axes", color="0.3", fontsize=7, fontweight="bold", ha="left")
 axes[0].legend(loc="ur", ncols=1)
 axes.format(
     xlabel="radius (\")",
     grid=True,
 )
 axes[0].format(
-    ylabel=r"$I$ flux (mJy)"
+    ylabel=r"$I$ flux (Jy / arcsec$^2$)"
 )
 axes[1].format(
-    ylabel=r"$Q_r$ flux (mJy)"
+    ylabel=r"$Q_r$ flux (mJy / arcsec$^2$)"
 )
 axes[2].format(
     ylabel=r"$Q_r/I$ flux (%)"

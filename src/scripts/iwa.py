@@ -93,8 +93,8 @@ for key in names.keys():
 axes.legend(ncols=1, title="Mask (IWA)")
 axes.format(
     grid=True,
-    xlabel="Separation (mas)",
-    ylabel="Normalized throughput",
+    xlabel="separation (mas)",
+    ylabel="normalized throughput",
     xlim=(0, 255)
 )
 

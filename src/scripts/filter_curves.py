@@ -92,7 +92,7 @@ for i, filt in enumerate(VAMPIRES_NB_FILTERS):
         space=space,
         # plot_ave=False,
     )
-axes[2:].format(ylim=(-0.02, 1.15), xlabel=r"$\lambda$ (nm)")
+axes[2:].format(ylim=(-0.02, 1.15), xlabel="wavelength (nm)")
 axes[2].format(xlim=(644, 660), title=r"H$\alpha$", titleloc="uc")
 axes[3].format(xlim=(668, 686), title=r"SII", titleloc="uc")
 axes[:2].format(xlim=(575, 780))

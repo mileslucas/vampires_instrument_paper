@@ -154,7 +154,7 @@ for i, texp in enumerate((0.1, 100)):
 
 axes.format(
     xlabel="photons / pixel / frame",
-    ylabel="Relative S/N",
+    ylabel="relative S/N",
     xscale="log",
     xformatter="log",
 )
