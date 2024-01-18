@@ -70,6 +70,7 @@ for i in range(4):
     im = ax.imshow(frame, extent=ext, vmin=0, vmax=vmax)
     # ax.colorbar(im, loc="top")
 
+axes[:, -1].format(rightlabels=(r"Stokes $Q_\phi$", r"Stokes $Q_\phi \times r^2$"), rightlabelpad=2, rightlabels_kw=dict(rotation=-90))
 
 
 # coronagraph mask

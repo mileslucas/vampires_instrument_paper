@@ -74,23 +74,25 @@ ext = (side_length, -side_length, -side_length, side_length)
 for ax, frame, title in zip(axes[0, :], Qr_frames, titles):
     im = ax.imshow(frame, extent=ext, cmap="bone", vmin=0, vmax=np.nanpercentile(frame, 99.5))
 
-    ax.text(0.025, 0.9, title, c="white", ha="left", fontsize=9, transform="axes")
+    ax.text(0.025, 0.9, title, c="white", ha="left", fontsize=8, transform="axes")
 
+axes[:, -1].format(rightlabels=(r"Stokes $Q_r$", r"Stokes $I$"), rightlabelpad=2,  rightlabels_kw=dict(rotation=-90))
 
 arrow_pa = np.deg2rad(np_ang - 90)
-arrow_r = planet_diam / 2 + 0.1
-arrow_x = -arrow_r * np.sin(arrow_pa)
-arrow_y = arrow_r * np.cos(arrow_pa)
+arrow_x = np_dist * np.sin(arrow_pa)
+arrow_y = -np_dist * np.cos(arrow_pa)
+arrow_length = 0.3
 
 
 # Intensity images
 for ax, frame in zip(axes[1, :], I_frames):
     im = ax.imshow(frame, extent=ext, cmap="matter_r", vmin=0)
 
-    circ = patches.Circle((0, 0), planet_diam/2, fill=False, ec="w", ls="--", lw=1)
+for ax in axes:
+    circ = patches.Circle((0, 0), planet_diam/2, fill=False, ec="w", lw=0.5)
     ax.add_patch(circ)
 
-    ax.arrow(arrow_x, arrow_y, -0.15 * np.sin(arrow_pa), 0.15 * np.cos(arrow_pa), width=0.01, head_width=0.05, color="w", overhang=0.2, lw=0.1, length_includes_head=True)
+    ax.arrow(arrow_x, arrow_y, -arrow_length * np.sin(arrow_pa), arrow_length * np.cos(arrow_pa), width=0.01, head_width=0, color="w", overhang=0.2, lw=0.1, length_includes_head=True)
 
 ## sup title
 axes.format(
