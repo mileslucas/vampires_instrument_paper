@@ -18,7 +18,8 @@ with fits.open(paths.data / "20230711_Neptune_stokes_cube.fits") as hdul:
 
 ## data from JPL horizons
 planet_diam = 2.313102 # arcsecond
-np_ang = 318.0816 # deg, not quite certain of origin but gonna try PA=360-np_ang
+np_ang = 318.0816 # deg E of N
+np_dist = -1.058 # arcsec
 surf_bright = 9.286 # mag / sq. arcsecond
 
 
@@ -27,6 +28,7 @@ nx = stokes_cube.shape[-1]
 center = (ny - 1) / 2, (nx - 1) / 2
 Ys, Xs = np.ogrid[: stokes_cube.shape[-2], : stokes_cube.shape[-1]]
 angles = np.arctan2(center[-1] - Xs, Ys - center[-2])
+titles = ("F610", "F670", "F720", "F760")
 
 def radial_stokes(Q, U, phi=0):
     cos2th = np.cos(2 * (angles + phi))
@@ -39,13 +41,13 @@ def opt_func(phi, stokes_frame):
     Qr, Ur = radial_stokes(stokes_frame[1], stokes_frame[2], phi)
     return np.abs(np.nansum(Ur))
 
-def optimizer_Qr(stokes_frames):
+def optimizer_Qr(stokes_frames, frame=""):
     res = minimize_scalar(lambda f: opt_func(f, stokes_frames), bounds=(0, np.pi/2))
-    print(res)
+    print(f"Neptune {frame} field phi offset: {np.rad2deg(res.x):.01f}°")
     return radial_stokes(stokes_frames[1], stokes_frames[2], phi=res.x)
 
 for i in range(4):
-    Qr, Ur = optimizer_Qr(stokes_cube[i])
+    Qr, Ur = optimizer_Qr(stokes_cube[i], titles[i])
     stokes_cube[i, 3] = Qr
     stokes_cube[i, 4] = Ur
 
@@ -68,17 +70,16 @@ I_err = calib_errs[:, 0]
 side_length = stokes_cube.shape[-1] * plate_scale * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
 
-titles = ("F610", "F670", "F720", "F760")
 # PDI images
 for ax, frame, title in zip(axes[0, :], Qr_frames, titles):
     im = ax.imshow(frame, extent=ext, cmap="bone", vmin=0, vmax=np.nanpercentile(frame, 99.5))
 
-    ax.text(0.025, 0.9, title, c="white", ha="left", fontsize=10, transform="axes")
+    ax.text(0.025, 0.9, title, c="white", ha="left", fontsize=9, transform="axes")
 
 
-arrow_pa = np.deg2rad(360 - np_ang)
+arrow_pa = np.deg2rad(np_ang - 90)
 arrow_r = planet_diam / 2 + 0.1
-arrow_x = arrow_r * np.sin(arrow_pa)
+arrow_x = -arrow_r * np.sin(arrow_pa)
 arrow_y = arrow_r * np.cos(arrow_pa)
 
 
@@ -86,10 +87,10 @@ arrow_y = arrow_r * np.cos(arrow_pa)
 for ax, frame in zip(axes[1, :], I_frames):
     im = ax.imshow(frame, extent=ext, cmap="matter_r", vmin=0)
 
-    circ = patches.Circle((0, 0), planet_diam/2, fill=False, ec="w", ls=":", lw=0.5)
+    circ = patches.Circle((0, 0), planet_diam/2, fill=False, ec="w", ls="--", lw=1)
     ax.add_patch(circ)
 
-    ax.arrow(arrow_x, arrow_y, 0.15 * np.sin(arrow_pa), 0.15 * np.cos(arrow_pa), width=0.01, head_width=0.05, color="w", overhang=0.2, lw=0.1, length_includes_head=True)
+    ax.arrow(arrow_x, arrow_y, -0.15 * np.sin(arrow_pa), 0.15 * np.cos(arrow_pa), width=0.01, head_width=0.05, color="w", overhang=0.2, lw=0.1, length_includes_head=True)
 
 ## sup title
 axes.format(
