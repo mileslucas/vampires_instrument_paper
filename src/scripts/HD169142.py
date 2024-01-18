@@ -114,7 +114,7 @@ fig.savefig(
     dpi=300,
 )
 ### FLUX plots
-fig, axes = pro.subplots(nrows=2, width="3.5in", height="4in", sharey=0, hspace=0)
+fig, axes = pro.subplots(nrows=2, width="3.5in", height="3.5in", sharey=0, hspace=0)
 
 cycle = pro.Colormap("fire")(np.linspace(0.4, 0.9, 4))
 pxscale = header["PXSCALE"] / 1e3
