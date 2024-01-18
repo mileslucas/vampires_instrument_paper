@@ -14,11 +14,9 @@ pro.rc["cycle"] = "ggplot"
 pro.rc["axes.grid"] = False
 
 fig, axes = pro.subplots(
-    ncols=4,
-    nrows=2,
+    ncols=2,
     width="7in",
-    # height="2.5in",
-    space=0, hspace=0.25, sharey=1, sharex=1
+    sharey=1, sharex=0
 )
 
 stokes_path = paths.data / "20230707_HD169142_vampires_stokes_cube.fits"
@@ -37,6 +35,7 @@ rs = (radii * plate_scale / 1e3)**2
 # rs[rs > 1] = 1
 
 Qphi_frames = stokes_cube[:, 3]
+Qphi_sum = np.nansum(Qphi_frames, axis=0)
 I_frames = stokes_cube[:, 0]
 
 vmin=0
@@ -49,30 +48,15 @@ bar_width_arc = bar_width_au * plx  # "
 side_length = Qphi_frames.shape[-1] * plate_scale * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
 titles = ("F610", "F670", "F720", "F760")
-for i in range(4):
-    ax = axes[0, i]
-    frame = Qphi_frames[i]
-    title = titles[i]
-    # ratio = np.round(vmax / np.nanmax(frame))
-    # vmax=None
-    im = ax.imshow(frame, extent=ext, vmin=0)
-    # ax.colorbar(im, loc="top")
-    ax.text(0.025, 0.9, title, c="white", ha="left", fontsize=10, transform="axes")
-    rect = patches.Rectangle([-0.5, -0.5], bar_width_arc, 1e-2, color="white")
-    ax.add_patch(rect)
-    ax.text(-0.5 + bar_width_arc/2, -0.45, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=7)
 
-for i in range(4):
-    ax = axes[1, i]
-    frame = Qphi_frames[i] * rs
-    title = titles[i]
-    # ratio = np.round(vmax / np.nanmax(frame))
-    vmax=np.nanmax(Qphi_frames[i]) * (0.2)**2
-    # vmax=None
-    im = ax.imshow(frame, extent=ext, vmin=0, vmax=vmax)
-    # ax.colorbar(im, loc="top")
+im = axes[0].imshow(Qphi_sum, extent=ext, vmin=0)
+rect = patches.Rectangle([-0.55, -0.55], bar_width_arc, 1e-2, color="white")
+axes[0].add_patch(rect)
+axes[0].text(-0.55 + bar_width_arc/2, -0.5, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=8)
+axes[0].text(0.05, 0.92, r"Stokes $Q_\phi$", transform="axes", c="white", fontsize=11)
 
-axes[:, -1].format(rightlabels=(r"Stokes $Q_\phi$", r"Stokes $Q_\phi \times r^2$"), rightlabelpad=2, rightlabels_kw=dict(rotation=-90))
+vmax=np.nanmax(Qphi_sum) * (0.2)**2
+im = axes[1].imshow(Qphi_sum * rs, extent=ext, vmin=0, vmax=vmax)
 
 
 # coronagraph mask
@@ -103,11 +87,9 @@ axes.format(
 )
 
 for ax in axes:
-    ax.xaxis.set_major_locator(MaxNLocator(nbins=3, prune='both'))
+    ax.xaxis.set_major_locator(MaxNLocator(nbins=5, prune='both'))
     ax.yaxis.set_major_locator(MaxNLocator(nbins=5, prune='both'))
-
-axes[:, 1:].format(yticks=[])
-axes[0, :].format(xticks=[])
+axes[1].format(yticks=[])
 
 fig.savefig(
     paths.figures / "20230707_HD169142_Qphi_mosaic.pdf",
@@ -119,14 +101,14 @@ fig, axes = pro.subplots(nrows=2, width="3.5in", height="3.5in", sharey=0, hspac
 cycle = pro.Colormap("fire")(np.linspace(0.4, 0.9, 4))
 pxscale = header["PXSCALE"] / 1e3
 fwhm = 4
-radii = np.arange(0.105 / pxscale, 1.4 / pxscale, fwhm)
+radii = np.arange(0.105 / pxscale - fwhm/2, 1.4 / pxscale, fwhm)
 for i in range(4):
     Qphi_prof = RadialProfile(Qphi_frames[i], (center[1], center[0]), radii)
-    rel_prof = RadialProfile(Qphi_frames[i] / I_frames[i], (center[1], center[0]), radii)
+    I_prof = RadialProfile(I_frames[i], (center[1], center[0]), radii)
 
     common = dict(ms=2, c=cycle[i], zorder=100+i)
     axes[0].plot(Qphi_prof.radius * pxscale, Qphi_prof.profile, m="o", label=titles[i], **common)
-    axes[1].plot(rel_prof.radius * pxscale, rel_prof.profile * 100, m="s", **common)
+    axes[1].plot(Qphi_prof.radius * pxscale, Qphi_prof.profile / I_prof.profile * 100, m="s", **common)
 
 axes[0].legend(ncols=1)
 axes.format(
