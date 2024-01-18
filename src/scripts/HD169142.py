@@ -4,6 +4,7 @@ import numpy as np
 from astropy.io import fits
 from matplotlib import patches
 from matplotlib.ticker import MaxNLocator
+from photutils.profiles import RadialProfile
 
 pro.rc["legend.fontsize"] = 7
 pro.rc["legend.title_fontsize"] = 8
@@ -36,6 +37,7 @@ rs = (radii * plate_scale / 1e3)**2
 # rs[rs > 1] = 1
 
 Qphi_frames = stokes_cube[:, 3]
+I_frames = stokes_cube[:, 0]
 
 vmin=0
 # vmax=np.nanmax(stokes_cube[:, 3])
@@ -111,29 +113,34 @@ fig.savefig(
     paths.figures / "20230707_HD169142_Qphi_mosaic.pdf",
     dpi=300,
 )
-
 ### FLUX plots
-fig, axes = pro.subplots(nrows=2, width="3.5in", height="3.5in", sharey=0)
+fig, axes = pro.subplots(nrows=2, width="3.5in", height="4in", sharey=0, hspace=0)
 
-sum_mask = rs < 1
+cycle = pro.Colormap("fire")(np.linspace(0.4, 0.9, 4))
+pxscale = header["PXSCALE"] / 1e3
+fwhm = 4
+radii = np.arange(0.105 / pxscale, 1.4 / pxscale, fwhm)
+for i in range(4):
+    Qphi_prof = RadialProfile(Qphi_frames[i], (center[1], center[0]), radii)
+    rel_prof = RadialProfile(Qphi_frames[i] / I_frames[i], (center[1], center[0]), radii)
 
-pdi_flux_sum = np.nansum(Qphi_frames * sum_mask, axis=(1, 2)) * header["PXAREA"]
-tot_flux_sum = np.nansum(stokes_cube[:, 0] * sum_mask, axis=(1, 2)) * header["PXAREA"]
+    common = dict(ms=2, c=cycle[i], zorder=100+i)
+    axes[0].plot(Qphi_prof.radius * pxscale, Qphi_prof.profile, m="o", label=titles[i], **common)
+    axes[1].plot(rel_prof.radius * pxscale, rel_prof.profile * 100, m="s", **common)
 
-axes[0].plot([612, 670, 719, 760], pdi_flux_sum, c="C0", marker="o")
+axes[0].legend(ncols=1)
+axes.format(
+    xlabel="radius (\")",
+    grid=True,
+)
 axes[0].format(
-    xlabel="wavelength (nm)",
-    ylabel=r"$Q_\phi$ flux (mJy)",
-    grid=True
+    ylabel=r"$Q_\phi$ flux (Jy / arcsec$^2$)",
+    yscale="log"
 )
-axes[1].plot([612, 670, 719, 760], pdi_flux_sum / tot_flux_sum * 100, c="C0", marker="o")
 axes[1].format(
-    ylabel=r"$Q_\phi/I_{tot}$ flux (%)",
-    grid=True
+    ylabel=r"$Q_\phi/I_{tot}$ flux (%)"
 )
 
-print((pdi_flux_sum / tot_flux_sum * 100).mean())
-axes.format(xlim=(600, 770))
 fig.savefig(
     paths.figures / "20230707_HD169142_Qphi_flux.pdf",
     dpi=300,
