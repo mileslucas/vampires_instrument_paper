@@ -50,26 +50,21 @@ For each camera (and therefore each narrowband filter) we reduced the data follo
 
 We observed gas giant \textit{Neptune} on \formatdate{11}{7}{2023} in the multiband imaging mode to test VAMPIRES capabilities for planetary astromony. \textit{Neptune} was a good target due to its angular diameter being within the VAMPIRES FOV ($<$\ang{;;3}) and without being too faint. The adaptive optics systems during this observation were not able to correct for wavefront errors with the typical performance due to the lack of a point-source guide star- rather using the extended planet itself as a guide star. In addition, this data requires slight modifications in the post-processing to address the unique features of a planetary image.
 
-We adopt the following parameters for Neptune based on JPL horizons DE441 ephemerides:\footnote{\url{https://ssd.jpl.nasa.gov/horizons/}}
-\begin{itemize}
-\item Apparent diameter \ang{;;2.313102}
-\item North pole angle \ang{318.0816}
-\item North pole distance \ang{;;-1.058}
-\end{itemize}
-
-% \begin{deluxetable}{cl}
-% \tablehead{
-%     \colhead{Parameter} &
-%     \colhead{Value}
-% }
-% \tablecaption{Planetary parameters for Neptune adopted in this study from JPL horizons DE441 ephemerides.\label{tbl:neptune}}
-% \startdata
-% Apparent diameter & \ang{;;2.313102} \\
-% North pole angle & \ang{318.0816} \\
-% North pole distance & \ang{;;-1.058}
-% \enddata
-% \tablereferences{\url{https://ssd.jpl.nasa.gov/horizons/}}
-% \end{deluxetable}
+\begin{deluxetable}{ll}
+\tablewidth{\columnwidth}
+\tablehead{
+    \colhead{Parameter} & 
+    \colhead{Value}
+}
+\tablecaption{Ephemeris of Neptune for our observations on \formatdate{11}{7}{2023} based on JPL horizons data.\label{tbl:neptune}}
+\startdata
+Apparent diameter & \ang{;;2.313102} \\
+North pole angle & \ang{318.0816} \\
+North pole distance & \ang{;;-1.058} \\
+Solar phase angle & \ang{1.8173}
+\enddata
+\tablereferences{\url{https://ssd.jpl.nasa.gov/horizons/}}
+\end{deluxetable}
 
 
 For processing, we attempted flat-field correction with some success. Multiband observations are uniquely difficult to flat field, because a single detector image has four images at different wavelengths, and therefore different intensities when illuminated with a calibration laser or flat lamp. We developed a simple computer-vision algorithm to fit rotated rectangles to each flat-field and normalizes each field with a local value. Unfortunately, in this data there was a bug in the data acquisition software which truncated all data to 15-bit unsigned integers, artificially saturating readout values greater than $2^{15}$. This has been fixed, but our calibration flats for the F720 filter from this epoch all suffer from this truncation leading to flat-field errors (as can be seen in \autoref{fig:neptune_mosaic}). We also discovered some imperfect flat-field correction of some dust features in other fields, likely due to small differences in the optical alignment of the glass fieldstop.
@@ -83,7 +78,7 @@ We calculate an alternative the radial Stokes parameters, $Q_r$ and $U_r$ \citep
     Q_r &= Q\cos{\left(2\theta\right)} + U\sin{\left(2\theta\right)} \\
     U_r &= -Q\sin{\left(2\theta\right)} + U\cos{\left(2\theta\right)}
 \end{align}
-For an optically thick planetary atmosphere like Neptune's, the most probable alignment of the electric field is radially (as opposed to azimuthally for \autoref{eqn:radial_stokes}), which makes $Q_r$ approximately equal to the polarized intensity. We expect $U_r$ to be minimized, at least to first order, and we attempt to correct residual polarization errors in our data by offsetting the angle, $\theta$, for the radial Stokes parameters in each filter. The required angle offset for each filter was \ang{21.3}, \ang{5.6}, \ang{0.3}, and \ang{1.0}, respectively.
+For an optically thick planetary atmosphere like Neptune's, the most probable alignment of the electric field is radially from the center of the planet to the limb\citep{schmid_limb_2006}. This makes $Q_r$ approximately equal to the polarized intensity and we expect $U_r$ to be minimized, at least to first order. We attempt to correct residual polarization errors in our data by offsetting the angle, $\theta$, for the radial Stokes parameters in each filter and optimizing until $|\Sigma{U_r}|$ is minimized. The required angle offset for each filter was \ang{21.3}, \ang{5.6}, \ang{0.3}, and \ang{1.0}, respectively.
 
 We show the corrected radial Stokes $Q_r$ frames and Stokes $I$ frames in \autoref{fig:neptune_mosaic}. We see clear limb polarization in all filters with little polarization in the center of the image and the maximum polarization at the edge. We see roughly equal polarization along the whole limb (as opposed to concentration at the poles or equator). The total intensity frames show some signs of a polar cloud along with some mild banding structures, especially in the F720 frame (disregarding any flat-field errors). We plot radial profiles of the $Q_r$, $I$, and $Q_r/I$ for each filter in \autoref{fig:neptune_flux}.
 

@@ -8,33 +8,6 @@ Polarimetric measurements are limited by instrumental polarization due to the ma
 
 \subsection{Polarimetric Spectral Differential Imaging}
 
-A new mode was developed for VAMPIRES to enable polarimetry alongside spectral differential imaging (SDI). The control algorithm switches the differential filter wheel once per HWP position. By following the standard double- or triple-differencing polarimetric procedure for each differential wheel position we create two Stokes cubes. Each stokes cube will either be a positive or negative copy of the narrowband flux, which can be combined with subtraction. An example demonstrating double-difference polarimetry for two HWP positions with the H$\alpha$ filter pair is shown in \autoref{eqn:psdi} (each tuple represents the HWP position and the narrowband filter for each camera).
-
-\begin{equation}
-    \label{eqn:psdi}
-    \begin{rcases}
-        \begin{rcases}
-            \begin{rcases}
-                +Q, \mathrm{H}\alpha  \\
-                +Q, \mathrm{H}\alpha\mathrm{-Cont} \\
-            \end{rcases} &  +Q, +\mathrm{H}\alpha \\
-            \begin{rcases}
-                -Q, \mathrm{H}\alpha  \\
-                -Q, \mathrm{H}\alpha\mathrm{-Cont} \\
-            \end{rcases} &  -Q, +\mathrm{H}\alpha \\
-        \end{rcases} & Q, +\mathrm{H}\alpha \\
-            \begin{rcases}
-            \begin{rcases}
-                +Q, \mathrm{H}\alpha\mathrm{-Cont} \\
-                +Q, \mathrm{H}\alpha  \\
-            \end{rcases} & +Q, -\mathrm{H}\alpha \\
-            \begin{rcases}
-                -Q, \mathrm{H}\alpha\mathrm{-Cont} \\
-                -Q, \mathrm{H}\alpha  \\
-            \end{rcases} & -Q, -\mathrm{H}\alpha \\
-        \end{rcases} & Q, -\mathrm{H}\alpha \\
-    \end{rcases} Q, \mathrm{H}\alpha
-\end{equation}
-
+We have developed a new mode for VAMPIRES for polarimetric measurements in the narrowband filters. Because the narrowband filters are stored in the differential filter wheel only one camera receives light from the filter. To enable polarimetry we must switch the differential filter between the cameras for each HWP position so that we measure both horizontal and vertically polarized light for each filter. In post-processing one can choose to do standard double- or triple-differencing separately for each filter to get the Stokes data, or the two filters can be subtracted immediately before differencing for spectral differential imaging (SDI).
 
 Polarimetric SDI (PSDI) will allow direct measurement of the polarized fraction of narrowband emission, which is particularly interesting for H$\alpha$ imaging of circumstellar disks. For example, the H$\alpha$ emission around AB Aur may be from a forming protoplanet \citep{currie_images_2022}, in which case the emission should be unpolarized. If the H$\alpha$ emission is polarized this points to different hypothesis, such as stellar emission scattering off dust grains \citep{zhou_uv-optical_2023}. This technique has been tested with an internal calibration source and future observations will be used to demonstrate our method on-sky.
