@@ -33,9 +33,10 @@ ext = (side_length, -side_length, -side_length, side_length)
 im = axes[0].imshow(halpha_frame, extent=ext, norm=simple_norm(halpha_frame, stretch="log"), vmin=0)
     # # ax.colorbar(im, loc="top")
     # ax.text(0.025, 0.9, title, c="white", ha="left", fontsize=10, transform="axes")
-rect = patches.Rectangle([0.35, -1], bar_width_arc, 1e-2, color="white")
+rect = patches.Rectangle([0.35, -0.99], bar_width_arc, 1e-2, color="white")
 axes[0].add_patch(rect)
-axes[0].text(0.35 + bar_width_arc/2, -0.95, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=7)
+axes[0].text(0.35 + bar_width_arc/2, -0.95, f"{bar_width_arc:.1f}\"", c="white", ha="center", fontsize=7)
+axes[0].text(0.35 + bar_width_arc/2, -1.05, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=7)
 
 
 
@@ -72,9 +73,10 @@ bar_width_au = 20
 bar_width_arc = bar_width_au * plx # "
 
 for ax in axes:
-    rect = patches.Rectangle([-0.11, -0.11], bar_width_arc, 3e-3, color="white")
+    rect = patches.Rectangle([-0.11, -0.085], bar_width_arc, 3e-3, color="white")
     ax.add_patch(rect)
-    ax.text(-0.11 + bar_width_arc/2, -0.1, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=8)
+    ax.text(-0.11 + bar_width_arc/2, -0.07, f"{bar_width_arc:.1f}\"", c="white", ha="center", fontsize=8)
+    ax.text(-0.11 + bar_width_arc/2, -0.11, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=8)
 
 # fig.colorbar(im, loc="r", label=r"mJy / sq. arcsec")
 

@@ -41,7 +41,7 @@ I_frames = stokes_cube[:, 0]
 vmin=0
 # vmax=np.nanmax(stokes_cube[:, 3])
 # vmax=np.nanpercentile(Qphi_frames, 99)
-bar_width_au = 25
+bar_width_au = 20
 plx = 8.7053e-3  # "
 bar_width_arc = bar_width_au * plx  # "
 
@@ -50,9 +50,10 @@ ext = (side_length, -side_length, -side_length, side_length)
 titles = ("F610", "F670", "F720", "F760")
 
 im = axes[0].imshow(Qphi_sum, extent=ext, vmin=0)
-rect = patches.Rectangle([-0.55, -0.55], bar_width_arc, 1e-2, color="white")
+rect = patches.Rectangle([-0.55, -0.49], bar_width_arc, 1e-2, color="white")
 axes[0].add_patch(rect)
-axes[0].text(-0.55 + bar_width_arc/2, -0.5, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=8)
+axes[0].text(-0.55 + bar_width_arc/2, -0.46, f"{bar_width_arc:.1f}\"", c="white", ha="center", fontsize=8)
+axes[0].text(-0.55 + bar_width_arc/2, -0.55, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=8)
 axes[0].text(0.05, 0.92, r"Stokes $Q_\phi$", transform="axes", c="white", fontsize=11)
 
 vmax=np.nanmax(Qphi_sum) * (0.2)**2
