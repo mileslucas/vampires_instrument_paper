@@ -45,7 +45,7 @@ axes[0].text(0.35 + bar_width_arc/2, -1.05, f"{bar_width_au:.0f} au", c="white",
 
 ## sup title
 axes.format(
-    xlim=(0.6, -0.6),
+    xlim=(0.55, -0.6),
     ylim=(-1.1, 0.85),
     # suptitle=f"2023/07/07 VAMPIRES HD 169142"
 )
