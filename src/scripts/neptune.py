@@ -86,7 +86,7 @@ arrow_length = 0.3
 
 # Intensity images
 for ax, frame in zip(axes[1, :], I_frames):
-    im = ax.imshow(frame, extent=ext, cmap="matter_r", vmin=0)
+    im = ax.imshow(frame, extent=ext, cmap="magma", vmin=0)
 
 for ax in axes:
     circ = patches.Circle((0, 0), planet_diam/2, fill=False, ec="w", lw=0.5)

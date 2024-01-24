@@ -4,11 +4,12 @@ import numpy as np
 from astropy.io import fits
 from matplotlib import patches
 from astropy.visualization import simple_norm
+from scipy.ndimage import gaussian_filter
 
 pro.rc["legend.fontsize"] = 7
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
-pro.rc["cmap"] = "matter_r"
+pro.rc["cmap"] = "magma"
 pro.rc["axes.grid"] = False
 
 fig, axes = pro.subplots(
@@ -35,7 +36,7 @@ im = axes[0].imshow(halpha_frame, extent=ext, norm=simple_norm(halpha_frame, str
     # ax.text(0.025, 0.9, title, c="white", ha="left", fontsize=10, transform="axes")
 rect = patches.Rectangle([0.35, -0.99], bar_width_arc, 1e-2, color="white")
 axes[0].add_patch(rect)
-axes[0].text(0.35 + bar_width_arc/2, -0.95, f"{bar_width_arc:.1f}\"", c="white", ha="center", fontsize=7)
+axes[0].text(0.35 + bar_width_arc/2, -0.95, f"{bar_width_arc:.02f}\"", c="white", ha="center", fontsize=7)
 axes[0].text(0.35 + bar_width_arc/2, -1.05, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=7)
 
 
@@ -59,9 +60,19 @@ fig.savefig(
     dpi=300,
 )
 
+## HST WFC3 equivalent
+wfc3_fwhm = 56.4 # mas
+wfc3_fwhm_px = wfc3_fwhm / header["PXSCALE"]
+halpha_wfc3 = gaussian_filter(halpha_frame, wfc3_fwhm_px)
+axes[0].imshow(halpha_wfc3, extent=ext, norm=simple_norm(halpha_wfc3, stretch="log"), vmin=0)
+fig.savefig(
+    paths.figures / "20230707_RAqr_Halpha_WFC3.pdf",
+    dpi=300,
+)
+
 ## zoom ins
 
-fig, axes = pro.subplots(ncols=2, space=0, width="3.5in")
+fig, axes = pro.subplots(ncols=2, wspace=0.25, width="3.5in")
 
 vmax=max(np.nanmax(halpha_frame), np.nanmax(hacont_frame))
 im = axes[0].imshow(halpha_frame, extent=ext, norm=simple_norm(halpha_frame, stretch="linear"), vmin=0, vmax=vmax)
@@ -75,8 +86,8 @@ bar_width_arc = bar_width_au * plx # "
 for ax in axes:
     rect = patches.Rectangle([-0.11, -0.085], bar_width_arc, 3e-3, color="white")
     ax.add_patch(rect)
-    ax.text(-0.11 + bar_width_arc/2, -0.07, f"{bar_width_arc:.1f}\"", c="white", ha="center", fontsize=8)
-    ax.text(-0.11 + bar_width_arc/2, -0.11, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=8)
+    ax.text(-0.11 + bar_width_arc/2, -0.072, f"{bar_width_arc:.02f}\"", c="white", ha="center", fontsize=8)
+    ax.text(-0.11 + bar_width_arc/2, -0.105, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=8)
 
 # fig.colorbar(im, loc="r", label=r"mJy / sq. arcsec")
 

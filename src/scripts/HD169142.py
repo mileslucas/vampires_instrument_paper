@@ -14,9 +14,10 @@ pro.rc["cycle"] = "ggplot"
 pro.rc["axes.grid"] = False
 
 fig, axes = pro.subplots(
-    ncols=2,
-    width="7in",
-    sharey=1, sharex=0
+    nrows=2,
+    width="3.5in",
+    sharex=1,
+    hspace=0.25
 )
 
 stokes_path = paths.data / "20230707_HD169142_vampires_stokes_cube.fits"
@@ -50,11 +51,12 @@ ext = (side_length, -side_length, -side_length, side_length)
 titles = ("F610", "F670", "F720", "F760")
 
 im = axes[0].imshow(Qphi_sum, extent=ext, vmin=0)
-rect = patches.Rectangle([-0.55, -0.49], bar_width_arc, 1e-2, color="white")
+rect = patches.Rectangle([-0.55, -0.495], bar_width_arc, 1e-2, color="white")
 axes[0].add_patch(rect)
-axes[0].text(-0.55 + bar_width_arc/2, -0.46, f"{bar_width_arc:.1f}\"", c="white", ha="center", fontsize=8)
+axes[0].text(-0.55 + bar_width_arc/2, -0.46, f"{bar_width_arc:.02f}\"", c="white", ha="center", fontsize=8)
 axes[0].text(-0.55 + bar_width_arc/2, -0.55, f"{bar_width_au:.0f} au", c="white", ha="center", fontsize=8)
-axes[0].text(0.05, 0.92, r"Stokes $Q_\phi$", transform="axes", c="white", fontsize=11)
+axes[0].text(0.03, 0.92, r"Stokes $Q_\phi$", transform="axes", c="white", fontsize=11)
+axes[1].text(0.03, 0.92, r"Stokes $Q_\phi \times r^2$", transform="axes", c="white", fontsize=11, bbox=dict(fc="k", alpha=0.6))
 
 vmax=np.nanmax(Qphi_sum) * (0.2)**2
 im = axes[1].imshow(Qphi_sum * rs, extent=ext, vmin=0, vmax=vmax)
@@ -90,7 +92,7 @@ axes.format(
 for ax in axes:
     ax.xaxis.set_major_locator(MaxNLocator(nbins=5, prune='both'))
     ax.yaxis.set_major_locator(MaxNLocator(nbins=5, prune='both'))
-axes[1].format(yticks=[])
+axes[0].format(xticks=[])
 
 fig.savefig(
     paths.figures / "20230707_HD169142_Qphi_mosaic.pdf",
