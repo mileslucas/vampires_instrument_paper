@@ -68,8 +68,10 @@ overleaf:
     - src/tex/sections/inst_models.tex
     - src/tex/sections/intro.tex
     - src/tex/sections/observing_log.tex
+    - src/tex/sections/pnr_derivation.tex
     - src/tex/sections/polarimetry.tex
     - src/tex/sections/processing.tex
+    - src/tex/sections/psf.tex
     - src/tex/sections/science_applications.tex
 
 # Always require all input files to be present on disk for workflow to pass?

@@ -25,13 +25,22 @@ side_length = cube.shape[-1] * plate_scale * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
 
 ## Plot and save
-Jy_fact = np.array((1.4e-6, 7e-7, 4.9e-7, 1.2e-6)) / header["PXAREA"] * 2 # Jy / sq.arcsec / (e-/s)
+Jy_fact = (
+    np.array((1.4e-6, 7e-7, 4.9e-7, 1.2e-6)) / header["PXAREA"] * 2
+)  # Jy / sq.arcsec / (e-/s)
 calib_data = cube * Jy_fact[:, None, None]
 
 
 # PDI images
 for ax, frame, title in zip(axes, calib_data, titles):
-    im = ax.imshow(frame, extent=ext, cmap="magma", vmin=0, vmax=np.nanmax(calib_data), norm=simple_norm(frame, "log"))
+    im = ax.imshow(
+        frame,
+        extent=ext,
+        cmap="magma",
+        vmin=0,
+        vmax=np.nanmax(calib_data),
+        norm=simple_norm(frame, "log"),
+    )
 
     ax.text(0.025, 0.9, title, c="white", ha="left", fontsize=9, transform="axes")
 
@@ -39,7 +48,14 @@ bar_width_arc = 0.075
 for ax in axes:
     rect = patches.Rectangle([-0.12, -0.17], bar_width_arc, 5e-3, color="white")
     ax.add_patch(rect)
-    ax.text(-0.12 + bar_width_arc/2, -0.15, f"{bar_width_arc*1e3:.0f} mas", c="white", ha="center", fontsize=8)
+    ax.text(
+        -0.12 + bar_width_arc / 2,
+        -0.15,
+        f"{bar_width_arc*1e3:.0f} mas",
+        c="white",
+        ha="center",
+        fontsize=8,
+    )
 
 ## sup title
 axes.format(
@@ -48,7 +64,7 @@ axes.format(
     ylim=(-0.17 - 25e-3, 0.17 - 25e-3),
     # xlabel=r'$\Delta$RA (")',
     # ylabel=r'$\Delta$DEC (")',
-    facecolor="k"
+    facecolor="k",
 )
 # for ax in axes:
 #     ax.xaxis.set_major_locator(MaxNLocator(nbins=3, prune='both'))
