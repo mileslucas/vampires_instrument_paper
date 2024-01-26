@@ -18,7 +18,7 @@ vcam_rn = {
 
 
 data = fits.getdata(paths.data / "20230620_dark_vcam1_504s.fits")
-data = data[:, :20, :20]
+data = data[:, :100, :100]
 
 def theoretical_noise(flux, sigma_rn):
     return np.sqrt(flux + sigma_rn**2)
@@ -68,8 +68,6 @@ def loss(X):
         loglike += np.log(pch(value, n_e, sigma, fpn))
     return -loglike
 
-from scipy.optimize import minimize
-print(loss([0.1, 2, 0.25, 200, 1e-2]))
 # res = minimize(loss, [0.1, 2, 0.25, 200, 1e-2], method="nelder-mead")
 # print(res)
 # fig, axes = pro.subplots(refwidth="3.5in", refheight="3.5in")
@@ -105,16 +103,31 @@ print(loss([0.1, 2, 0.25, 200, 1e-2]))
 
 # fig.savefig(paths.figures / "pnr.pdf", dpi=300)
 
+bins = np.arange(190, 270)
+hist, bin_edges = np.histogram(data.ravel(), bins=bins, density=True)
 
-fig, axes = pro.subplots(nrows=2, width="3.5in", height="4.5in", share=0)
+from scipy.signal import find_peaks
+peaks, _ = find_peaks(hist, 1e-3, distance=5)
+gain = 1 / np.diff(bins[peaks]).mean()
+n_e = hist[peaks[1]] / hist[peaks[0]]
+print(gain, n_e)
 
+fig, axes = pro.subplots(nrows=2, width="3.5in", height="4in", share=0)
 
-axes[0].hist(data.ravel(), bins=np.arange(193, 261))
+# test_bins = np.linspace(bins.min(), bins.max(), 1000)
+# pch_prob = np.array([pch((b - 200) * gain, n_e, 0.25, 0) for b in test_bins])
+axes[0].hist(data.ravel(), bins=bins, label="Data")
+axes[0].legend(ncols=1)
 axes[0].format(
+    xlim=(192, 260),
+    xformatter="scalar",
     xlabel="signal [adu]",
-    ylabel="count",
+    ylabel="counts",
 )
-axes[0].dualx(lambda adu: (adu - 200) * 0.105, label="signal [e-]")
+ax2 = axes[0].dualx(lambda adu: (adu - 200) * gain, label="signal [e-]")
+ax2.format(
+    xticks=np.arange(8)
+)
 
 
 theoretical_curves = {}
@@ -163,7 +176,7 @@ axes[1].scatter(
     label="Monte Carlo (fast)",
 )
 axes[1].legend(ncols=1)
-axes[1].axhline(0, c="0.3")
+axes[1].axhline(0, c="0.2")
 
 axes[1].format(
     xlabel="e- / pixel / frame",
