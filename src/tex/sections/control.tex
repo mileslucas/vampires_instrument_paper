@@ -1,4 +1,4 @@
-\section{Instrument Control}\label{sec:control}
+\section{Instrument control}\label{sec:control}
 
 SCExAO uses multiple computers for real time control and computation to keep latency low. The detectors are especially important to have dedicated resources because they can produce over \SI{20}{GB/s} \textit{each}. The detectors are both connected to the SCExAO data acquisition computer- the incoming data is treated as a continuous video stream which can be saved directly to FITS files as well as forwarded over TCP ports for access on the SCExAO real time control computer. The data acquisition computer manages metadata by combining the observatory-provided FITS headers with the SCExAO internal status, which uses a \texttt{redis} database hosted on a dedicated machine. Observing data and calibrations are transferred nightly to the Subaru STARS2 archive.
 

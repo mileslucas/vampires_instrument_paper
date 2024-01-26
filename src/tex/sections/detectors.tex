@@ -6,13 +6,22 @@ The detectors have two  readout modes: the full-speed ``FAST'' mode, and the slo
 
 The detectors have rolling-shutter readout that exposes four pixel rows at a time. The maximum framerate is limited by the number of rows read out and the readout speed described previously. In addition, the rolling-shutter effect becomes more prevalent at the shortest DITs and the duty cycle gets lower and lower. At the extreme, each group of four pixel rows will not be exposed until after the preceding group has been read out. As an additional complication, when using the hardware trigger the detectors have reduced framerates and duty cycle, below 50\% in some scenarios, to enable consistent timings for synchronization between both cameras.
 
-\subsection{Detector Characterization}
+\subsection{Detector characterization}
 
 We measured a photon transfer curve using a calibration flat field source for both detectors in both readout modes using a non-polarizing beamsplitter cube. We removed the fixed-pattern noise through frame-differencing before performing a linear fit between the average signal and the signal variance \citep{stefanov_cmos_2022}. 
 \begin{equation}
     \sigma^2\left(\mu | k, \sigma_{RN}\right) = \frac{\mu}{k} + \sigma^2_{RN}
 \end{equation}
 From this fit we extract the gain ($k$) in \si{\electron/adu} from the slope of the line. We measure the readout noise from the standard deviation of a bias frame and convert to \si{\electron} with the gain. We observe that the full well (\SI{7000}{\electron}) is greater than the maximum bit-depth with our measured detector gain. The detector photoresponse is linear over the entire dynamic range and saturates at $2^{16}$ \si{adu}. During commissioning we also took dark frames with the detector caps covered. For data with significant signal, we performed a linear fit of the signal to the exposure time to get the average dark current per pixel. We report our results in \autoref{tbl:detectors}.
+
+The qCMOS detectors are capable of photon-number resolving- that is, statistically determining the number of electrons from Poisson statistics. The photon number statistic is essentially free from frame-to-frame noise (like readout noise), but requires accurate bias subtraction and flat-fielding for practical use. We demonstrate the benefit of photon number resolving in \autoref{fig:pnr}. In the right pane the relative improvement in S/N by photon number resolving (i.e., converting signal to electrons and rounding to nearest whole number) is given as a function of detector readout noise and input flux. The derivation and verification of our formula is in \autoref{sec:pnr_derivation}. We mark lines for the readout noises of our qCMOS detectors in ``fast'' and ``slow'' mode (\autoref{tbl:detectors})- in ``slow'' mode there is 
+
+\begin{figure}
+    \centering
+    \script{pnr.py}
+    \includegraphics[width=\columnwidth]{figures/pnr_improvement.pdf}
+    \caption{.\label{fig:pnr}}
+\end{figure}
 
 We compare the sensitivity of the qCMOS detectors to the EM-CCD detectors in \autoref{fig:detector_snr_relative}. These signal-to-noise (S/N) curves use calibrated read noise, dark current, and gain along with manufacturer quantum efficiency (QE) values averaged over \SIrange{600}{800}{nm}. When EM gain is enabled, we add a excess noise factor of $\sqrt{2}$. The qCMOS have an order of magnitude worse dark current and slightly worse QE compared to the EMCCDs. Despite this, we see from \autoref{fig:detector_snr_relative} that the qCMOS detectors have better performance than the EMCCDs when photon noise or read-noise limited, in general. The qCMOS detectors are dark-limited in ``SLOW'' mode at $\sim$\SI{15}{s}, where the relative performance in the low-flux regime drops compared to the EMCCDs. Using the EMCCDs without EM gain outperforms both the qCMOS and EMCCD with EM gain at high photon fluxes due to the lack of excess noise factor combined with higher QE.
 
@@ -59,7 +68,7 @@ Overall, our detectors are some of the most sensitive available commercially tod
 \end{figure}
 
 
-\subsection{Astrometric Calibration}
+\subsection{Astrometric calibration}
 
 The astrometric calibration is used to determine the instrument rotation angle and pixel plate scale. We determine our calibration solution using visual binaries and correlate those solutions to the pinhole mask in SCExAO. This way future observers can use the pinhole mask calibration data taken off-sky as an absolute astrometric reference. 
 
