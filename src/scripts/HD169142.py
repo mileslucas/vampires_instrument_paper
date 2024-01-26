@@ -33,15 +33,12 @@ Ys, Xs = np.ogrid[: stokes_cube.shape[-2], : stokes_cube.shape[-1]]
 radii = np.hypot(Ys - center[-2], Xs - center[-1])
 
 rs = (radii * plate_scale / 1e3)**2
-# rs[rs > 1] = 1
 
 Qphi_frames = stokes_cube[:, 3]
 Qphi_sum = np.nansum(Qphi_frames, axis=0)
 I_frames = stokes_cube[:, 0]
 
 vmin=0
-# vmax=np.nanmax(stokes_cube[:, 3])
-# vmax=np.nanpercentile(Qphi_frames, 99)
 bar_width_au = 20
 plx = 8.7053e-3  # "
 bar_width_arc = bar_width_au * plx  # "
