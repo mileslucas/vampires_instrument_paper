@@ -7,6 +7,7 @@ from scipy.optimize import minimize
 from astropy.io import fits
 
 pro.rc["legend.fontsize"] = 7
+pro.rc["font.size"] = 7
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
 
@@ -17,7 +18,7 @@ vcam_rn = {
 
 
 data = fits.getdata(paths.data / "20230620_dark_vcam1_504s.fits")
-data = data[:, :100, :100]
+data = data[:, :20, :20]
 
 def theoretical_noise(flux, sigma_rn):
     return np.sqrt(flux + sigma_rn**2)
@@ -52,6 +53,25 @@ theoretical_improvement = theoretical_noise(flux_grid, sigma_grid) / theoretical
     flux_grid, pnr_equiv_rn(sigma_grid)
 )
 
+
+def pch(value, n_e, sigma, fpn, max_k=10):
+    ks = np.arange(max_k)
+    sig_k = np.sqrt(sigma**2 + (ks * fpn)**2)
+    prob = np.sum(stats.norm(ks, sig_k).pdf(value) * stats.poisson(n_e).pmf(ks))
+    return prob
+
+def loss(X):
+    gain, n_e, sigma, bias, fpn = X
+    loglike = 0
+    data_e = (data - bias) * gain
+    for value in data_e.ravel():
+        loglike += np.log(pch(value, n_e, sigma, fpn))
+    return -loglike
+
+from scipy.optimize import minimize
+print(loss([0.1, 2, 0.25, 200, 1e-2]))
+# res = minimize(loss, [0.1, 2, 0.25, 200, 1e-2], method="nelder-mead")
+# print(res)
 # fig, axes = pro.subplots(refwidth="3.5in", refheight="3.5in")
 
 
@@ -113,7 +133,6 @@ axes[1].plot(
     (theoretical_curves["slow"] - 1) * 100,
     c="C0",
     zorder=999,
-    lw=1,
     label="Theoretical (slow)",
 )
 axes[1].plot(
@@ -121,7 +140,6 @@ axes[1].plot(
     (theoretical_curves["fast"] - 1) * 100,
     c="C3",
     zorder=999,
-    lw=1,
     label="Theoretical (fast)",
 )
 axes[1].scatter(

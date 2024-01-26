@@ -9,6 +9,7 @@ from scipy.optimize import minimize_scalar
 
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
+pro.rc["font.size"] = 7
 pro.rc["legend.fontsize"] = 6
 
 with fits.open(paths.data / "20230711_Neptune_stokes_cube.fits") as hdul:

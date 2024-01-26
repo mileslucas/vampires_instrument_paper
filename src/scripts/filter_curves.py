@@ -10,6 +10,8 @@ import numpy as np
 import astropy.units as u
 from matplotlib.ticker import MaxNLocator, FixedLocator
 
+pro.rc["font.size"] = 7
+
 fig, axes = pro.subplots(
     [[1, 1], [2, 2], [3, 4]],
     width="3.5in",

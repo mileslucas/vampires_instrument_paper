@@ -4,6 +4,7 @@ import numpy as np
 
 pro.rc["legend.fontsize"] = 7
 pro.rc["cycle"] = "ggplot"
+pro.rc["font.size"] = 7
 
 
 def get_emccd_snr(photons, texp, emgain=300):
