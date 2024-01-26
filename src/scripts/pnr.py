@@ -116,7 +116,7 @@ fig, axes = pro.subplots(nrows=2, width="3.5in", height="4in", share=0)
 
 # test_bins = np.linspace(bins.min(), bins.max(), 1000)
 # pch_prob = np.array([pch((b - 200) * gain, n_e, 0.25, 0) for b in test_bins])
-axes[0].hist(data.ravel(), bins=bins, label="Data")
+axes[0].hist(data.ravel(), bins=bins, density=True, label="Data")
 axes[0].legend(ncols=1)
 axes[0].format(
     xlim=(192, 260),

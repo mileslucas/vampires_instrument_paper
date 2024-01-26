@@ -93,7 +93,7 @@ for key in names.keys():
     axes[0].axvline(iwa * 1e3, c=colors[key], ls=":")
 
 # format and legends
-axes.legend(ncols=1, title="Mask (IWA)")
+axes.legend(ncols=1)
 axes.format(
     grid=True, xlabel="separation (mas)", ylabel="normalized throughput", xlim=(0, 255)
 )
