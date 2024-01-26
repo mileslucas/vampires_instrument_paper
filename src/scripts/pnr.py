@@ -94,7 +94,7 @@ axes[0].format(
     xlabel="signal [adu]",
     ylabel="count",
 )
-axes[0].dualx(lambda adu: (adu - 200) * 0.103, label="signal [e-]")
+axes[0].dualx(lambda adu: (adu - 200) * 0.105, label="signal [e-]")
 
 
 theoretical_curves = {}
