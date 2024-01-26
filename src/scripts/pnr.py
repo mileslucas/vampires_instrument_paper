@@ -37,13 +37,13 @@ def pnr_equiv_rn(sigma_rn, max_k=101):
 
 
 def montecarlo_samples(
-    f, sigma_rn: float, N: int = 10000, rng=np.random.default_rng()
+    flux, sigma_rn: float, N: int = 10000, rng=np.random.default_rng()
 ):
     return np.array([rng.normal(rng.poisson(f, size=N), scale=sigma_rn) for f in flux])
 
-flux = np.geomspace(1e-3, 10, 1000)  # photons/pix/frame
+flux = np.geomspace(1e-3, 10, 500)  # photons/pix/frame
 
-sigma_rn = np.linspace(0, 1, 1000)
+sigma_rn = np.linspace(0, 1, 500)
 
 flux_grid, sigma_grid = np.meshgrid(flux, sigma_rn)
 
@@ -128,7 +128,7 @@ axes[1].scatter(
     flux,
     (mc_curves["slow"] - 1) * 100,
     c="C0",
-    alpha=0.3,
+    alpha=0.5,
     zorder=900,
     ms=5,
     mew=0,
@@ -138,7 +138,7 @@ axes[1].scatter(
     flux,
     (mc_curves["fast"] - 1) * 100,
     c="C3",
-    alpha=0.3,
+    alpha=0.5,
     zorder=900,
     ms=5,
     mew=0,
