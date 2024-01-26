@@ -7,7 +7,7 @@ from matplotlib.ticker import MaxNLocator
 from photutils.profiles import RadialProfile
 
 pro.rc["legend.fontsize"] = 7
-pro.rc["font.size"] = 7
+pro.rc["font.size"] = 8
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["cmap"] = "bone"
 pro.rc["image.origin"] = "lower"

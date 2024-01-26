@@ -11,7 +11,7 @@ from scipy.optimize import minimize_scalar
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
 pro.rc["legend.fontsize"] = 6
-pro.rc["font.size"] = 7
+pro.rc["font.size"] = 8
 
 with fits.open(paths.data / "20230707_HD204827_coll.fits") as hdul:
     cube = hdul[0].data

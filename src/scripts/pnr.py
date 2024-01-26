@@ -7,7 +7,7 @@ from scipy.optimize import minimize
 from astropy.io import fits
 
 pro.rc["legend.fontsize"] = 7
-pro.rc["font.size"] = 7
+pro.rc["font.size"] = 8
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
 

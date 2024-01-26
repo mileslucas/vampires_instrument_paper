@@ -9,7 +9,7 @@ from scipy.optimize import minimize_scalar
 
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
-pro.rc["font.size"] = 7
+pro.rc["font.size"] = 8
 pro.rc["legend.fontsize"] = 6
 
 with fits.open(paths.data / "20230711_Neptune_stokes_cube.fits") as hdul:
@@ -130,7 +130,7 @@ axes.format(
     facecolor="k",
 )
 for ax in axes:
-    ax.xaxis.set_major_locator(MaxNLocator(nbins=4, prune="both"))
+    ax.xaxis.set_major_locator(MaxNLocator(nbins=3, prune="both"))
     ax.yaxis.set_major_locator(MaxNLocator(nbins=5, prune="both"))
 
 axes[:, 1:].format(yticks=[])

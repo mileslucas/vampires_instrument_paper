@@ -7,7 +7,7 @@ from astropy.visualization import simple_norm
 from scipy.ndimage import gaussian_filter
 
 pro.rc["legend.fontsize"] = 7
-pro.rc["font.size"] = 7
+pro.rc["font.size"] = 8
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
 pro.rc["cmap"] = "magma"
