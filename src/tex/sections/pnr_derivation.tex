@@ -35,5 +35,17 @@ h(k) = h(-k) = \int_{k - 0.5}^{k + 0.5}g(x) dx
 \right]
 \end{equation}
 
+We verify the solution in \autoref{eqn:var_pnr} via Monte Carlo simulation for $\sigma_{RN}\in\{$0.22, 0.4$\}$\si{\electron} (\autoref{tbl:detectors}). We draw $N=$\num{100000} samples from a Poisson distribution and then add $N$ samples from a normal distribution with zero mean and $\sigma_{RN}$ standard deviation
+\begin{equation}
+    s \sim \mathcal{N}\left(\mathcal{P}\left(f\right), \sigma_{RN}\right)
+\end{equation}
+For the standard case we calculate the standard deviation of all the samples for each flux value, $f$. For the photon number resolving case we round $s$ to the nearest integer and then calculate the standard deviation. \autoref{fig:pnr_improvement} shows the relative improvement of the S/N beetween the photon number resolving case and the standard case (both theoretical and Monte Carlo results). From \autoref{fig:pnr} we expect a deterioration in S/N from rounding to to photon numbers for $\sigma_{RN}<$\SI{-1}{\electron}, which is reflected by the worse performance in the ``Fast'' readout mode.
 
+
+\begin{figure}
+    \centering
+    \script{pnr.py}
+    \includegraphics[width=\columnwidth]{figures/pnr_improvement.pdf}
+    \caption{.\label{fig:pnr}}
+\end{figure}
 
