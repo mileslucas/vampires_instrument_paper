@@ -1,0 +1,39 @@
+\section{Photon number resolving statistics}\label{sec:pnr_derivation}
+Let $g(x)$ a zero-centered Gaussian of std $\sigma$
+
+$$
+g \sim \mathcal{N}\left(0, \sigma_{RN}\right)
+$$
+
+Rounding operation turns $g$ into a discrete distribution $h$. I'm writing this as a function but really it's a sequence of Diracs over $\mathbb{Z}$. Like, a discrete distribution (\emph{insert more sass here.}).
+\begin{align}
+h(0) &= \int_{-0.5}^{0.5}g(x) dx\\
+h(1) = h(-1) &= \int_{0.5}^{1.5}g(x) dx\\
+h(k) = h(-k) &= \int_{k - 0.5}^{k + 0.5}g(x) dx\\
+\end{align}
+
+Now by convenience symmetry, the mean of the distro $h$ is 0.
+\begin{equation}
+\mathrm{E}[h] = \sum_{-\infty}^{+\infty} h(k) \cdot k = 0
+\end{equation}
+The variance is:
+\begin{equation}
+\mathrm{V}[h] = \sum_{-\infty}^{+\infty} h(k) \cdot k^2 = 2 \cdot \sum_{1}^{+\infty} h(k) \cdot k^2
+\end{equation}
+And now since $g$ is a Gaussian we can rewrite $h$ in terms of erf differences, and good to go we are.
+\begin{equation}
+h(k) = h(-k) = \int_{k - 0.5}^{k + 0.5}g(x) dx
+\end{equation}
+\begin{equation}
+    h(\pm k) = \mathrm{erf}\left(\dfrac{k+0.5}{\sigma_{RN}}\right) - \mathrm{erf}\left(\dfrac{k-0.5}{\sigma_{RN}}\right)
+\end{equation}
+
+\begin{equation}
+\label{eqn:var_pnr}
+\mathrm{V}[h] = 2 \cdot \sum_{k=1}^{+\infty}  k^2 \left[%
+\mathrm{erf}\left(\dfrac{k+0.5}{\sigma_{RN}}\right) - \mathrm{erf}\left(\dfrac{k-0.5}{\sigma_{RN}}\right)%
+\right]
+\end{equation}
+
+
+
