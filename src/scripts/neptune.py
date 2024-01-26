@@ -130,7 +130,7 @@ axes.format(
     facecolor="k",
 )
 for ax in axes:
-    ax.xaxis.set_major_locator(MaxNLocator(nbins=3, prune="both"))
+    ax.xaxis.set_major_locator(MaxNLocator(nbins=4, prune="both"))
     ax.yaxis.set_major_locator(MaxNLocator(nbins=5, prune="both"))
 
 axes[:, 1:].format(yticks=[])
