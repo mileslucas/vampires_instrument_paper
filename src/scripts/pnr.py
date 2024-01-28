@@ -5,6 +5,7 @@ from scipy.special import erf
 from scipy import stats
 from scipy.optimize import minimize
 from astropy.io import fits
+from scipy.signal import find_peaks
 
 pro.rc["legend.fontsize"] = 7
 pro.rc["font.size"] = 8
@@ -29,7 +30,7 @@ def phi(z):
     return 0.5 * (1 + erf(z / np.sqrt(2)))
 
 
-def pnr_equiv_rn(sigma_rn, max_k=101):
+def pnr_equiv_rn(sigma_rn, max_k=5):
     _sum = 0
     for k in np.arange(-max_k, max_k + 1):
         left_side = phi((k + 0.5) / sigma_rn)
@@ -110,12 +111,11 @@ def loss(X):
 bins = np.arange(190, 270)
 hist, bin_edges = np.histogram(data.ravel(), bins=bins, density=True)
 
-from scipy.signal import find_peaks
 
 peaks, _ = find_peaks(hist, 1e-3, distance=5)
 gain = 1 / np.diff(bins[peaks]).mean()
 n_e = hist[peaks[1]] / hist[peaks[0]]
-print(gain, n_e)
+print(f"Dark PCH fitting | k: {gain}, n_e: {n_e}")
 
 fig, axes = pro.subplots(nrows=2, width="3.5in", height="4in", share=0)
 
