@@ -17,12 +17,13 @@ def get_emccd_snr(photons, texp, emgain=300):
         enf = 1
         rn_e = 9.6
         fullwell_e = 180_000
+    cic_flux = 1e-3 # e- / pix / frame
     # open filter QE
     ave_qe = 0.85
     fullwell = min(fullwell_e, (2**16 - 150) * 4.5)
     signal = photons * ave_qe * texp
     signal[signal > fullwell] = np.nan
-    noise_e = np.sqrt(signal * enf**2 + rn_e**2 + dark_e * enf**2)
+    noise_e = np.sqrt(signal * enf**2 + rn_e**2 + dark_e * enf**2 + cic_flux * enf**2)
     return signal / noise_e
 
 
@@ -33,7 +34,9 @@ def get_emccd_dr(emgain=300):
     else:
         fullwell = min(180_000, (2**15 - 150) * 4.5)
         rn_e = 9.6
-    return 20 * np.log10(fullwell / rn_e)
+    cic_flux = 1e-3 # e- / pix / frame
+    equiv_noise = np.sqrt(rn_e**2 + cic_flux)
+    return 20 * np.log10(fullwell / equiv_noise)
 
 
 def get_cmos_snr(photons, texp, mode: str = "slow"):
