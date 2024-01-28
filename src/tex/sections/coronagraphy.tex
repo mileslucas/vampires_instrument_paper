@@ -2,10 +2,9 @@
 
 VAMPIRES is equipped with four Lyot-style coronagraphs with various focal plane mask sizes and a new vector-vortex phase mask. The focal plane masks are mounted in a precise translation stage for fine alignment due to the lack of a dedicated tip-tilt mirror for VAMPIRES. The four Lyot-style focal plane masks were designed to be partially transmissive (design 0.1\%; actual 0.6\%) circular dots with inner working angles (IWA) corresponding to roughly two, three, five, and seven resolution elements (2, 3, 5, and 7 $\lambda/D$) in radius.
 
+\subsection{Focal-plane masks}
+
 A new set of Lyot focal plane masks were made for VAMPIRES for our upgrades so that each mask has a \SI{3}{\arcsecond}x\SI{3}{\arcsecond} fieldstop. These masks were constructed the same as \citet{lucas_visible-light_2022}, however we note the measured IWAs have changed slightly compared to the previous coronagraph masks. The mask IWAs were measured by rastering the SCExAO internal calibration source across the focal plane mask and using a conversion factor for the encoder plate scale (\SI{1.8}{\arcsecond\per\milli\meter}, Lozi~J. private communication). We normalize the throughput to the peak flux of the PSF far from the mask and measure the IWA where this normalized throughput is 0.5 (50\%). We plot the throughput curves and IWA in \autoref{fig:iwa}.
-
-The VAMPIRES pupil mask wheel currently houses one Lyot stop for rejecting the light diffracted by the focal plane mask \citep{lucas_visible-light_2022}. This mask is coated with gold for high reflectivity, aiding alignment with the pupil camera. We measured the total flux reflected by a protected silver mirror and compared it to the light reflected by the Lyot stop. Using the SCExAO internal source we measured a geometric pupil throughput of 63\%.
-
 
 \begin{deluxetable}{ccc}
 \tablehead{\colhead{Name} & \colhead{Radius (\si{\micron})} & \colhead{IWA (\si{\mas})}}
@@ -26,6 +25,23 @@ DGVVC & 7\tablenotemark{*} & 61 \\
     \includegraphics{figures/coronagraph_iwa.pdf}
     \caption{Normalized off-axis throughput for the various coronagraph masks in VAMPIRES measured on \formatdate{17}{11}{2023}. The throughputs are normalized so the minimum flux is 0 and the maximum flux is 1. The inner working angle (IWA) is marked with vertical dotted lines at the point where the throughput reaches 50\%.\label{fig:iwa}}
 \end{figure}
+
+\subsection{Pupil masks}
+
+The VAMPIRES pupil mask wheel currently houses three Lyot stops for rejecting the light diffracted by the focal plane mask. There is one Lyot stop with moderate throughput (63\%) which is described in \citet{lucas_visible-light_2022}. This mask is coated with gold for high reflectivity, aiding alignment with the pupil camera and for a future low-order wavefront sensor. Two new masks were laser-cut from metal foil sheets and deployed in January 2024 with alternate geometry in order to improve the throughput of the masks. These masks require further testing but the geometric throughput has been measured and is shown alongside the gold Lyot stop in \autoref{tbl:pupil}. To measure the throughput, we take pupil images without the pupil masks, and then with the pupil masks, and take the ratio.
+
+
+\begin{deluxetable}{ccccc}
+\tablehead{\colhead{Name} & \colhead{Type} & \colhead{$D_{in}$ (\si{mm})} & \colhead{$D_{out}$ (\si{mm})} & \colhead{through (\%)}}
+\tablecaption{VAMPIRES Lyot stop specifications.\label{tbl:pupil}}
+\startdata
+LyotStop & G & 2 & 7 & 63 \\
+OptLyot & M & 2 & 7 & 85 \\
+PupilRef & M & 2 & 7.06 & 100 \\
+\enddata
+\tablenotes{The stop type is either ``G'' for the gold-plated glass window and ``M'' for the laser-cut metal sheet foil.}
+\end{deluxetable}
+
 
 \subsection{Calibration speckles}
 
