@@ -20,6 +20,7 @@ vcam_rn = {
 data = fits.getdata(paths.data / "20230620_dark_vcam1_504s.fits")
 data = data[:, :100, :100]
 
+
 def theoretical_noise(flux, sigma_rn):
     return np.sqrt(flux + sigma_rn**2)
 
@@ -42,6 +43,7 @@ def montecarlo_samples(
 ):
     return np.array([rng.normal(rng.poisson(f, size=N), scale=sigma_rn) for f in flux])
 
+
 flux = np.geomspace(1e-3, 10, 500)  # photons/pix/frame
 
 sigma_rn = np.linspace(0, 1, 500)
@@ -56,9 +58,10 @@ theoretical_improvement = theoretical_noise(flux_grid, sigma_grid) / theoretical
 
 def pch(value, n_e, sigma, fpn, max_k=10):
     ks = np.arange(max_k)
-    sig_k = np.sqrt(sigma**2 + (ks * fpn)**2)
+    sig_k = np.sqrt(sigma**2 + (ks * fpn) ** 2)
     prob = np.sum(stats.norm(ks, sig_k).pdf(value) * stats.poisson(n_e).pmf(ks))
     return prob
+
 
 def loss(X):
     gain, n_e, sigma, bias, fpn = X
@@ -67,6 +70,7 @@ def loss(X):
     for value in data_e.ravel():
         loglike += np.log(pch(value, n_e, sigma, fpn))
     return -loglike
+
 
 # res = minimize(loss, [0.1, 2, 0.25, 200, 1e-2], method="nelder-mead")
 # print(res)
@@ -107,6 +111,7 @@ bins = np.arange(190, 270)
 hist, bin_edges = np.histogram(data.ravel(), bins=bins, density=True)
 
 from scipy.signal import find_peaks
+
 peaks, _ = find_peaks(hist, 1e-3, distance=5)
 gain = 1 / np.diff(bins[peaks]).mean()
 n_e = hist[peaks[1]] / hist[peaks[0]]
@@ -125,9 +130,7 @@ axes[0].format(
     ylabel="counts",
 )
 ax2 = axes[0].dualx(lambda adu: (adu - 200) * gain, label="signal [e-]")
-ax2.format(
-    xticks=np.arange(8)
-)
+ax2.format(xticks=np.arange(8))
 
 
 theoretical_curves = {}

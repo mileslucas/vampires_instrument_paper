@@ -17,7 +17,7 @@ def get_emccd_snr(photons, texp, emgain=300):
         enf = 1
         rn_e = 9.6
         fullwell_e = 180_000
-    cic_flux = 1e-3 # e- / pix / frame
+    cic_flux = 1e-3  # e- / pix / frame
     # open filter QE
     ave_qe = 0.85
     fullwell = min(fullwell_e, (2**16 - 150) * 4.5)
@@ -34,7 +34,7 @@ def get_emccd_dr(emgain=300):
     else:
         fullwell = min(180_000, (2**15 - 150) * 4.5)
         rn_e = 9.6
-    cic_flux = 1e-3 # e- / pix / frame
+    cic_flux = 1e-3  # e- / pix / frame
     equiv_noise = np.sqrt(rn_e**2 + cic_flux)
     return 20 * np.log10(fullwell / equiv_noise)
 
