@@ -9,7 +9,7 @@ from scipy.optimize import minimize_scalar
 
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
-pro.rc["font.size"] = 8
+pro.rc["font.size"] = 7
 pro.rc["legend.fontsize"] = 6
 
 with fits.open(paths.data / "20230711_Neptune_stokes_cube.fits") as hdul:
@@ -45,14 +45,14 @@ def opt_func(phi, stokes_frame):
     return np.abs(np.nansum(Ur))
 
 
-def optimizer_Qr(stokes_frames, frame=""):
-    res = minimize_scalar(lambda f: opt_func(f, stokes_frames), bounds=(0, np.pi / 2))
+def optimize_Qr(stokes_frames, frame=""):
+    res = minimize_scalar(lambda f: opt_func(f, stokes_frames), bounds=(-np.pi/4, np.pi / 4))
     print(f"Neptune {frame} field phi offset: {np.rad2deg(res.x):.01f}°")
     return radial_stokes(stokes_frames[1], stokes_frames[2], phi=res.x)
 
 
 for i in range(4):
-    Qr, Ur = optimizer_Qr(stokes_cube[i], titles[i])
+    Qr, Ur = optimize_Qr(stokes_cube[i], titles[i])
     stokes_cube[i, 3] = Qr
     stokes_cube[i, 4] = Ur
 
@@ -142,6 +142,70 @@ fig.savefig(
 )
 
 
+# fig, axes = pro.subplots(
+#     nrows=2, ncols=4, width="7in", space=0, hspace=0.25, sharey=1, sharex=1
+# )
+# # PDI images
+# for ax, frame, title in zip(axes[0, :], Qr_frames, titles):
+#     im = ax.imshow(
+#         frame, extent=ext, cmap="bone", vmin=0, vmax=np.nanpercentile(frame, 99.5)
+#     )
+
+#     ax.text(0.025, 0.9, title, c="white", ha="left", fontsize=8, transform="axes")
+
+# axes[:, -1].format(
+#     rightlabels=(r"Stokes $Q_r$", r"Stokes $I$"),
+#     rightlabelpad=2,
+#     rightlabels_kw=dict(rotation=-90),
+# )
+
+# arrow_pa = np.deg2rad(np_ang - 90)
+# arrow_x = np_dist * np.sin(arrow_pa)
+# arrow_y = -np_dist * np.cos(arrow_pa)
+# arrow_length = 0.3
+
+
+# # Intensity images
+# for ax, frame in zip(axes[1, :], I_frames):
+#     im = ax.imshow(frame, extent=ext, cmap="magma", vmin=0)
+
+# for ax in axes:
+#     circ = patches.Circle((0, 0), planet_diam / 2, fill=False, ec="w", lw=0.5)
+#     ax.add_patch(circ)
+
+#     ax.arrow(
+#         arrow_x,
+#         arrow_y,
+#         -arrow_length * np.sin(arrow_pa),
+#         arrow_length * np.cos(arrow_pa),
+#         width=0.01,
+#         head_width=0,
+#         color="w",
+#         overhang=0.2,
+#         lw=0.1,
+#         length_includes_head=True,
+#     )
+
+# ## sup title
+# axes.format(
+#     grid=False,
+#     xlim=(1.3, -1.3),
+#     ylim=(-1.3, 1.3),
+#     xlabel=r'$\Delta$RA (")',
+#     ylabel=r'$\Delta$DEC (")',
+#     facecolor="k",
+# )
+# for ax in axes:
+#     ax.xaxis.set_major_locator(MaxNLocator(nbins=3, prune="both"))
+#     ax.yaxis.set_major_locator(MaxNLocator(nbins=5, prune="both"))
+
+# axes[:, 1:].format(yticks=[])
+# axes[0, :].format(xticks=[])
+
+# fig.savefig(
+#     paths.figures / "20230711_Neptune_mosaic.pdf",
+#     dpi=300,
+# )
 ### FLUX plots
 fig, axes = pro.subplots(nrows=3, width="3.5in", height="4.5in", sharey=0, hspace=0)
 cycle = pro.Colormap("fire")(np.linspace(0.4, 0.9, 4))

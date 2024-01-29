@@ -5,6 +5,7 @@ from astropy.io import fits
 from matplotlib import patches
 from matplotlib.ticker import MaxNLocator
 from photutils.profiles import RadialProfile
+from scipy.optimize import minimize_scalar
 
 pro.rc["legend.fontsize"] = 7
 pro.rc["font.size"] = 8
@@ -27,6 +28,32 @@ center = (ny - 1) / 2, (nx - 1) / 2
 Ys, Xs = np.ogrid[: stokes_cube.shape[-2], : stokes_cube.shape[-1]]
 
 radii = np.hypot(Ys - center[-2], Xs - center[-1])
+angles = np.arctan2(center[-1] - Xs, Ys - center[-2])
+
+def azimuthal_stokes(Q, U, phi=0):
+    cos2th = np.cos(2 * (angles + phi))
+    sin2th = np.sin(2 * (angles + phi))
+    Qphi = -Q * cos2th - U * sin2th
+    Uphi = Q * sin2th - U * cos2th
+    return Qphi, Uphi
+
+
+def opt_func(phi, stokes_frame):
+    Qr, Ur = azimuthal_stokes(stokes_frame[1], stokes_frame[2], phi)
+    return np.abs(np.nansum(Ur))
+
+
+def optimize_Uphi(stokes_frames, frame=""):
+    res = minimize_scalar(lambda f: opt_func(f, stokes_frames), bounds=(-np.pi/4, np.pi / 4))
+    print(f"HD169142 {frame} field phi offset: {np.rad2deg(res.x):.01f}°")
+    return azimuthal_stokes(stokes_frames[1], stokes_frames[2], phi=res.x)
+
+titles = ("F610", "F670", "F720", "F760")
+
+for i in range(4):
+    Qphi, Uphi = optimize_Uphi(stokes_cube[i], titles[i])
+    stokes_cube[i, 3] = Qphi
+    stokes_cube[i, 4] = Uphi
 
 rs = (radii * plate_scale / 1e3) ** 2
 
@@ -41,7 +68,6 @@ bar_width_arc = bar_width_au * plx  # "
 
 side_length = Qphi_frames.shape[-1] * plate_scale * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
-titles = ("F610", "F670", "F720", "F760")
 
 im = axes[0].imshow(Qphi_sum, extent=ext, vmin=0)
 rect = patches.Rectangle([-0.55, -0.495], bar_width_arc, 1e-2, color="white")
@@ -114,7 +140,7 @@ fig.savefig(
     dpi=300,
 )
 ### FLUX plots
-fig, axes = pro.subplots(nrows=2, width="3.5in", height="3.5in", sharey=0, hspace=0)
+fig, axes = pro.subplots(nrows=2, width="3.5in", height="3.25in", sharey=0, space=0)
 
 cycle = pro.Colormap("fire")(np.linspace(0.4, 0.9, 4))
 pxscale = header["PXSCALE"] / 1e3
@@ -142,7 +168,6 @@ axes.format(
 )
 axes[0].format(ylabel=r"$Q_\phi$ flux (Jy / arcsec$^2$)", yscale="log")
 axes[1].format(ylabel=r"$Q_\phi/I_{tot}$ flux (%)")
-
 fig.savefig(
     paths.figures / "20230707_HD169142_Qphi_flux.pdf",
     dpi=300,
