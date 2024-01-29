@@ -13,8 +13,8 @@ pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
 
 vcam_rn = {
-    "fast": 0.4,  # e- average of both cams
-    "slow": 0.235,
+    "FAST": 0.4,  # e- average of both cams
+    "SLOW": 0.235,
 }
 
 
@@ -109,19 +109,19 @@ def loss(X):
 # fig.savefig(paths.figures / "pnr.pdf", dpi=300)
 
 bins = np.arange(190, 270)
-hist, bin_edges = np.histogram(data.ravel(), bins=bins, density=True)
+hist, bin_edges = np.histogram(data.ravel(), bins=bins)
 
 
-peaks, _ = find_peaks(hist, 1e-3, distance=5)
+peaks, _ = find_peaks(hist, 20, distance=5)
 gain = 1 / np.diff(bins[peaks]).mean()
 n_e = hist[peaks[1]] / hist[peaks[0]]
 print(f"Dark PCH fitting | k: {gain}, n_e: {n_e}")
 
-fig, axes = pro.subplots(nrows=2, width="3.5in", height="4in", share=0)
+fig, axes = pro.subplots(nrows=2, width="3.5in", height="4in", share=0, hspace=3.75)
 
 # test_bins = np.linspace(bins.min(), bins.max(), 1000)
 # pch_prob = np.array([pch((b - 200) * gain, n_e, 0.25, 0) for b in test_bins])
-axes[0].hist(data.ravel(), bins=bins, density=True, label="Data")
+axes[0].hist(data.ravel(), bins=bins, label="Data")
 axes[0].legend(ncols=1)
 axes[0].format(
     xlim=(192, 260),
@@ -146,37 +146,37 @@ for mode, sigma in vcam_rn.items():
 
 axes[1].plot(
     flux,
-    (theoretical_curves["slow"] - 1) * 100,
+    (theoretical_curves["SLOW"] - 1) * 100,
     c="C0",
     zorder=999,
-    label="Theoretical (slow)",
+    label="Theoretical (SLOW)",
 )
 axes[1].plot(
     flux,
-    (theoretical_curves["fast"] - 1) * 100,
+    (theoretical_curves["FAST"] - 1) * 100,
     c="C3",
     zorder=999,
-    label="Theoretical (fast)",
+    label="Theoretical (FAST)",
 )
 axes[1].scatter(
     flux,
-    (mc_curves["slow"] - 1) * 100,
+    (mc_curves["SLOW"] - 1) * 100,
     c="C0",
     alpha=0.5,
     zorder=900,
     ms=5,
     mew=0,
-    label="Monte Carlo (slow)",
+    label="Monte Carlo (SLOW)",
 )
 axes[1].scatter(
     flux,
-    (mc_curves["fast"] - 1) * 100,
+    (mc_curves["FAST"] - 1) * 100,
     c="C3",
     alpha=0.5,
     zorder=900,
     ms=5,
     mew=0,
-    label="Monte Carlo (fast)",
+    label="Monte Carlo (FAST)",
 )
 axes[1].legend(ncols=1)
 axes[1].axhline(0, c="0.2")
