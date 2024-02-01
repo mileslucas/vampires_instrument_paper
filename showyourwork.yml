@@ -54,10 +54,10 @@ overleaf:
     - src/tex/output
   # List of files to pull from Overleaf
   pull:
-    - src/tex/ms.tex
-    - src/tex/bib.bib
-    - src/tex/authors.tex
     - src/tex/acknowledgements.tex
+    - src/tex/authors.tex
+    - src/tex/bib.bib
+    - src/tex/ms.tex
     - src/tex/sections/conclusions.tex
     - src/tex/sections/control.tex
     - src/tex/sections/coronagraphy.tex
