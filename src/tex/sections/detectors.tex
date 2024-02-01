@@ -25,7 +25,7 @@ We compare the sensitivity of the qCMOS detectors to the EMCCD detectors in \aut
 
 The qCMOS detectors are capable of photon-number resolving- that is, statistically determining the number of electrons from Poisson statistics. The photon number statistic is essentially free from frame-to-frame noise (like readout noise), but requires accurate bias subtraction and flat-fielding for practical use. We demonstrate the benefit of photon number resolving in \autoref{fig:pnr}. The top plot shows a histogram of pixel values in a 100 by 100 pixel window for a long exposure dark frame. The photon peaks from Poisson statistics are clear. We use the method from \citet{starkey_determining_2016} to determine the gain and quanta exposure directly from the histogram peaks. 
 
-In the bottom plot is the relative improvement in S/N by photon number resolving (i.e., converting signal to electrons and rounding to nearest whole number). The derivation of our formula is in \autoref{sec:pnr_derivation}. We also show the standard deviation of Monte Carlo samples ($N=10^4$) with and without rounding to confirm our theoretical results. We note that there are more sophisticated algorithms for achieving higher S/N ratios with photon-number resolving than simply rounding after the fact \citep{harpsoe_bayesian_2012}, but this is still a somewhat contrived use case for a ground-based instrument like VAMPIRES which will be largely photon-noise limited.
+In the bottom plot is the relative improvement in S/N by photon number resolving (i.e., converting signal to electrons and rounding to nearest whole number). The derivation of our formula is in \autoref{sec:pnr_derivation}. We also show the standard deviation of Monte Carlo samples ($N=10^4$) with and without rounding to confirm our theoretical results. We note that there are more sophisticated algorithms for achieving higher S/N ratios with photon-number resolving than simply rounding after the fact \citep{harpsoe_bayesian_2012}, but this is still a somewhat contrived use case for a ground-based instrument like VAMPIRES which will photon-noise limited in most applications.
 
 \begin{figure}
     \centering
@@ -51,13 +51,14 @@ Overall, our detectors are some of the most sensitive available commercially tod
     \colhead{(\si{\electron/\second/\pixel})} &
     \colhead{(\si{\decibel})}
 }
-\tablecaption{VAMPIRES detector characteristics. The input-referred dynamic range (DR) is derived from max signal ($2^{16}$ \si{\adu} $\approx$ \SI{6800}{\electron}) divided by the readout noise.\label{tbl:detectors}}
+\tablecaption{VAMPIRES detector characteristics.\label{tbl:detectors}}
 \startdata
 \multirow{2}{*}{VCAM1} & FAST & 0.103 & 0.40 & \num{3.6e-3} & 85 \\
  & SLOW & 0.105 & 0.25 & \num{3.6e-3} & 90 \\
 \multirow{2}{*}{VCAM2} & FAST & 0.103 & 0.40 & \num{3.6e-3} & 85 \\
  & SLOW & 0.105 & 0.22 & \num{3.6e-3} & 90 \\
 \enddata
+\tablecomments{The input-referred dynamic range (DR) is derived from max signal ($2^{16}$ \si{\adu} $\approx$ \SI{6800}{\electron}) divided by the readout noise.}
 \end{deluxetable}
 
 
