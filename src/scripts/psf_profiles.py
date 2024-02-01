@@ -6,9 +6,9 @@ from photutils.profiles import RadialProfile, CurveOfGrowth
 from astropy.convolution import kernels, convolve_fft
 from matplotlib import ticker
 
-pro.rc["legend.fontsize"] = 5
+pro.rc["legend.fontsize"] = 6
 pro.rc["legend.frameon"] = True
-pro.rc["font.size"] = 7
+pro.rc["font.size"] = 8
 pro.rc["legend.title_fontsize"] = 8
 
 filters = (
@@ -62,10 +62,10 @@ plate_scale = 6.03 # mas / px
 fig, axes = pro.subplots(
     nrows=2,
     width="3.5in",
-    height="3.in",
+    height="3.25in",
     hspace=0.4,
     sharey=0,
-    hratios=(0.65, 0.35)
+    hratios=(0.7, 0.3)
 )
 
 
@@ -85,7 +85,7 @@ for filt, color in zip(filters, cycle):
         radprof.profile,
         label=f"{filt}",
         c=color,
-        lw=0.7,
+        lw=1,
     )
 
 for filt, color in zip(filters, cycle):
@@ -99,7 +99,7 @@ for filt, color in zip(filters, cycle):
         [0, *cog.profile.tolist()],
         label=f"{filt}",
         c=color,
-        lw=0.7,
+        lw=1,
     )
 
 
@@ -112,9 +112,9 @@ for ax in axes:
     ax.axvline(46.6/2 * ave_lamd, c="0.5", ls="-", lw=0.7, zorder=0)
     ax.axvline(68/2 * ave_lamd, c="0.5", ls="--", lw=0.7, zorder=0)
 
-axes[0].text(17/2 * ave_lamd + 6e-3, 1, "AO188 control radius", c="0.5", rotation=-90, fontsize=5, va="top")
-axes[0].text(46.6/2 * ave_lamd + 6e-3, 1, "SCExAO control radius", c="0.5", rotation=-90, fontsize=5, va="top")
-axes[0].text(68/2 * ave_lamd + 6e-3, 1, "(future) AO3k control radius", c="0.5", rotation=-90, fontsize=5, va="top")
+axes[0].text(17/2 * ave_lamd + 6e-3, 1, "AO188 control radius", c="0.5", rotation=-90, fontsize=6, va="top")
+axes[0].text(46.6/2 * ave_lamd + 6e-3, 1, "SCExAO control radius", c="0.5", rotation=-90, fontsize=6, va="top")
+axes[0].text(68/2 * ave_lamd + 6e-3, 1, "AO3K control radius", c="0.5", rotation=-90, fontsize=6, va="top")
 
 axes[0].legend(ncols=1)
 # axes[1].legend(ncols=2)

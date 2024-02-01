@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from scipy import interpolate
 
-pro.rc["legend.fontsize"] = 7
+pro.rc["legend.fontsize"] = 6
 pro.rc["font.size"] = 8
 pro.rc["legend.title_fontsize"] = 8
 
