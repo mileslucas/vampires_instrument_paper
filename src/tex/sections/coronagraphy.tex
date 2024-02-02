@@ -4,7 +4,25 @@ VAMPIRES is equipped with four Lyot-style coronagraphs with various focal plane 
 
 \subsection{Focal-plane masks}
 
-A new set of Lyot focal plane masks were made for VAMPIRES for our upgrades so that each mask has a \SI{3}{\arcsecond}x\SI{3}{\arcsecond} fieldstop. These masks were constructed the same as \citet{lucas_visible-light_2022}, however we note the measured IWAs have changed slightly compared to the previous coronagraph masks. The mask IWAs were measured by rastering the SCExAO internal calibration source across the focal plane mask and using a conversion factor for the encoder plate scale (\SI{1.8}{\arcsecond\per\milli\meter}, Lozi~J. private communication). We normalize the throughput to the peak flux of the PSF far from the mask and measure the IWA where this normalized throughput is 0.5 (50\%). We plot the throughput curves and IWA in \autoref{fig:iwa}.
+A new set of Lyot focal plane masks were made for VAMPIRES for our upgrades so that each mask has a \SI{3}{\arcsecond}x\SI{3}{\arcsecond} fieldstop. These masks were constructed the same as \citet{lucas_visible-light_2022}, however we note the measured IWAs have changed slightly compared to the previous coronagraph masks. Flat-field images of the four CLC masks are shown in \autoref{fig:clc_masks} and for the DGVVC in \autoref{fig:dgvvc_masks}. The DGVVC field shows a faint azimuthal structure when using the polarizing beamsplitter due to the polarization effects of the mask itself. These features mostly disappear when using the non-polarizing beamsplitter.
+
+\begin{figure}
+    \centering
+    \script{clc_masks.py}
+    \includegraphics{figures/clc_masks.pdf}
+    \caption{Flat-field images of the classic Lyot coronagraph (CLC) focal plane masks cropped to the inner \ang{;;0.8} FOV. Dust particles on the front and rear faces of the optic blemish the field.\label{fig:clc_masks}}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \script{dgvvc_masks.py}
+    \includegraphics{figures/dgvvc_masks.pdf}
+    \caption{Flat-field images of the double-grating vector vortex coronagraph (DGVVC). The left image is with the polarizing beamsplitter (PBS) inserted where a clear azimuthal variation in intensity. The right image uses the non-polarizing beamsplitter (NPBS) which reduces this effect, although not completely. The limits have been clipped to emphasize the azimuthal variation in the frame. There are many out-of-focus dust features as well as the amplitude mask obscuring the central defect of the mask.\label{fig:dgvvc_masks}}
+\end{figure}
+
+The focal plane masks all suffer from large build-up of dust on the surface, which is problematic due to the transmission losses localized around dust particles. Flat-fielding can mitigate these effects but is hard to do successfully with VAMPIRES because the coronagraph mask mount have to be moved to align to the star. A dedicated tip-tilt solution for VAMPIRES before the coronagraph would be preferred, but space constraints and restrictions due to the common path optics of the PyWFS make this practically impossible. Careful cleaning of the masks and deployment of a baffle to protect them during (frequent) instrument access are future solutions to be implemented.
+
+We measured the mask IWAs by rastering the SCExAO internal calibration source across the focal plane mask and measuring the photometric throughput. We convert the motion stage position to on-sky angle using plate scale of \SI{1.8}{\arcsecond\per\milli\meter} (Lozi~J. private communication). We measured the flux as the total sum of the full frame. We normalize the throughput to the peak flux of the PSF far from the mask and measure the IWA where this normalized throughput is 50\%. We plot the throughput curves and IWA in \autoref{fig:iwa} and summarize the results in \autoref{tbl:coronagraph}.
 
 \begin{deluxetable}{ccc}
 \tablehead{\colhead{Name} & \colhead{Radius (\si{\micron})} & \colhead{IWA (\si{\mas})}}

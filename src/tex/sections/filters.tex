@@ -17,7 +17,9 @@ The narrowband filters are deployed in pairs for spectral differential imaging (
 
 During commissioning spectrophotometric standard stars were observed in each filter with the non-polarizing beamsplitter. The standard spectra for each star was used for calibrating photometric zero points in \si{Jy} and \si{\electron/\second} as well as the instrument throughput. We used an empirical model for the atmospheric extinction \citep{buton_atmospheric_2013} which drives our uncertainties in absolute flux calibration. The filter calibration factors and zero points are summarized in \autoref{tbl:filters}.
 
-The absolute flux calibration is summarized by the $C_{FD}$ coefficient, following \citet{gordon_james_2022}. This flux density conversion factor allows translation between data units and \si{Jy}. To use this factor the calibrated images need converted to instrumental flux with the gain and exposure time. Once in units of \si{\electron/s} apply the conversion factor to get to calibrated flux in \si{Jy}. To convert to surface brightness, divide by the area of a pixel (\SI{3.6e-5}{sq. arc/\pixel}). For Vega magnitudes, instead convert the corrected flux in \si{\electron/s} to instrumental magnitudes and correct with the appropriate zero point magnitude-
+The absolute flux calibration is summarized by the $C_{FD}$ coefficient, following \citet{gordon_james_2022}. This flux density conversion factor allows translation between data units and \si{Jy}. To use this factor the calibrated images need converted to instrumental flux with the gain and exposure time. Once in units of \si{\electron/s} apply the conversion factor to get to calibrated flux in \si{Jy}. Note that the $C_{FD}$ values in \autoref{tbl:filters} are without the beamsplitter, so whey will need to divide coefficient by the beamsplitter throughput (ideally 0.5) before converting data taken with a beamsplitter inserted. Another method would be to sum both cameras' frames together (instead of averaging) so that the flux is roughly equal to the total flux entering the beamsplitter.
+
+To convert to surface brightness, divide by the area of a pixel ($\Omega_{px}=$\SI{3.6e-5}{arcsec^2/\pixel}). For Vega magnitudes, instead convert the corrected flux in \si{\electron/s} to instrumental magnitudes and correct with the appropriate zero point magnitude-
 \begin{equation}
     m^\mathrm{filt}=\mathrm{ZP}_\mathrm{filt} - 2.5\log{\left(f\right)}
 \end{equation}
@@ -25,7 +27,8 @@ or, equivalently-
 \begin{equation}
     m^\mathrm{filt}=-2.5\log{\left(f/f_\mathrm{ZP}\right)}
 \end{equation}
-and to convert to surface brightness subtract the pixel area in square arcseconds converted to magnitudes-
+as above, if using zero-points or calibration factors from \autoref{tbl:filters} they need to be corrected for the throughput of the beamsplitter when inserted.
+To convert the magnitudes to surface brightness subtract the pixel area in square arcseconds converted to magnitudes-
 \begin{equation}
     \Sigma^\mathrm{filt} = m^\mathrm{filt} - 2.5\log{\left(\Omega_{px}\right)} = m^\mathrm{filt} + 11.1~\mathrm{mag/ sq.arc}
 \end{equation}
