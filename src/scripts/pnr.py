@@ -126,10 +126,10 @@ axes[0].legend(ncols=1)
 axes[0].format(
     xlim=(192, 260),
     xformatter="scalar",
-    xlabel="signal [adu]",
+    xlabel="signal (adu)",
     ylabel="counts",
 )
-ax2 = axes[0].dualx(lambda adu: (adu - 200) * gain, label="signal [e-]")
+ax2 = axes[0].dualx(lambda adu: (adu - 200) * gain, label="signal (e-)")
 ax2.format(xticks=np.arange(8))
 
 

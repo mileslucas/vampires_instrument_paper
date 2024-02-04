@@ -26,11 +26,13 @@ def get_emccd_noise(photons, texp, emgain=300):
     noise_e = np.sqrt(signal * enf**2 + rn_e**2 + dark_e * enf**2 + cic_flux * enf**2)
     return noise_e
 
+
 def get_emccd_snr(photons, texp, emgain=300):
     ave_qe = 0.85
     signal = photons * ave_qe * texp
     noise_e = get_emccd_noise(photons, texp, emgain)
     return signal / noise_e
+
 
 def get_emccd_dr(emgain=300):
     if emgain > 1:
@@ -44,7 +46,7 @@ def get_emccd_dr(emgain=300):
     return 20 * np.log10(fullwell / equiv_noise)
 
 
-def get_cmos_noise(photons, texp, mode:str):
+def get_cmos_noise(photons, texp, mode: str):
     dark_e = 3.6e-3 * texp
     if mode == "fast":
         rn_e = 0.4
@@ -57,6 +59,7 @@ def get_cmos_noise(photons, texp, mode:str):
     electrons = photons * ave_qe * texp
     electrons[electrons > fullwell] = np.nan
     return np.sqrt(electrons + rn_e**2 + dark_e)
+
 
 def get_cmos_snr(photons, texp, mode: str = "slow"):
     ave_qe = 0.678

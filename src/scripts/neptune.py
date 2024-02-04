@@ -9,7 +9,7 @@ from scipy.optimize import minimize_scalar
 
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
-pro.rc["font.size"] = 7
+pro.rc["font.size"] = 8
 pro.rc["legend.fontsize"] = 6
 
 with fits.open(paths.data / "20230711_Neptune_stokes_cube.fits") as hdul:
@@ -46,7 +46,9 @@ def opt_func(phi, stokes_frame):
 
 
 def optimize_Qr(stokes_frames, frame=""):
-    res = minimize_scalar(lambda f: opt_func(f, stokes_frames), bounds=(-np.pi/4, np.pi / 4))
+    res = minimize_scalar(
+        lambda f: opt_func(f, stokes_frames), bounds=(-np.pi / 4, np.pi / 4)
+    )
     print(f"Neptune {frame} field phi offset: {np.rad2deg(res.x):.01f}°")
     return radial_stokes(stokes_frames[1], stokes_frames[2], phi=res.x)
 

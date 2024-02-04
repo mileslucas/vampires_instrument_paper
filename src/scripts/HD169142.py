@@ -30,6 +30,7 @@ Ys, Xs = np.ogrid[: stokes_cube.shape[-2], : stokes_cube.shape[-1]]
 radii = np.hypot(Ys - center[-2], Xs - center[-1])
 angles = np.arctan2(center[-1] - Xs, Ys - center[-2])
 
+
 def azimuthal_stokes(Q, U, phi=0):
     cos2th = np.cos(2 * (angles + phi))
     sin2th = np.sin(2 * (angles + phi))
@@ -44,9 +45,12 @@ def opt_func(phi, stokes_frame):
 
 
 def optimize_Uphi(stokes_frames, frame=""):
-    res = minimize_scalar(lambda f: opt_func(f, stokes_frames), bounds=(-np.pi/4, np.pi / 4))
+    res = minimize_scalar(
+        lambda f: opt_func(f, stokes_frames), bounds=(-np.pi / 4, np.pi / 4)
+    )
     print(f"HD169142 {frame} field phi offset: {np.rad2deg(res.x):.01f}°")
     return azimuthal_stokes(stokes_frames[1], stokes_frames[2], phi=res.x)
+
 
 titles = ("F610", "F670", "F720", "F760")
 
