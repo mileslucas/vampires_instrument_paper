@@ -41,9 +41,11 @@ for ax, key in zip(axes, mask_names):
         window = 800
         cutout = Cutout2D(frame, (cx, cy), window)
         norm = simple_norm(cutout.data, "asinh")
+        vmax = None
     else:
         c = "k"
-        norm = simple_norm(cutout.data, "log")
+        vmax = np.nanpercentile(cutout.data, 30)
+        norm = None
         cmap = "magma"
         window = int(2e3 / 6.03)
         cutout = Cutout2D(frame, (cx, cy), window)
@@ -54,7 +56,7 @@ for ax, key in zip(axes, mask_names):
         -side_length[0] / 2,
         side_length[0] / 2,
     )
-    ax.imshow(cutout.data, extent=ext, cmap=cmap, norm=norm)
+    ax.imshow(cutout.data, extent=ext, cmap=cmap, norm=norm, vmin=0, vmax=vmax)
     ax.text(
         0.03,
         0.97,
@@ -66,11 +68,11 @@ for ax, key in zip(axes, mask_names):
         transform="axes",
     )
 
-axes[1].line((0.14e3 / plate_scale, 0.78e3 / plate_scale), (0, 0), c="w", ls="--", lw=1)
+axes[1].line((0.14e3 / plate_scale, 0.78e3 / plate_scale), (0, 0), c="w", ls="--", lw=0.75)
 axes[1].text(
     0.14e3 / plate_scale + (0.78e3 - 0.14e3) / 2 / plate_scale,
-    0 + 2,
-    '0.8"',
+    0 + 3,
+    '0.1" - 0.8"',
     c="w",
     fontsize=6,
     ha="center",
