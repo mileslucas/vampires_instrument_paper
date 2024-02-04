@@ -7,6 +7,7 @@ from matplotlib.ticker import MaxNLocator
 from matplotlib import patches
 from photutils.profiles import RadialProfile
 from scipy.optimize import minimize_scalar
+from matplotlib.patches import FancyArrowPatch
 
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
@@ -61,6 +62,17 @@ for ax in axes:
     ax.scatter(
         [0], [0], m="+", ms=50, c="w", lw=0.75
     )
+
+    arrow_length = 0.07
+    theta = -np.deg2rad(header["D_IMRPAP"] + header["INST-PA"])
+    rot_mat = np.array([[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]])
+    delta = rot_mat @ np.array((0, -arrow_length))
+    ax.plot((0.3, delta[0] + 0.3), (-0.3, delta[1] - 0.3), color="w", lw=0.5)
+    ax.text(delta[0] + 0.29, -0.3 + delta[1], "El", color="w", fontsize=6, ha="left", va="center")
+    delta = rot_mat @ np.array((-arrow_length, 0))
+    ax.plot((0.3, delta[0] + 0.3), (-0.3, delta[1] - 0.3), color="w", lw=0.5)
+    ax.text(delta[0] + 0.3, -0.29 + delta[1], "Az", color="w", fontsize=6, ha="center", va="bottom")
+
 
 ## sup title
 axes.format(
