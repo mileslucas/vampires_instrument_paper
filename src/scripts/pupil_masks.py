@@ -29,11 +29,13 @@ for path in (paths.data / "pupil_images").glob("*.fits"):
 
 # plate_scale = 6.03 # mas / px
 
-fig, axes = pro.subplots(nrows=2, ncols=2, width="3.5in", space=0)
+fig, axes = pro.subplots(nrows=2, ncols=2, width="3.5in", space=0.25)
 
 for ax, key in zip(axes, masks_name):
     frame = data_dict[key]
     cy, cx = np.array(frame.shape[-2:]) / 2 - 0.5
+    if key == "LyotStop":
+        cy -= 3
     cutout = Cutout2D(frame, (cx, cy), 850)
     side_length = np.array(cutout.shape)
     ext = (

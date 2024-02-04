@@ -11,7 +11,7 @@ pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
 pro.rc["cmap"] = "mono_r"
 
-mask_names = {"RAP": "Pupil (RAP)", "PSF": "PSF"}
+mask_names = {"RAP": "Pupil (RAP)", "PSF": "PSF (Open)"}
 
 data_dict = {}
 for path in [
@@ -39,7 +39,7 @@ for ax, key in zip(axes, mask_names):
         c = "w"
         cmap = "mono_r"
         window = 800
-        cutout = Cutout2D(frame, (cx, cy), window)
+        cutout = Cutout2D(frame, (cx, cy - 3), window)
         norm = simple_norm(cutout.data, "asinh")
         vmax = None
     else:
