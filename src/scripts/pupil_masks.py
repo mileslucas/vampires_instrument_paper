@@ -27,6 +27,10 @@ for path in (paths.data / "pupil_images").glob("*.fits"):
     data_dict[key] = np.nan_to_num(np.squeeze(data))
 
 
+for k in masks_name:
+    ratio = np.nansum(data_dict[k] > 1e6) / np.nansum(data_dict["Open"] > 1e6)
+    print(f"{k}: {ratio * 100:.01f}%")
+
 # plate_scale = 6.03 # mas / px
 
 fig, axes = pro.subplots(nrows=2, ncols=2, width="3.5in", space=0.25)
