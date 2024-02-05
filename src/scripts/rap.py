@@ -4,12 +4,14 @@ import proplot as pro
 import numpy as np
 from astropy.nddata import Cutout2D
 from astropy.visualization import simple_norm
+from photutils.profiles import RadialProfile
 
 pro.rc["legend.fontsize"] = 6
 pro.rc["font.size"] = 8
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
 pro.rc["cmap"] = "mono_r"
+pro.rc["cycle"] = "ggplot"
 
 mask_names = {"RAP": "Pupil (RAP)", "PSF": "PSF (Open)"}
 
@@ -30,9 +32,9 @@ for path in [
 
 plate_scale = 6.03  # mas / px
 
-fig, axes = pro.subplots(ncols=2, wspace=0.25, width="3.5in", share=0)
+fig, axes = pro.subplots([[1, 2], [3, 3]], wspace=0.25, hspace=0.5, width="3.5in", share=0, hratios=(0.6, 0.4))
 
-for ax, key in zip(axes, mask_names):
+for ax, key in zip(axes[0, :], mask_names):
     frame = data_dict[key]
     cy, cx = np.array(frame.shape[-2:]) / 2 - 0.5
     if key == "RAP":
@@ -68,8 +70,8 @@ for ax, key in zip(axes, mask_names):
         transform="axes",
     )
 
-axes[1].line((0.14e3 / plate_scale, 0.78e3 / plate_scale), (0, 0), c="w", ls="--", lw=0.75)
-axes[1].text(
+axes[0, 1].line((0.14e3 / plate_scale, 0.78e3 / plate_scale), (0, 0), c="w", ls="--", lw=0.75)
+axes[0, 1].text(
     0.14e3 / plate_scale + (0.78e3 - 0.14e3) / 2 / plate_scale,
     0 + 3,
     '0.1" - 0.8"',
@@ -79,7 +81,15 @@ axes[1].text(
     va="bottom",
 )
 
-axes.format(grid=False, xticks=[], yticks=[])
+axes[0, :].format(grid=False, xticks=[], yticks=[])
+
+
+radii = np.arange(0, 1e3 / plate_scale)
+cy, cx = np.array(cutout.data.shape) / 2 - 0.5
+prof = RadialProfile(cutout.data, (cx, cy), radii)
+prof.normalize()
+axes[1, :].plot(prof.radius * plate_scale / 1e3, prof.profile)
+axes[1, :].format(yscale="log", yformatter="log", xlabel="separation (\")", ylabel="norm. profile")
 
 # save output
 fig.savefig(paths.figures / "rap.pdf", dpi=300)
