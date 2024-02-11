@@ -1,6 +1,6 @@
 \section{Coronagraphy}\label{sec:coronagraphy}
 
-VAMPIRES is equipped with four Lyot-style coronagraphs with various focal plane mask sizes and a new vector-vortex phase mask. The focal plane masks are mounted in a precise translation stage for fine alignment due to the lack of a dedicated tip-tilt mirror for VAMPIRES. The four Lyot-style focal plane masks were designed to be partially transmissive (design 0.1\%; actual 0.6\%) circular dots with inner working angles (IWA) corresponding to roughly two, three, five, and seven resolution elements (2, 3, 5, and 7 $\lambda/D$) in radius.
+As a high-contrast testbed SCExAO seeks to push wavefront control and coronagraphy to its limits. Currently VAMPIRES is equipped with four Lyot-style coronagraphs with various focal plane mask sizes and a new vector-vortex phase mask. The focal plane masks are mounted in a precise three-axis translation stage for fine alignment due to the lack of a dedicated tip-tilt mirror for VAMPIRES. The four Lyot-style focal plane masks were designed to be partially transmissive (design 0.1\%; actual 0.6\%) circular dots with inner working angles (IWA) corresponding to roughly two, three, five, and seven resolution elements (2, 3, 5, and 7 $\lambda/D$) in radius. The new double-grating vector vortex coronagraph (DGVVC; PI: Doelman, D.) was deployed in November 2023. This mask requires further testing before being made available for observers, especially given the polarizing effects of the liquid crystal grating in the mask.
 
 \subsection{Focal-plane masks}
 
@@ -20,7 +20,7 @@ A new set of Lyot focal plane masks were made for VAMPIRES for our upgrades so t
     \caption{Flat-field images of the double-grating vector vortex coronagraph (DGVVC). The left image is with the polarizing beamsplitter (PBS) inserted where a clear azimuthal variation in intensity. The right image uses the non-polarizing beamsplitter (NPBS) which reduces this effect, although not completely. The limits have been clipped to emphasize the azimuthal variation in the frame. There are many out-of-focus dust features as well as the amplitude mask obscuring the central defect of the mask.\label{fig:dgvvc_masks}}
 \end{figure}
 
-The focal plane masks all suffer from large build-up of dust on the surface, which is problematic due to the transmission losses localized around dust particles. Flat-fielding can mitigate these effects but is hard to do successfully with VAMPIRES because the coronagraph mask mount have to be moved to align to the star. A dedicated tip-tilt solution for VAMPIRES before the coronagraph would be preferred, but space constraints and restrictions due to the common path optics of the PyWFS make this practically impossible. Careful cleaning of the masks and deployment of a baffle to protect them during (frequent) instrument access are future solutions to be implemented.
+The focal plane masks all suffer from built-up dust on the front and back surfaces, which is problematic due to the transmission losses localized around dust particles. Flat-fielding can mitigate these effects but is hard to do successfully with VAMPIRES because the coronagraph mask mount have to be moved to align to the star. A dedicated tip-tilt solution for VAMPIRES before the coronagraph would be preferred, but space constraints and restrictions due to the common path optics of the PyWFS make this practically impossible (\autoref{fig:cad}). Careful cleaning of the masks and deployment of a baffle to protect them during (frequent) instrument access are future solutions to be implemented.
 
 We measured the mask IWAs by rastering the SCExAO internal calibration source across the focal plane mask and measuring the photometric throughput. We convert the motion stage position to on-sky angle using plate scale of \SI{1.8}{\arcsecond\per\milli\meter} (Lozi~J. private communication). We measured the flux as the total sum of the full frame. We normalize the throughput to the peak flux of the PSF far from the mask and measure the IWA where this normalized throughput is 50\%. We plot the throughput curves and IWA in \autoref{fig:iwa} and summarize the results in \autoref{tbl:coronagraph}.
 
@@ -32,9 +32,9 @@ CLC-2 & 46 & 37 \\
 CLC-3 & 69 & 59 \\
 CLC-5 & 116 & 105 \\
 CLC-7 & 148 & 150 \\
-DGVVC & 7\tablenotemark{*} & 61 \\
+DGVVC & 7^\dagger & 61 \\
 \enddata
-\tablenotetext{*}{The radius of the DGVVC is the radius of the amplitude mask obscuring the central defect in the phase mask.}
+\tablecomments{$^\dagger$ The radius of the DGVVC is the radius of the amplitude mask obscuring the central defect in the phase mask.}
 \end{deluxetable}
 
 \begin{figure}
@@ -46,7 +46,7 @@ DGVVC & 7\tablenotemark{*} & 61 \\
 
 \subsection{Pupil masks}
 
-The VAMPIRES pupil mask wheel currently houses three Lyot stops for rejecting the light diffracted by the focal plane mask. There is one Lyot stop with moderate throughput (63\%) which is described in \citet{lucas_visible-light_2022}. This mask is coated with gold for high reflectivity, aiding alignment with the pupil camera and for a future low-order wavefront sensor. Two new masks were laser-cut from metal foil sheets and deployed in January 2024 with alternate geometry in order to improve the throughput of the masks. These masks require further testing but the geometric throughput has been measured and is shown alongside the gold Lyot stop in \autoref{tbl:pupil}. To measure the throughput, we take pupil images without the pupil masks, and then with the pupil masks, and take the ratio.
+The VAMPIRES pupil mask wheel currently houses three Lyot stops for rejecting the light diffracted by the focal plane mask. There is one Lyot stop with moderate throughput (63\%) which is described in \citet{lucas_visible-light_2022}. This mask is coated with gold for high reflectivity, aiding alignment with the pupil camera and for a future low-order wavefront sensor. Two new masks were laser-cut from metal foil sheets and deployed in January 2024 with alternate geometry in order to improve the throughput of the masks (PI: Walk, A.). These masks require further testing but we show them alongside the VAMPIRES pupil in \autoref{fig:pupil_masks}. We measure the geometric throughput of each mask using the pupil imaging lens and summing the images with various masks in the Open filter. To eliminate the non-uniform apodization effects of a fiber-fed laser source we binarize our pupil images so the background is 0 and the illuminated pupil is 1. We measure the throughput with the sums of each binarized pupil image and their ratio relative to the VAMPIRES pupil. The throughput measurements and mask specifications are listed in \autoref{tbl:pupil}. The sparse aperture masks are described in \citep{norris_vampires_2015}. 
 
 
 \begin{figure}
@@ -57,17 +57,26 @@ The VAMPIRES pupil mask wheel currently houses three Lyot stops for rejecting th
 \end{figure}
 
 
-\begin{deluxetable}{ccccc}
-\tablehead{\colhead{Name} & \colhead{Type} & \colhead{$D_\mathrm{in}$ (\si{mm})} & \colhead{$D_\mathrm{out}$ (\si{mm})} & \colhead{through (\%)}}
+\begin{deluxetable}{lccccc}
+\tabletypesize{\footnotesize}
+\tablehead{\multirow{2}{*}{Name} & \multirow{2}{*}{Type} & \colhead{$D_\mathrm{in}$} & \colhead{$D_\mathrm{out}$} & \colhead{$w_s$} & \colhead{Through.}\\
+    & & \colhead{(\si{mm})} & \colhead{(\si{mm})} & \colhead{(\si{\micron})} & \colhead{(\%)}
+}
 \tablecaption{VAMPIRES Lyot stop specifications.\label{tbl:pupil}}
 \startdata
-LyotStop-L & G & 2 & 7 & 63 \\
-LyotStop-M & M & 2 & 7 & 85 \\
-PupilRef & M & 2 & 7.06 & 100 \\
+Telescope Pupil & & \num{1300} & \num{7950} & & - \\
+SCExAO Pupil & C & & 14 & & 100 \\
+\tableline
+LyotStop-S & M & 2.14 & 7.06 &  & 98.2 \\
+LyotStop-M & M & 2.82 & 6.99 &  & 89.4 \\
+LyotStop-L & G & 3.16 & 6.33 &  & 66.1 \\
 \enddata
-\tablecomments{The stop type is either ``G'' for the gold-plated glass window or ``M'' for the laser-cut metal sheet foil.}
+\tablecomments{The telescope pupil is the effective pupil at the Nasymth IR platform .The stop type is either ``G'' for the gold-plated glass window, ``M'' for the laser-cut metal sheet foil, or "C" for laser-cut carbon fiber sheets. The throughput is measured using the pupil imaging lens and the internal source.}
 \end{deluxetable}
 
+\subsection{Coronagraphic point-spread function}
+
+We show the coronagraphic PSF for all focal plane masks and all Lyot stops in \autoref{fig:bench_coro_profiles} using the Open filter and the SCExAO internal source.
 
 \subsection{Calibration speckles}
 
@@ -93,20 +102,30 @@ Passive & 45.0 & \\
 \enddata
 \end{deluxetable}
 
-\subsection{Performance: on-sky contrast curves}
+\subsection{On-sky contrast curves}
 
 We have measured the surface brightness profiles and contrast curves for the CLC-3 and CLC-5 coronagraph masks. Data were obtained from observations of HD 102438 and GL 758 (HD 182488). The data were processed using dark subtraction and flat correction. The data were taken in the multiband-imaging mode so for each field the astrogrid calibration speckles were used to register the frame and we combined the coregistered and median-collapsed frames into a spectral cube. We use the aperture photometry of the calibration speckles for flux conversion to contrast using the relative scaling factors (\autoref{eqn:astrogrid},\autoref{tbl:astrogrid}).
 
 The surface brightness profiles are plotted in TODO. We used TODO algorithm for modeling the PSF for each wavelength. The 1$\sigma$ small-sample statistics corrected contrast curves \citep{mawet_fundamental_2014} are plotted in TODO. We also calculate the double-SDI contrast curve after radially scaling each field by its wavelength and subtracting the median frame before rescaling and collapsing.
 
-\subsection{Advanced coronagraphy}
+\subsection{Residual atmospheric dispersion}
 
-As a high-contrast testbed SCExAO seeks to push wavefront control and coronagraphy to its limits. Two experimental additions have been made to VAMPIRES that will be studied and made available to observers in future semesters. The first of these is a double-grating vector vortex coronagraph (DGVVC; PI: Doelman, D.). This will be the first visible-light phase mask coronagraph deployed on SCExAO which will push the visible contrast limits of VAMPIRES. The second is a redundant apodized pupil mask (RAP; PI: Leboullex, L.) which creates a static dark hole that is robust to low-wind effect up to $\sim$\SI{1}{rad} RMS wavefront error.
+There is only a single broadband atmospheric dispersion corrector (ADC) in the common path of VAMPIRES. This can result in residual atmospheric dispersion, depending on the airmass. Residual dispersion can be seen as a shift in the PSF over different wavelengths range. When using a fixed coronagraph, this can cause the stellar PSF to actually appear only partially covered by the coronagraph mask. This is often seen in the K-band of coronagraphic low-dispersion CHARIS observations. With multiband imaging we can see this effect (\autoref{fig:resid_adc}), but it only affected the CLC-3 mask at airmasses above $\sim$\num{2.2} ($<$\ang{27} elevation). The larger masks (CLC-5 and CLC-7) would be less affected by the dispersion, but at a loss of inner working angle. Future development of a visible-light ADC in SCExAO would be ideal, but there is limited space where the beam is collimated upstream of the coronagraph masks.
 
+\begin{figure}
+    \centering
+    \script{resid_adc.py}
+    \includegraphics{figures/resid_adc.pdf}
+    \caption{Coronagraphic multiband imaging of HD163296 with the CLC-3 coronagraph at 2.25 airmass (\ang{26.3} elevation). The filter is labeled in the top left, the location of the star is marked with a cross, and the telescope elevation and azimuth axes are displayed with a compass in the bottom left. The image is shown with a square-root stretch with separate limits for each filter.\label{fig:resid_adc}}
+\end{figure}
+
+\subsection{Redundant apodizing pupil}
+
+A redundant apodized pupil mask (RAP; PI: Leboulleux, L.) was deployed on VAMPIRES in September 2023. This mask apodizes the pupil in a way which creates a static dark hole that is robust to low-wind effect up to $\sim$\SI{1}{rad} RMS wavefront error. The trade-off is the limited inner and outer working angles and the fact that there is no attenuation of the stellar PSF, which may lead to saturation. We show the RAP mask, PSF, and profile from bench tests in the Open filter in \autoref{fig:rap}. Further testing on-sky is required before opening to observers and is future work.
 
 \begin{figure}
     \centering
     \script{rap.py}
     \includegraphics{figures/rap.pdf}
-    \caption{The redundant apodized pupil (RAP) mask. (Left) a pupil image of the mask showing the apodization pattern. (Right) a \ang{;;2}x\ang{;;2} FOV of the resulting PSF in the Open filter stretched to emphasize the dark hole from approximately \ang{;;0.1} to \ang{;;0.8}.\label{fig:rap}}
+    \caption{The redundant apodized pupil (RAP) mask. (Top left) a pupil image of the mask showing the apodization pattern. (Top right) a \ang{;;2}x\ang{;;2} FOV of the PSF produced by the RAP using the SCExAO internal source in the Open filter. The image is stretched to emphasize the dark hole from approximately \ang{;;0.1} to \ang{;;0.8}. (Bottom) a normalized radial profile of the top right PSF in log scale.\label{fig:rap}}
 \end{figure}

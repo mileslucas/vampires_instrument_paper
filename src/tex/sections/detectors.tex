@@ -1,6 +1,6 @@
 \section{Detectors}\label{sec:detectors}
 
-For our upgrades we deployed two custom-modified \textit{Hamamatsu ORCA-Quest} qCMOS detectors\footnote{\url{https://www.hamamatsu.com/us/en/product/cameras/qcmos-cameras/C15550-20UP.html}}. These detectors were chosen for their fast readout ($\sim$500 Hz at 512x512), low read noise ($\sim$ 0.2 - 0.4 $e^-$ RMS), and high dynamic range ($\sim$ 85 - 90 \si{\decibel}). We modified the cameras to be compatible with the telescope glycol cooling loop which keeps the detectors at \SIrange{-45}{-40}{\celsius} without creating turbulence in the instrument from air cooling.
+For our upgrades we deployed two custom-modified \textit{Hamamatsu ORCA-Quest} qCMOS detectors\footnote{\url{https://www.hamamatsu.com/us/en/product/cameras/qcmos-cameras/C15550-20UP.html}}. These detectors were chosen for their fast readout ($\sim$500 Hz at 512x512), low read noise ($\sim$ 0.2 - 0.4 $e^-$ RMS), and high dynamic range ($\sim$ 85 - 90 \si{\decibel}). We modified the cameras to be compatible with the telescope liquid cooling loop which keeps the detectors at \SIrange{-45}{-40}{\celsius} without creating turbulence or vibrations in the instrument from air cooling.
 
 The detectors have two  readout modes: the full-speed ``FAST'' mode, and the slower, but more sensitive, ``SLOW'' mode. In ``FAST'' mode there is an electronic shutter that allows detector integration times (DIT) of \SI{7.2}{\micro\second} - \SI{1800}{\second}. In ``SLOW'' mode the DIT is limited to $\gtrsim$\SI{50}{\milli\second}, depending on the camera crop. In this mode the analog to digital converters benefit from the reduced readout rate to reach $\sim$0.2 $e^-$ RMS read noise.
 
@@ -25,15 +25,21 @@ We compare the sensitivity of the qCMOS detectors to the EMCCD detectors in \aut
 
 The qCMOS detectors are capable of photon-number resolving- that is, statistically determining the number of electrons from Poisson statistics. The photon number statistic is essentially free from frame-to-frame noise (like readout noise), but requires accurate bias subtraction and flat-fielding for practical use. We demonstrate the benefit of photon number resolving in \autoref{fig:pnr}. The top plot shows a histogram of pixel values in a 100 by 100 pixel window for a long exposure dark frame. The photon peaks from Poisson statistics are clear. We use the method from \citet{starkey_determining_2016} to determine the gain and quanta exposure directly from the histogram peaks. 
 
-In the bottom plot is the relative improvement in S/N by photon number resolving (i.e., converting signal to electrons and rounding to nearest whole number). The derivation of our formula is in \autoref{sec:pnr_derivation}. We also show the standard deviation of Monte Carlo samples ($N=10^4$) with and without rounding to confirm our theoretical results. We note that there are more sophisticated algorithms for achieving higher S/N ratios with photon-number resolving than simply rounding after the fact \citep{harpsoe_bayesian_2012}, but this is still a somewhat contrived use case for a ground-based instrument like VAMPIRES which will photon-noise limited in most applications.
+In the bottom plot is the relative improvement in S/N by photon number resolving (i.e., converting signal to electrons and rounding to nearest whole number). The derivation of our formula is in \autoref{sec:pnr_derivation}. We also show the standard deviation of Monte Carlo samples ($N=10^4$) with and without rounding to confirm our theoretical results. We note that there are more sophisticated algorithms for achieving higher S/N ratios with photon-number resolving than simply rounding after the fact \citep{harpsoe_bayesian_2012}, but this is still a somewhat contrived use case for a ground-based instrument like VAMPIRES which will be photon-noise limited for most observations.
+
+\begin{figure}
+    \centering
+    \script{pnr.py}
+    \includegraphics[width=\columnwidth]{figures/pch.pdf}
+    \caption{Histogram of pixel values in a 100 by 100 pixel region of a long exposure in ``SLOW'' mode ($\sigma_{RN}$=\SI{0.22}{\electron})- all signal is due to dark current. The Poisson photon number peaks are clearly resolved.\label{fig:pch}}
+\end{figure}
 
 \begin{figure}
     \centering
     \script{pnr.py}
     \includegraphics[width=\columnwidth]{figures/pnr.pdf}
-    \caption{(top) histogram of pixel values in a 100 by 100 pixel region of a long exposure in ``SLOW'' mode ($\sigma_{RN}$=\SI{0.22}{\electron})- all signal is due to dark current. The photon number peaks are clearly resolved. (bottom) relative S/N improvement from calculating the photon number in the low-flux regime compared to the standard noise terms. Solid curves are theoretical values (\autoref{eqn:pnr_std}) and the scatter points are Monte Carlo statistical simulations shown for both the ``SLOW'' and the ``FAST''  ($\sigma_{RN}$=\SI{0.4}{\electron}) detector readout modes.\label{fig:pnr}}
+    \caption{Relative S/N improvement from calculating the photon number in the low-flux regime compared to the standard noise terms. Solid curves are theoretical values (\autoref{eqn:pnr_std}) and the scatter points are Monte Carlo statistical simulations shown for both the ``SLOW'' and the ``FAST''  ($\sigma_{RN}$=\SI{0.4}{\electron}) detector readout modes.\label{fig:pnr}}
 \end{figure}
-
 Overall, our detectors are some of the most sensitive available commercially today. Compared to electron-multiplication technologies, the calibration and operation of the detectors is much simpler. In addition, the previous installment of VAMPIRES did not allow exposure times $>$\SI{1}{s}, so our new detector architecture is vastly more flexible and sensitive than before. We recommend flat-fielding to correct for the pixel-to-pixel gain variations that are much higher in CMOS detectors. The bias frames are quite structured due to the CMOS architecture, so we also recommend bias or sky-background frames for subtracting the structured offset. Other than that, the detectors are virtually free of cosmetics so we only apply bad-pixel correction to long exposures for cosmic-ray rejection.
 
 \begin{deluxetable}{cccccc}

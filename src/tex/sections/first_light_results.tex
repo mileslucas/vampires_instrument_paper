@@ -46,7 +46,7 @@ For each camera (and therefore each narrowband filter) we reduced the data follo
     \centering
     \script{RAqr.py}
     \includegraphics[width=\columnwidth]{figures/20230707_RAqr_mosaic.pdf}
-    \caption{\formatdate{28}{6}{2023} VAMPIRES \textit{R Aqr} Reduced images in linear stretch. Both images are in units of \si{mJy/arcsec^2} and have the same limits. (left) The H$\alpha$ image showing the giant star and a bright emission clump to the northeast. (right) The H$\alpha$-continuum image which only contains emission from the giant star.\label{fig:raqr_mosaic}}
+    \caption{\formatdate{28}{6}{2023} VAMPIRES \textit{R Aqr} Reduced images with a square-root stretch. Both images are in units of \si{mJy/arcsec^2} and have the same limits. (left) The H$\alpha$ image showing the giant star and a bright emission clump to the northeast. (right) The H$\alpha$-continuum image which only contains emission from the giant star.\label{fig:raqr_mosaic}}
 \end{figure}
 
 \subsection{Neptune\label{sec:neptune}}
@@ -61,10 +61,10 @@ We observed gas giant \textit{Neptune} on \formatdate{11}{7}{2023} in the multib
 }
 \tablecaption{Ephemeris of Neptune for our observations on \formatdate{11}{7}{2023} based on JPL horizons data.\label{tbl:neptune}}
 \startdata
-Apparent diameter & \ang{;;2.313102} \\
-North pole angle & \ang{318.0816} \\
+Apparent diameter & \ang{;;2.313} \\
+North pole angle & \ang{318.1} \\
 North pole distance & \ang{;;-1.058} \\
-Sun-observer phase angle & \ang{1.8173}
+Sun-observer phase angle & \ang{1.817}
 \enddata
 \tablereferences{\url{https://ssd.jpl.nasa.gov/horizons/}}
 \end{deluxetable}
@@ -78,8 +78,10 @@ We derotate all Stokes images to north up and east left before combining with a 
 
 We calculate an alternative the radial Stokes parameters, $Q_r$ and $U_r$ \citep{schmid_limb_2006},
 \begin{align}
+\begin{split}
     Q_r &= Q\cos{\left(2\theta\right)} + U\sin{\left(2\theta\right)} \\
     U_r &= -Q\sin{\left(2\theta\right)} + U\cos{\left(2\theta\right)}
+\end{split}
 \end{align}
 For an optically thick planetary atmosphere like Neptune's, the most probable alignment of the electric field is radially from the center of the planet to the limb \citep{schmid_limb_2006}. This makes $Q_r$ approximately equal to the polarized intensity and we expect $U_r$ to be minimized, at least to first order. We attempt to correct residual polarization errors in our data by offsetting the angle, $\theta$, for the radial Stokes parameters in each filter and optimizing until $|\Sigma{U_r}|$ is minimized. The best-fitting offset angles used for each filter were \ang{-6.1}, \ang{1.9}, \ang{3.8}, and \ang{9.3}, respectively.
 

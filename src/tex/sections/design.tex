@@ -3,7 +3,7 @@
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{figures/VAMPIRES_diagram.pdf}
-    \caption{VAMPIRES Instrument Schematic}
+    \caption{VAMPIRES Instrument Schematic. Some components are greatly simplified for clarity.}
     \label{fig:schematic}
 \end{figure*}
 
@@ -19,9 +19,18 @@ This light enters SCExAO and is immediately collimated and corrected with a 2000
 Once the light is on the visible bench of SCExAO it encounters a series of pickoffs for routing the light to various modules of SCExAO. The first is the pickoff for the visible pyramid wavefront sensor (PyWFS), which has multiple filters for sending more or less light to the wavefront sensor to assure sufficient S/N during observations. Typically an \SI{800}{\nano\meter} dichroic filter is used, which effectively cuts off light below $\lambda <$\SI{775}{\nano\meter} due to its \ang{20} tilt. Then the light passes through a fieldstop that houses the suite of Lyot coronagraph masks (\autoref{sec:coronagraphy}) as well as a \SI{3}{\arcsecond}x\SI{3}{\arcsecond} fieldstop. After the fieldstop are two pickoffs for the fiber-fed instrument FIRST. These pickoffs typically use non-polarizing gray beamsplitters which allows simultaneous observations in VAMPIRES with appropriate focus shifts.
 
 \subsection{VAMPIRES optics}
-Finally, the remaining light (\SIrange{600}{775}{\nano\meter}) reaches the VAMPIRES collimating lens, after which is a deployable ferroelectric liquid crystal (FLC), a wheel for pupil-plane optics, and a standard filter wheel. The pupil wheel houses sparse aperture masks, neutral-density (ND) filters, and the coronagraph Lyot stops. This wheel is at $\sim$\ang{6} so that light reflected off the masks can be imaged by a separate pupil-viewing camera. The standard filter wheel houses five \SI{50}{\nano\meter}-wide bandpass filters for standard imaging as well as an empty slot for broadband observations, After this filter wheel is a separate baffle for the VAMPIRES fore-optics to reduce scattered light from motor encoders and electronic devices on the SCExAO bench. 
 
-The beam then reaches a newly-developed multiband imaging (MBI) optic. This optic uses multiple dichroics with unique angles-of-incidence (AOI) to split broadband light into multiple fields imaged on the detector (\autoref{fig:mbi_schematic}). Our design uses three shortpass dichroic filters with a protected silver mirror at the back creating four $\sim$\SI{50}{\nano\meter} fields which roughly match the standard bandpass filters. This optic can be rotated \ang{180} to place a protected silver mirror in the beam, instead, creating a single image. In both cases, the light has a $\sim$\ang{10} reflection off a protected silver fold mirror before reaching the removable pupil-imaging lens and the objective lens.
+Finally, the remaining light (\SIrange{600}{775}{\nano\meter}) reaches the VAMPIRES collimating lens, after which is a deployable ferroelectric liquid crystal (FLC), a wheel for pupil-plane optics, and a standard filter wheel. The pupil wheel houses sparse aperture masks, neutral-density (ND) filters, and the coronagraph Lyot stops. This wheel is at $\sim$\ang{6} so that light reflected off the masks can be imaged by a separate pupil-viewing camera. The standard filter wheel houses five \SI{50}{\nano\meter}-wide bandpass filters for standard imaging as well as an empty slot for broadband observations, After this filter wheel is a separate baffle for the VAMPIRES fore-optics to reduce scattered light from motor encoders and electronic devices on the SCExAO bench.
+
+Next, the beam reaches the multiband imaging optics, which are discussed below. The light is focused using an achromatic doublet lens and an additional singlet lens can be inserted for pupil imaging. The converging beam passes through the beamsplitter wheel, which has a non-polarizing 50/50 beamsplitter cube, a wire-grid polarizing beamsplitter cube, or the light can be imaged without a beamsplitter onto a single detector, only. Because the beamsplitter cubes are \SI{25}{\milli\meter} thick, there is a significant focus shift which is accomadated by a translation stage on one of the cameras and the objective lens. 
+
+The last optic before the detectors is a differential filter wheel which houses four narrowband filters. These filters come in pairs and are deployed so each pair is imaged simultaneously in front of both cameras. The filter wheel can switch which camera a respective filter is in front of with a \ang{180} rotation, which allows differential imaging to cancel out the non-common path aberrations between the two beams \citep{uyama_high-contrast_2020}. Finally, the light reaches the two VAMPIRES detectors, which are discussed in detail in \autoref{sec:detectors}.
+
+\subsection{Multiband imaging}
+
+We developed a new technique for imaging multiple fields at different wavelengths on the same detector which we call multiband imaging (MBI). This was developed to take advantage of the large sensor size of our detectors, which only uses 3\% of the detector for a \ang{;;3}x\ang{;;3} field of view. We create an image slicer by using multiple dichroics with unique angles-of-incidence (AOI) to split broadband light into multiple fields imaged on the detector (\autoref{fig:mbi_schematic}). Our design uses three shortpass dichroic filters (\SI{750}{\nano\meter}, \SI{700}{\nano\meter}, and \SI{650}{\nano\meter}) with a protected silver mirror at the back creating four $\sim$\SI{50}{\nano\meter} fields which roughly match the standard bandpass filters (\autoref{fig:filters}). This optic can be rotated \ang{180} to place a protected silver mirror in the beam, instead, creating a single image. In both cases, the light has a $\sim$\ang{10} reflection off a protected silver fold mirror to orient the beam towards the objective and pupil lens.
+
+There are ghost PSF images produced by repeated reflections between dichroic surfaces which would be highly disturbing for high-contrast observations. In lab testing we isolated the source of the ghost PSFs and redesigned the geometry of the dichroic tilts so that all ghost PSFs fall completely outside of the fields of view of ``primary'' PSFs. The precision of the angular tilts of the dichroics is on the order of \SI{1}{mdeg} to make sure neighboring fields do not overlap- this is a linear precision of $\sim$\SI{1}{\micron} or less, which is very hard to accomplish with traditional fabrication methods. We worked with industrial machinists to create a custom lens tube and titanium ring spacers to hold the MBI dichroics and mirror. The ring spacers use electrical-discharge machining to precisely create ridges along the circumference of the ring which encode the tilt for each dichroic.
 
 \begin{figure}
     \centering
@@ -29,14 +38,6 @@ The beam then reaches a newly-developed multiband imaging (MBI) optic. This opti
     \caption{Schematic drawing for the multiband imaging dichroic principle. Broadband collimated light reaches the stack of dichroics plus mirror, each of which has a unique angle of incidence (AOI). The light reflected by each dichroic will have its own field in the focal plane due to the AOI. The light transmitted by each dichroic will pass onto the next optic, until all remaining light is reflected by a mirror at the back. of the stack.\label{fig:mbi_schematic}}
 \end{figure}
 
-As the light is focusing it passes through the beamsplitter wheel, which has a non-polarizing 50/50 beamsplitter cube, a wire-grid polarizing beamsplitter cube, or the light can be imaged without a beamsplitter onto a single detector, only. Because the beamsplitter cubes are \SI{25}{\milli\meter} thick, there is a significant focus shift which is accomadated by a translation stage on one of the cameras and the objective lens. The last optic before the detectors is a differential filter wheel which houses four narrowband filters. These filters come in pairs and are deployed so each pair is imaged simultaneously in front of both cameras. The filter wheel can switch which camera a respective filter is in front of with a \ang{180} rotation, which allows differential imaging to cancel out the non-common path aberrations between the two beams \citep{uyama_high-contrast_2020}.
-
-\begin{figure}
-    \centering
-    \script{HD204827.py}
-    \includegraphics[width=\columnwidth]{figures/20230707_HD204827_binary_mosaic.pdf}
-    \caption{Multiband observations of \textit{HD 204827} after frame selection, registration, and collapsing reveals a \si{75}{mas} binary. The extreme AO correction enables diffraction-limited imaging despite the reported \ang{;;0.83} seeing. All data are rotated to North up and East left and shown in log stretch with the same limits for all frames.\label{fig:binary}}
-\end{figure}
 
 \begin{deluxetable}{cl}
 \tabletypesize{\footnotesize}
@@ -49,15 +50,19 @@ As the light is focusing it passes through the beamsplitter wheel, which has a n
 Diff. Limit & \SI{16.5}{\mas} at \SI{625}{\nm}, \SI{20.1}{\mas} at \SI{760}{\nm}\\
 FOV & \SI{3}{\arcsecond} x \SI{3}{\arcsecond} \\
 Plate Scale & \SI{6}{\mas/px} \\
+F-ratio &  21.2 (28.3 in coronagraph focal plane) \\
+Pupil diameter & \SI{7.06}{\milli\meter} (1126x magnification)\\
+Min. DIT & \SI{7.2}{\micro\second} (FAST), $>$\SI{48}{\milli\second} (SLOW) \\
 Coronagraph & CLC-2, CLC-3, CLC-5, CLC-7, DGVVC \\
-SAM & 7-hole, 9-hole, 18-hole, Annulus, RAP \\
-Pupil Masks & LyotStop, OptLyot, PupilRef, Mirror, ND1.0, ND2.5 \\
+Pupil Masks & 7-hole, 9-hole, 18-hole, Annulus, RAP, \\
+ & LyotStop-S, LyotStop-M, LyotStop-L, \\
+& Mirror, ND1.0, ND2.5 \\
 Filters & 625-50, 650-50, 675-50, 725-50, 750-50, 775-50, Open \\
-MBI & Dichroic stack (enabled) or mirror (disabled) \\
+MBI & Dichroic stack (enabled), mirror (disabled) \\
 NB Filters & H$\alpha$, H$\alpha$-Cont, SII, SII-Cont \\
 Beamsplitter & PBS, NPBS, Open \\
 Polarimetry & HWP (modulation $>$\SI{0.5}{\second}), \\
 & Optional FLC (modulation synced to cameras $<$\SI{1}{\second}), \\
-& calibration polarizers, and QWP \\
+& calibration polarizers, QWP \\
 \enddata
 \end{deluxetable}
