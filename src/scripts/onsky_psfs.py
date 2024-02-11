@@ -37,6 +37,7 @@ axes[0].imshow(
     norm=simple_norm(norm_frame, "log"),
     extent=ext,
     cmap="magma",
+    vmin=-5e-5,    
     vmax=0.12 * np.nanmax(norm_frame),
 )
 
