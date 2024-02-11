@@ -3,10 +3,7 @@ import proplot as pro
 from astropy.io import fits
 import numpy as np
 from astropy.visualization import simple_norm
-from matplotlib.ticker import MaxNLocator
 from matplotlib import patches
-from photutils.profiles import RadialProfile
-from scipy.optimize import minimize_scalar
 
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
@@ -19,7 +16,9 @@ with fits.open(paths.data / "20230707_HD204827_coll.fits") as hdul:
 
 titles = ("F610", "F670", "F720", "F760")
 
-fig, axes = pro.subplots(nrows=2, ncols=2, width="3.5in", space=0.2, sharey=1, sharex=1)
+fig, axes = pro.subplots(
+    nrows=2, ncols=2, width="3.5in", space=0.25, sharey=1, sharex=1
+)
 
 plate_scale = header["PXSCALE"]
 side_length = cube.shape[-1] * plate_scale * 1e-3 / 2

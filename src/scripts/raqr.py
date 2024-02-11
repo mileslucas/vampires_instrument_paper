@@ -5,6 +5,7 @@ from astropy.io import fits
 from matplotlib import patches
 from astropy.visualization import simple_norm
 from scipy.ndimage import gaussian_filter
+from photutils.profiles import RadialProfile
 
 pro.rc["legend.fontsize"] = 7
 pro.rc["font.size"] = 8
@@ -20,7 +21,9 @@ fig, axes = pro.subplots(
 halpha_frame, header = fits.getdata(
     paths.data / "20230707_RAqr_Halpha.fits", header=True
 )
-hacont_frame = fits.getdata(paths.data / "20230707_RAqr_Ha-cont.fits")
+hacont_frame, hacont_header = fits.getdata(
+    paths.data / "20230707_RAqr_Ha-cont.fits", header=True
+)
 halpha_frame = halpha_frame / header["EXPTIME"] * header["GAIN"] * 3.6e-5
 hacont_frame = hacont_frame / header["EXPTIME"] * header["GAIN"] * 1.6e-5
 plate_scale = header["PXSCALE"]  # mas / px
@@ -94,26 +97,34 @@ fig.savefig(
 
 fig, axes = pro.subplots(ncols=2, wspace=0.25, width="3.5in")
 
+ctr = np.array(halpha_frame.shape) / 2 - 0.5
+radprof = RadialProfile(halpha_frame, ctr[::-1], np.arange(0, 150))
+fwhm = radprof.gaussian_fwhm * header["PXSCALE"]
+print(f"RAqr Halpha FWHM: {fwhm:.01f} mas ({fwhm/header['RESELEM']:.02f} l/D)")
 vmax = max(np.nanmax(halpha_frame), np.nanmax(hacont_frame))
 im = axes[0].imshow(
     halpha_frame,
     extent=ext,
-    norm=simple_norm(halpha_frame, stretch="linear"),
+    norm=simple_norm(halpha_frame, stretch="sqrt"),
     vmin=0,
     vmax=vmax,
 )
+ctr = np.array(hacont_frame.shape) / 2 - 0.5
+radprof = RadialProfile(hacont_frame, ctr[::-1], np.arange(0, 150))
+fwhm = radprof.gaussian_fwhm * hacont_header["PXSCALE"]
+print(f"RAqr Ha-Cont FWHM: {fwhm:.01f} mas ({fwhm/hacont_header['RESELEM']:.02f} l/D)")
 axes[0].text(0.95, 0.9, r"Halpha", transform="axes", c="white", ha="right", fontsize=9)
 im = axes[1].imshow(
     hacont_frame,
     extent=ext,
-    norm=simple_norm(hacont_frame, stretch="linear"),
+    norm=simple_norm(hacont_frame, stretch="sqrt"),
     vmin=0,
     vmax=vmax,
 )
 axes[1].text(0.95, 0.9, r"Ha-Cont", transform="axes", c="white", ha="right", fontsize=9)
 
-bar_width_au = 20
-bar_width_arc = bar_width_au * plx  # "
+bar_width_arc = 0.05
+bar_width_au = bar_width_arc / plx
 
 for ax in axes:
     rect = patches.Rectangle([-0.11, -0.085], bar_width_arc, 3e-3, color="white")
@@ -121,7 +132,7 @@ for ax in axes:
     ax.text(
         -0.11 + bar_width_arc / 2,
         -0.072,
-        f'{bar_width_arc:.02f}"',
+        f"{bar_width_arc*1e3:.0f} mas",
         c="white",
         ha="center",
         fontsize=8,

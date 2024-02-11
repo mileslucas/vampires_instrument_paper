@@ -41,7 +41,7 @@ def radial_stokes(Q, U, phi=0):
 
 
 def opt_func(phi, stokes_frame):
-    Qr, Ur = radial_stokes(stokes_frame[1], stokes_frame[2], phi)
+    Qr, Ur = radial_stokes(stokes_frame[2], stokes_frame[3], phi)
     return np.abs(np.nansum(Ur))
 
 
@@ -50,13 +50,13 @@ def optimize_Qr(stokes_frames, frame=""):
         lambda f: opt_func(f, stokes_frames), bounds=(-np.pi / 4, np.pi / 4)
     )
     print(f"Neptune {frame} field phi offset: {np.rad2deg(res.x):.01f}°")
-    return radial_stokes(stokes_frames[1], stokes_frames[2], phi=res.x)
+    return radial_stokes(stokes_frames[2], stokes_frames[3], phi=res.x)
 
 
 for i in range(4):
     Qr, Ur = optimize_Qr(stokes_cube[i], titles[i])
-    stokes_cube[i, 3] = Qr
-    stokes_cube[i, 4] = Ur
+    stokes_cube[i, 4] = Qr
+    stokes_cube[i, 5] = Ur
 
 fig, axes = pro.subplots(
     nrows=2, ncols=4, width="7in", space=0, hspace=0.25, sharey=1, sharex=1
@@ -71,11 +71,11 @@ Jy_fact = (
     np.array((1.4e-6, 7e-7, 4.9e-7, 1.2e-6)) / header["PXAREA"] * 2
 )  # Jy / sq.arcsec / (e-/s)
 calib_data = stokes_cube * Jy_fact[:, None, None, None]
-Qr_frames = calib_data[:, 3]
-I_frames = calib_data[:, 0]
+Qr_frames = calib_data[:, 4]
+I_frames = (calib_data[:, 0] + calib_data[:, 1]) / 2
 calib_errs = stokes_err * Jy_fact[:, None, None, None]
-Qr_err = calib_errs[:, 3]
-I_err = calib_errs[:, 0]
+Qr_err = calib_errs[:, 4]
+I_err = np.hypot(calib_errs[:, 0], calib_errs[:, 1]) / np.sqrt(2)
 
 
 side_length = stokes_cube.shape[-1] * plate_scale * 1e-3 / 2

@@ -13,7 +13,7 @@ pro.rc["cmap"] = "mono_r"
 
 masks_name = {
     "Open": "Pupil",
-    "PupilRef": "PupilRef",
+    "PupilRef": "LyotStop-S",
     "LyotOpt": "LyotStop-M",
     "LyotStop": "LyotStop-L",
 }

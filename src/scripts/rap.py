@@ -32,7 +32,14 @@ for path in [
 
 plate_scale = 6.03  # mas / px
 
-fig, axes = pro.subplots([[1, 2], [3, 3]], wspace=0.25, hspace=0.5, width="3.5in", share=0, hratios=(0.6, 0.4))
+fig, axes = pro.subplots(
+    [[1, 2], [3, 3]],
+    wspace=0.25,
+    hspace=0.5,
+    width="3.5in",
+    share=0,
+    hratios=(0.6, 0.4),
+)
 
 for ax, key in zip(axes[0, :], mask_names):
     frame = data_dict[key]
@@ -70,7 +77,9 @@ for ax, key in zip(axes[0, :], mask_names):
         transform="axes",
     )
 
-axes[0, 1].line((0.14e3 / plate_scale, 0.78e3 / plate_scale), (0, 0), c="w", ls="--", lw=0.75)
+axes[0, 1].line(
+    (0.14e3 / plate_scale, 0.78e3 / plate_scale), (0, 0), c="w", ls="--", lw=0.75
+)
 axes[0, 1].text(
     0.14e3 / plate_scale + (0.78e3 - 0.14e3) / 2 / plate_scale,
     0 + 3,
@@ -84,12 +93,15 @@ axes[0, 1].text(
 axes[0, :].format(grid=False, xticks=[], yticks=[])
 
 
-radii = np.arange(0, 1e3 / plate_scale)
+radii = np.arange(0, 1.2e3 / plate_scale)
 cy, cx = np.array(cutout.data.shape) / 2 - 0.5
 prof = RadialProfile(cutout.data, (cx, cy), radii)
 prof.normalize()
-axes[1, :].plot(prof.radius * plate_scale / 1e3, prof.profile)
-axes[1, :].format(yscale="log", yformatter="log", xlabel="separation (\")", ylabel="norm. profile")
+axes[1, :].plot(prof.radius * plate_scale / 1e3, prof.profile, label="Open")
+axes[1, :].legend()
+axes[1, :].format(
+    yscale="log", yformatter="log", xlabel='separation (")', ylabel="norm. profile"
+)
 
 # save output
 fig.savefig(paths.figures / "rap.pdf", dpi=300)

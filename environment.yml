@@ -7,4 +7,5 @@ dependencies:
   - pip:
       - matplotlib==3.4.3
       - proplot==0.9.7
+      - scikit-image==0.22.0
       - -e /Users/mileslucas/dev/python/scexao_etc

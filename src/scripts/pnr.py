@@ -3,7 +3,6 @@ import proplot as pro
 import numpy as np
 from scipy.special import erf
 from scipy import stats
-from scipy.optimize import minimize
 from astropy.io import fits
 from scipy.signal import find_peaks
 
@@ -117,7 +116,7 @@ gain = 1 / np.diff(bins[peaks]).mean()
 n_e = hist[peaks[1]] / hist[peaks[0]]
 print(f"Dark PCH fitting | k: {gain}, n_e: {n_e}")
 
-fig, axes = pro.subplots(nrows=2, width="3.5in", height="4in", share=0, hspace=3.75)
+fig, axes = pro.subplots(width="3.5in", height="2.25in")
 
 # test_bins = np.linspace(bins.min(), bins.max(), 1000)
 # pch_prob = np.array([pch((b - 200) * gain, n_e, 0.25, 0) for b in test_bins])
@@ -144,21 +143,26 @@ for mode, sigma in vcam_rn.items():
     theoretical_curves[mode] = theoretical_improvement
     mc_curves[mode] = mc_improvement
 
-axes[1].plot(
+# save output
+fig.savefig(paths.figures / "pch.pdf", dpi=300)
+
+
+fig, axes = pro.subplots(width="3.5in", height="2.25in")
+axes[0].plot(
     flux,
     (theoretical_curves["SLOW"] - 1) * 100,
     c="C0",
     zorder=999,
     label="Theoretical (SLOW)",
 )
-axes[1].plot(
+axes[0].plot(
     flux,
     (theoretical_curves["FAST"] - 1) * 100,
     c="C3",
     zorder=999,
     label="Theoretical (FAST)",
 )
-axes[1].scatter(
+axes[0].scatter(
     flux,
     (mc_curves["SLOW"] - 1) * 100,
     c="C0",
@@ -168,7 +172,7 @@ axes[1].scatter(
     mew=0,
     label="Monte Carlo (SLOW)",
 )
-axes[1].scatter(
+axes[0].scatter(
     flux,
     (mc_curves["FAST"] - 1) * 100,
     c="C3",
@@ -178,10 +182,10 @@ axes[1].scatter(
     mew=0,
     label="Monte Carlo (FAST)",
 )
-axes[1].legend(ncols=1)
-axes[1].axhline(0, c="0.2")
+axes[0].legend(ncols=1)
+axes[0].axhline(0, c="0.2")
 
-axes[1].format(
+axes[0].format(
     xlabel="e- / pixel / frame",
     ylabel="relative S/N improvement (%)",
     xscale="log",

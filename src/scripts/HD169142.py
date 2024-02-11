@@ -15,7 +15,7 @@ pro.rc["image.origin"] = "lower"
 pro.rc["cycle"] = "ggplot"
 pro.rc["axes.grid"] = False
 
-fig, axes = pro.subplots(nrows=2, width="3.5in", sharex=1, hspace=0.25)
+fig, axes = pro.subplots(nrows=2, width="3.5in", sharex=1, hspace=0.5, sharey=0)
 
 stokes_path = paths.data / "20230707_HD169142_vampires_stokes_cube.fits"
 stokes_cube, header = fits.getdata(stokes_path, header=True)
@@ -40,7 +40,7 @@ def azimuthal_stokes(Q, U, phi=0):
 
 
 def opt_func(phi, stokes_frame):
-    Qr, Ur = azimuthal_stokes(stokes_frame[1], stokes_frame[2], phi)
+    Qr, Ur = azimuthal_stokes(stokes_frame[2], stokes_frame[3], phi)
     return np.abs(np.nansum(Ur))
 
 
@@ -49,21 +49,21 @@ def optimize_Uphi(stokes_frames, frame=""):
         lambda f: opt_func(f, stokes_frames), bounds=(-np.pi / 4, np.pi / 4)
     )
     print(f"HD169142 {frame} field phi offset: {np.rad2deg(res.x):.01f}°")
-    return azimuthal_stokes(stokes_frames[1], stokes_frames[2], phi=res.x)
+    return azimuthal_stokes(stokes_frames[2], stokes_frames[3], phi=res.x)
 
 
 titles = ("F610", "F670", "F720", "F760")
 
 for i in range(4):
     Qphi, Uphi = optimize_Uphi(stokes_cube[i], titles[i])
-    stokes_cube[i, 3] = Qphi
-    stokes_cube[i, 4] = Uphi
+    stokes_cube[i, 4] = Qphi
+    stokes_cube[i, 5] = Uphi
 
 rs = (radii * plate_scale / 1e3) ** 2
 
-Qphi_frames = stokes_cube[:, 3]
+Qphi_frames = stokes_cube[:, 4]
 Qphi_sum = np.nansum(Qphi_frames, axis=0)
-I_frames = stokes_cube[:, 0]
+I_frames = 0.5 * (stokes_cube[:, 0] + stokes_cube[:, 1])
 
 vmin = 0
 bar_width_au = 20
@@ -73,7 +73,7 @@ bar_width_arc = bar_width_au * plx  # "
 side_length = Qphi_frames.shape[-1] * plate_scale * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
 
-im = axes[0].imshow(Qphi_sum, extent=ext, vmin=0)
+im = axes[0].imshow(Qphi_sum, extent=ext, vmin=0, vmax=0.9 * np.nanmax(Qphi_sum))
 rect = patches.Rectangle([-0.55, -0.495], bar_width_arc, 1e-2, color="white")
 axes[0].add_patch(rect)
 axes[0].text(

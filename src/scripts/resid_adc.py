@@ -3,11 +3,7 @@ import proplot as pro
 from astropy.io import fits
 import numpy as np
 from astropy.visualization import simple_norm
-from matplotlib.ticker import MaxNLocator
 from matplotlib import patches
-from photutils.profiles import RadialProfile
-from scipy.optimize import minimize_scalar
-from matplotlib.patches import FancyArrowPatch
 
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
@@ -20,7 +16,9 @@ with fits.open(paths.data / "20230710_HD163296_resid_adc.fits") as hdul:
 
 titles = ("F610", "F670", "F720", "F760")
 
-fig, axes = pro.subplots(nrows=2, ncols=2, width="3.5in", space=0.2, sharey=1, sharex=1)
+fig, axes = pro.subplots(
+    nrows=2, ncols=2, width="3.5in", space=0.25, sharey=1, sharex=1
+)
 
 plate_scale = header["PXSCALE"]
 side_length = cube.shape[-1] * plate_scale * 1e-3 / 2
@@ -53,25 +51,41 @@ for ax in axes:
     ax.text(
         -0.35 + bar_width_arc / 2,
         -0.33,
-        f"{bar_width_arc:.02f}\"",
+        f'{bar_width_arc:.02f}"',
         c="white",
         ha="center",
         va="bottom",
         fontsize=8,
     )
-    ax.scatter(
-        [0], [0], m="+", ms=50, c="w", lw=0.75
-    )
+    ax.scatter([0], [0], m="+", ms=50, c="w", lw=0.75)
 
     arrow_length = 0.07
     theta = -np.deg2rad(header["D_IMRPAP"] + header["INST-PA"])
-    rot_mat = np.array([[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]])
+    rot_mat = np.array(
+        [[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]]
+    )
     delta = rot_mat @ np.array((0, -arrow_length))
     ax.plot((0.3, delta[0] + 0.3), (-0.3, delta[1] - 0.3), color="w", lw=0.5)
-    ax.text(delta[0] + 0.29, -0.3 + delta[1], "El", color="w", fontsize=6, ha="left", va="center")
+    ax.text(
+        delta[0] + 0.29,
+        -0.3 + delta[1],
+        "El",
+        color="w",
+        fontsize=6,
+        ha="left",
+        va="center",
+    )
     delta = rot_mat @ np.array((-arrow_length, 0))
     ax.plot((0.3, delta[0] + 0.3), (-0.3, delta[1] - 0.3), color="w", lw=0.5)
-    ax.text(delta[0] + 0.3, -0.29 + delta[1], "Az", color="w", fontsize=6, ha="center", va="bottom")
+    ax.text(
+        delta[0] + 0.3,
+        -0.29 + delta[1],
+        "Az",
+        color="w",
+        fontsize=6,
+        ha="center",
+        va="bottom",
+    )
 
 
 ## sup title
