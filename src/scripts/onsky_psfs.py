@@ -27,22 +27,16 @@ nx = frame.shape[-1]
 center = (ny - 1) / 2, (nx - 1) / 2
 Ys, Xs = np.ogrid[: frame.shape[-2], : frame.shape[-1]]
 
-radii = np.hypot(Ys - center[-2], Xs - center[-1])
 
 reselem = np.rad2deg(720e-9 / 7.95) * 3.6e6
 cutoff = 22.5 * hdr["RESELEM"]
 norm_frame = frame[2] / np.nanmax(frame[2])
-radprof = RadialProfile(norm_frame, center[::-1], np.arange(0, 200))
-fwhm = radprof.gaussian_fwhm * hdr["PXSCALE"]
-print(f"HD191195 F720 FWHM: {fwhm:.01f} mas ({fwhm/reselem:.02f} l/D)")
-
 
 axes[0].imshow(
     norm_frame,
     norm=simple_norm(norm_frame, "log"),
     extent=ext,
     cmap="magma",
-    vmin=0,
     vmax=0.12 * np.nanmax(norm_frame),
 )
 
