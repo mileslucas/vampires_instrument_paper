@@ -120,7 +120,6 @@ axes[0].legend(ncols=2, order="F")
 axes.format(
     grid=True,
     xlabel='separation (")',
-    
 )
 axes.format(
     ylabel="normalized profile",
