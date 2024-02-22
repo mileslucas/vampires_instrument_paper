@@ -51,7 +51,7 @@ im = axes[1].imshow(
 
 axes[0].text(0.05, 0.9, "LWE", transform="axes", c="white", ha="left", fontsize=8)
 axes[1].text(
-    0.05, 0.9, "Long exposure", transform="axes", c="white", ha="left", fontsize=8
+    0.05, 0.9, "Bad seeing", transform="axes", c="white", ha="left", fontsize=8
 )
 
 axes[0].text(

@@ -29,15 +29,10 @@ fig, axes = pro.subplots(
     width="3.5in",
 )
 
-centers = {
-    "DGVVC (PBS)": (319.3, 245.8),
-    "DGVVC (NPBS)": (366.5, 239.8),
-}
 
-
-for ax, key in zip(axes, centers):
+for ax, key in zip(axes, masks):
     frame = data_dict[key]
-    cutout = Cutout2D(frame, centers[key], int(2e3 / plate_scale), mode="partial")
+    cutout = Cutout2D(frame, (268.5, 268.5), int(2e3 / plate_scale), mode="partial")
     side_length = np.array(cutout.shape) * plate_scale / 1e3
     ext = (
         -side_length[1] / 2,
@@ -45,13 +40,27 @@ for ax, key in zip(axes, centers):
         -side_length[0] / 2,
         side_length[0] / 2,
     )
-    ax.imshow(cutout.data, vmin=0.8, vmax=1.08, extent=ext)
+    ax.imshow(cutout.data, vmin=0.85, vmax=1.15, extent=ext)
     text_mask, text_bs = key.split()
     ax.text(
-        0.03, 0.97, text_mask, c="k", va="top", ha="left", fontsize=7, transform="axes"
+        0.03,
+        1.03,
+        text_mask,
+        c="k",
+        va="bottom",
+        ha="left",
+        fontsize=7,
+        transform="axes",
     )
     ax.text(
-        0.97, 0.97, text_bs, c="k", va="top", ha="right", fontsize=7, transform="axes"
+        0.97,
+        1.03,
+        text_bs,
+        c="k",
+        va="bottom",
+        ha="right",
+        fontsize=7,
+        transform="axes",
     )
 axes[:, 1].format(ytickloc="none")
 

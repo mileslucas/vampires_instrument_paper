@@ -23,17 +23,10 @@ plate_scale = 6.03  # mas / px
 
 fig, axes = pro.subplots(nrows=2, ncols=2, width="3.5in", space=0)
 
-centers = {
-    "CLC-2": (310.2, 207.1),
-    "CLC-3": (321.2, 241.8),
-    "CLC-5": (321.2, 241.3),
-    "CLC-7": (310.9, 205.3),
-}
 
-
-for ax, key in zip(axes, centers):
+for ax, key in zip(axes, masks):
     frame = data_dict[key]
-    cutout = Cutout2D(frame, centers[key], int(800 / plate_scale))
+    cutout = Cutout2D(frame, (268.5, 268.5), int(2e3 / plate_scale))
     side_length = np.array(cutout.shape) * plate_scale / 1e3
     ext = (
         -side_length[1] / 2,

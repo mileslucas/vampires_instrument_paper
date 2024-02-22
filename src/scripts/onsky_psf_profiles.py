@@ -12,6 +12,14 @@ pro.rc["legend.title_fontsize"] = 8
 pro.rc["cycle"] = "ggplot"
 
 
+def measure_strehl_otf(image, psf):
+    im_mtf = np.abs(np.fft.fft2(np.nan_to_num(image)))
+    psf_mtf = np.abs(np.fft.fft2(np.nan_to_num(psf)))
+    im_norm = im_mtf / np.max(im_mtf)
+    psf_norm = psf_mtf / np.max(psf_mtf)
+    return np.mean(im_norm) / np.mean(psf_norm)
+
+
 def get_profiles(frame):
     ny = frame.shape[-2]
     nx = frame.shape[-1]
@@ -36,7 +44,7 @@ mbi_cube, hdr_good = fits.getdata(
 radprof_good, cog_good = get_profiles(mbi_cube[2])
 good_norm = np.nansum(radprof_good.profile)
 print(f"Good FWHM: {radprof_good.gaussian_fwhm * hdr_good['PXSCALE']:.01f} mas")
-print(f"Good Strehl est: {ideal_norm / good_norm*100:.01f}%")
+print(f"Good Strehl est: {measure_strehl_otf(mbi_cube[2], ideal_psf)*100:.01f}%")
 
 mbi_cube, hdr_fuzzy = fits.getdata(
     paths.data / "20230627_BD332642_frame.fits", header=True
@@ -46,14 +54,16 @@ fuzzy_norm = np.nansum(radprof_fuzzy.profile)
 print(
     f"Long exposure FWHM: {radprof_fuzzy.gaussian_fwhm * hdr_fuzzy['PXSCALE']:.01f} mas"
 )
-print(f"Long exposure Strehl est: {ideal_norm / fuzzy_norm*100:.01f}%")
+print(
+    f"Long exposure Strehl est: {measure_strehl_otf(mbi_cube[2], ideal_psf)*100:.01f}%"
+)
 
 fig, axes = pro.subplots(
     ncols=2, width="7in", height="3in", wratios=(0.65, 0.35), wspace=1.5, share=0
 )
 
 axes[0].plot(
-    radprof_ideal.radii[:-1] * 6.5e-3,
+    radprof_ideal.radii[:-1] * 5.9e-3,
     radprof_ideal.profile,
     c="C3",
     lw=1.25,
