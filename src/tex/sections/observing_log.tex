@@ -4,19 +4,31 @@ In \autoref{tbl:obslog} we list all observations used for this work.
 
 
 
-\begin{deluxetable*}{ccccccccccccc}
+\begin{deluxetable*}{llllllccccccc}
+\tabletypesize{\footnotesize}
 \tablehead{
-    \colhead{Date (UTC)} &
-    \colhead{Object} &
-    \colhead{Obs. Mode} &
-    \colhead{Filter} &
-    \colhead{Pol. Mode} &
-    \colhead{Coron.} &
-    \colhead{DIT (s)} &
-    \colhead{$N_\mathrm{coadds}$} &
-    \colhead{$N_\mathrm{frames}$} &
-    \colhead{$T_\mathrm{exp}$ (min)} &
-    \colhead{Prop. ID}
+    \colhead{Date} &
+    \multirow{2}{*}{Object} &
+    \multirow{2}{*}{Obs. Mode} &
+    \multirow{2}{*}{Filter} &
+    \multirow{2}{*}{Pol. Mode} &
+    \multirow{2}{*}{Coron.} &
+    \colhead{DIT} &
+    \multirow{2}{*}{$N_\mathrm{coadd}$} &
+    \multirow{2}{*}{$N_\mathrm{frame}$} &
+    \colhead{$T_\mathrm{exp}$} &
+    \multirow{2}{*}{Prop. ID} \vspace{-0.75em} \\
+    \colhead{(UTC)} & % date
+    & % object
+    & % obs mode
+    & % filter
+    & % pol mode
+    &  % coron
+    \colhead{(\si{\second})} & % dit
+    & % ncoad
+    & % nfram
+    \colhead{(\si{min})} & %texp
+    &% propid
 }
 \tablecaption{Chronologically ordered observing log.\label{tbl:obslog}}
 \startdata

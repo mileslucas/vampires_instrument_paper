@@ -1,6 +1,6 @@
 \section{Detectors}\label{sec:detectors}
 
-For our upgrades we deployed two custom-modified \textit{Hamamatsu ORCA-Quest} qCMOS detectors\footnote{\url{https://www.hamamatsu.com/us/en/product/cameras/qcmos-cameras/C15550-20UP.html}}. These detectors were chosen for their fast readout ($\sim$500 Hz at 512x512), low read noise ($\sim$ 0.2 - 0.4 $e^-$ RMS), and high dynamic range ($\sim$ 85 - 90 \si{\decibel}). We modified the cameras to be compatible with the telescope liquid cooling loop which keeps the detectors at \SIrange{-45}{-40}{\celsius} without creating turbulence or vibrations in the instrument from air cooling.
+For our upgrades we deployed two custom-modified \textit{Hamamatsu ORCA-Quest} qCMOS detectors\footnote{\url{https://www.hamamatsu.com/us/en/product/cameras/qcmos-cameras/C15550-20UP.html}}. These detectors were chosen for their fast readout ($\sim$500 Hz at 536x536), low read noise ($\sim$ 0.2 - 0.4 $e^-$ RMS), and high dynamic range ($\sim$ 85 - 90 \si{\decibel}). We modified the cameras to be compatible with the telescope liquid cooling loop which keeps the detectors at \SIrange{-45}{-40}{\celsius} without creating turbulence or vibrations in the instrument from air cooling.
 
 The detectors have two  readout modes: the full-speed ``FAST'' mode, and the slower, but more sensitive, ``SLOW'' mode. In ``FAST'' mode there is an electronic shutter that allows detector integration times (DIT) of \SI{7.2}{\micro\second} - \SI{1800}{\second}. In ``SLOW'' mode the DIT is limited to $\gtrsim$\SI{50}{\milli\second}, depending on the camera crop. In this mode the analog to digital converters benefit from the reduced readout rate to reach $\sim$0.2 $e^-$ RMS read noise.
 
@@ -12,17 +12,11 @@ We measured a photon transfer curve using a calibration flat field source for bo
 \begin{equation}
     \sigma^2\left(\mu | k, \sigma_{RN}\right) = \frac{\mu}{k} + \sigma^2_{RN}
 \end{equation}
-From this fit we extract the gain ($k$) in \si{\electron/adu} from the slope of the line. We measure the readout noise from the standard deviation of a bias frame and convert to \si{\electron} with the gain. We observe that the full well (\SI{7000}{\electron}) is greater than the maximum bit-depth with our measured detector gain. The detector photoresponse is linear over the entire dynamic range and saturates at $2^{16}$ \si{adu}. During commissioning we also took dark frames with the detector caps covered. For data with significant signal, we performed a linear fit of the signal to the exposure time to get the average dark current per pixel. We report our results in \autoref{tbl:detectors}.
+From this fit we extract the gain ($k$) in \si{\electron/adu} from the slope of the line. We measure the readout noise from the standard deviation of a bias frame and convert to \si{\electron} with the gain. We observe that the full well (\SI{7000}{\electron}) is greater than can be stored in a 16-bit number with our measured detector gain. The detector photoresponse is linear over the entire dynamic range and saturates at $2^{16}$ \si{adu}.
 
-We compare the sensitivity of the qCMOS detectors to the EMCCD detectors in \autoref{fig:detector_snr_relative}. These signal-to-noise (S/N) curves use calibrated read noise, dark current, and gain along with manufacturer quantum efficiency (QE) values averaged over \SIrange{600}{800}{nm}. For the EMCCDs we include a clock-induced charge (CIC) flux of \SI{1e-3}{\electron/pixel/frame} based on empirical tests with our detectors. When electron multiplication is enabled we add a excess noise factor of $\sqrt{2}$ \citep{harpsoe_bayesian_2012}. The qCMOS detectors have an order of magnitude worse dark current and slightly worse QE compared to the EMCCDs. Despite this, \autoref{fig:detector_snr_relative} shows that the qCMOS detectors have better performance than the EMCCDs when photon-noise or read-noise limited, which is essentially all standard use-cases except for long exposures. The qCMOS detectors are dark-limited in ``SLOW'' mode at $\sim$\SI{15}{s}, where the relative performance in the low-flux regime drops compared to the EMCCDs. Using the EMCCDs without electron multiplication is superior at high photon fluxes due to the lack of excess noise factor (compared to the EMCCD) combined with higher QE (compared to the qCMOS).
+We measured the dark current of the detectors during commissioning with very long exposures while the detector lens caps were covered. We took sequences of two images per detector with increasing exposure times from \SIrange{1}{600}{\second}. We used a bias frame for background subtraction and the detector gain fit above to convert our pixel values to flux in \si{\electron}. We performed a linear fit to this signal with exposure time, only using frames with obvious dark signal (DIT$>$\SI{10}{\second}). For both cameras the dark current at \SI{-40}{\celsius} is \SI{3.6}{\electron/\pixel/\kilo\second}, better than the manufacturer's specification. We report the detector characteristics in \autoref{tbl:detectors}.
 
-\begin{figure}
-    \centering
-    \script{detector_snr.py}
-    \includegraphics[width=\columnwidth]{figures/detector_snr_relative.pdf}
-    \caption{Theoretical normalized S/N curves for the new CMOS detectors (red curves) and the previous EMCCD detectors (blue curves). The curves are normalized to an ideal camera (shot-noise only with perfect QE). The top plot shows a read noise-limited case, and the bottom plot shows a dark-limited case. Noise terms include read noise, dark noise, photon noise, and CIC plus excess noise factor for the EMCCDs.\label{fig:detector_snr_relative}}
-\end{figure}
-
+\subsection{Photon number resolving}
 The qCMOS detectors are capable of photon-number resolving- that is, statistically determining the number of electrons from Poisson statistics. The photon number statistic is essentially free from frame-to-frame noise (like readout noise), but requires accurate bias subtraction and flat-fielding for practical use. We demonstrate the benefit of photon number resolving in \autoref{fig:pnr}. The top plot shows a histogram of pixel values in a 100 by 100 pixel window for a long exposure dark frame. The photon peaks from Poisson statistics are clear. We use the method from \citet{starkey_determining_2016} to determine the gain and quanta exposure directly from the histogram peaks. 
 
 In the bottom plot is the relative improvement in S/N by photon number resolving (i.e., converting signal to electrons and rounding to nearest whole number). The derivation of our formula is in \autoref{sec:pnr_derivation}. We also show the standard deviation of Monte Carlo samples ($N=10^4$) with and without rounding to confirm our theoretical results. We note that there are more sophisticated algorithms for achieving higher S/N ratios with photon-number resolving than simply rounding after the fact \citep{harpsoe_bayesian_2012}, but this is still a somewhat contrived use case for a ground-based instrument like VAMPIRES which will be photon-noise limited for most observations.
@@ -40,16 +34,28 @@ In the bottom plot is the relative improvement in S/N by photon number resolving
     \includegraphics[width=\columnwidth]{figures/pnr.pdf}
     \caption{Relative S/N improvement from calculating the photon number in the low-flux regime compared to the standard noise terms. Solid curves are theoretical values (\autoref{eqn:pnr_std}) and the scatter points are Monte Carlo statistical simulations shown for both the ``SLOW'' and the ``FAST''  ($\sigma_{RN}$=\SI{0.4}{\electron}) detector readout modes.\label{fig:pnr}}
 \end{figure}
+
+\subsection{qCMOS versus EMCCD}
+
+We compare the sensitivity of the qCMOS detectors to the EMCCD detectors in \autoref{fig:detector_snr_relative}. These signal-to-noise (S/N) curves use calibrated read noise, dark current, and gain along with manufacturer quantum efficiency (QE) values averaged over \SIrange{600}{800}{nm}. For the EMCCDs we include a clock-induced charge (CIC) flux of \SI{1e-3}{\electron/pixel/frame} based on empirical tests with our detectors. When electron multiplication is enabled we add a excess noise factor of $\sqrt{2}$ \citep{harpsoe_bayesian_2012}. The qCMOS detectors have an order of magnitude worse dark current and slightly worse QE compared to the EMCCDs. Despite this, \autoref{fig:detector_snr_relative} shows that the qCMOS detectors have better performance than the EMCCDs when photon-noise or read-noise limited, which is essentially all standard use-cases except for long exposures. The qCMOS detectors are dark-limited in ``SLOW'' mode at $\sim$\SI{15}{s}, where the relative performance in the low-flux regime drops compared to the EMCCDs. Using the EMCCDs without electron multiplication is superior at high photon fluxes due to the lack of excess noise factor (compared to the EMCCD) combined with higher QE (compared to the qCMOS).
+
+\begin{figure}
+    \centering
+    \script{detector_snr.py}
+    \includegraphics[width=\columnwidth]{figures/detector_snr_relative.pdf}
+    \caption{Theoretical normalized S/N curves for the new CMOS detectors (red curves) and the previous EMCCD detectors (blue curves). The curves are normalized to an ideal camera (shot-noise only with perfect QE). The top plot shows a read noise-limited case, and the bottom plot shows a dark-limited case. Noise terms include read noise, dark noise, photon noise, and CIC plus excess noise factor for the EMCCDs.\label{fig:detector_snr_relative}}
+\end{figure}
+
 Overall, our detectors are some of the most sensitive available commercially today. Compared to electron-multiplication technologies, the calibration and operation of the detectors is much simpler. In addition, the previous installment of VAMPIRES did not allow exposure times $>$\SI{1}{s}, so our new detector architecture is vastly more flexible and sensitive than before. We recommend flat-fielding to correct for the pixel-to-pixel gain variations that are much higher in CMOS detectors. The bias frames are quite structured due to the CMOS architecture, so we also recommend bias or sky-background frames for subtracting the structured offset. Other than that, the detectors are virtually free of cosmetics so we only apply bad-pixel correction to long exposures for cosmic-ray rejection.
 
-\begin{deluxetable}{cccccc}
+\begin{deluxetable}{llcccc}
 \tablehead{
     \multirow{2}{*}{Cam} & 
     \multirow{2}{*}{Mode} & 
     \colhead{Gain} & 
     \colhead{RN} & 
     \colhead{DC} & 
-    \colhead{DR} \\
+    \colhead{DR} \vspace{-0.75em}\\
      &
      &
     \colhead{(\si{\electron/\adu})} &
@@ -81,13 +87,13 @@ The astrometric calibration is used to determine the instrument rotation angle a
 
 For our observations we observed three visual binaries (Albireo, 21 Oph, and Algol), but we only use one set of data due to systematic errors in two of the data sets. During our observations of Albireo there was significant optical vignetting due to a misplaced wheel in the pupil plane and our observations of Algol are very defocused. Thankfully we have multiple nights of data from 21 Oph in all filters, including the multiband mode. We also attempted to use a globular cluster (M5), but the lack of good guide stars for the adaptive optics system made our images too seeing limited and too low S/N for accurate astrometry.
 
-\begin{deluxetable}{ccccl}
+\begin{deluxetable}{lcccl}
 \tablehead{
     \multirow{2}{*}{Object} &
     \colhead{$t_\mathrm{obs}$} &
     \colhead{$\rho$} &
     \colhead{$\theta$} &
-    \multirow{2}{*}{Ref.} \\
+    \multirow{2}{*}{Ref.} \vspace{-0.75em}\\
     &
     \colhead{(MJD)} &
     \colhead{($^{\prime\prime}$)} &
@@ -110,12 +116,13 @@ We describe the instrument angle as the pupil rotation of the instrument with re
 \end{equation}
 where $\theta_\mathrm{PAP}$ is the static image rotator pupil offset of \ang{-39} (to align with the SCExAO entrance pupil). We note a \ang{180} parity compared to the previous astrometric solution for the EMCCDs \citep{currie_images_2022}.
 
-\begin{deluxetable}{cccc}
+\begin{deluxetable}{lccc}
+\tabletypesize{\small}
 \tablehead{
     \multirow{2}{*}{Cam} &
     \colhead{px. scale} &
     \colhead{$\theta_\mathrm{off}$} &
-    \colhead{$\theta_\mathrm{inst}$} \\
+    \colhead{$\theta_\mathrm{inst}$} \vspace{-0.5em}\\
     &
     \colhead{(mas/px)} &
     \colhead{(\textdegree)} &

@@ -33,10 +33,12 @@ The low-wind effect (LWE) is the realization of wavefront discontinuities across
 \end{figure}
 
 \subsection{Radial profiles}
-We plot the radial profile of our high-quality and seeing-limited PSFs along with a synthetic instrument PSF in \autoref{fig:onsky_psf_profiles}. The profiles are normalized using relative aperture photometry with a  diameter\ang{;;1} and so that the ideal PSF has a peak value of 1. We also show the cumulative aperture sums, or encircled energy.
+We plot the radial profile of our high-quality and seeing-limited PSFs along with a synthetic instrument PSF in \autoref{fig:onsky_psf_profiles}. The profiles are normalized to each other using relative aperture photometry with a  diameter of \ang{;;1}. All the profiles are normalized so the ideal PSF has a peak value of 1. We also show the cumulative aperture sums, or encircled energy, normalized to a value of 1 at \ang{;;0.5}.
 \begin{figure*}
     \centering
     \script{onsky_psf_profiles.py}
     \includegraphics[width=\textwidth]{figures/onsky_psf_profiles.pdf}
     \caption{\label{fig:onsky_psf_profiles}}
 \end{figure*}
+
+We see that our high-quality PSF closely matches the profile of the ideal PSF until about 15$\lambda/D$. The nulls of the radial pattern are not as deep in our data as the model due to quasi-static speckles. Past 15$\lambda/D$ the control radius of the SCExAO DM is clear due to the residual atmospheric speckle halo. The overall dynamic range from peak to apparent noise floor is \SI{90}{\decibel}.

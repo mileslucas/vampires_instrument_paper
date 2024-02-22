@@ -8,17 +8,18 @@ The narrowband filters are deployed in pairs for spectral differential imaging (
 
 
 \begin{deluxetable*}{ccccccccccccc}
+\centering
 \tablehead{
     \multirow{2}{*}{Filter} &
     \colhead{$\lambda_\mathrm{ave}$} &
     \colhead{$\lambda_\mathrm{min}$} &
     \colhead{$\lambda_\mathrm{max}$} &
     \colhead{FWHM} &
-    \multirow{2}{*}{$\Delta\lambda/\lambda$} &
-    \colhead{Inst. Trans.} &
+    \colhead{$\Delta\lambda/\lambda$} &
+    \colhead{Through.} &
     \colhead{$\mathrm{QE}_\mathrm{ave}$} &
-    \multicolumn{3}{c}{Zero Point} &
-    \colhead{$C_{FD}$} \\
+    \multicolumn{3}{c}{Zero points} &
+    \colhead{$C_{FD}$} \vspace{-0.5em}\\
     &
     \colhead{(\si{\nm})} &
     \colhead{(\si{\nm})} &
@@ -50,7 +51,6 @@ H$\alpha$ & 656.3 & 655.9 & 656.7 & 0.8 & 0.0012 & 4.9 & 69 & 19.5 & \num{6.5e+0
 H$\alpha$-Cont & 647.7 & 646.7 & 648.6 & 1.9 & 0.0029 & 5.3 & 70 & 20.8 & \num{2.1e+08} & 3210 & \num{1.6e-05} \\
 SII & 672.7 & 671.2 & 674.1 & 2.9 & 0.0043 & 7.1 & 67 & 21.4 & \num{3.6e+08} & 3090 & \num{8.6e-06} \\
 SII-Cont & 681.5 & 680.0 & 683.0 & 3.0 & 0.0044 & 7.1 & 66 & 21.3 & \num{3.4e+08} & 3040 & \num{8.8e-06} \\
-% 625-50\\
 \enddata
 \tablecomments{Minimum and maximum wavelengths represent 50\% relative throughput. Zero points, relative throughput, and conversion factors estimated from spectrophotometric standard observations on \formatdate{31}{8}{2023} and all assume no beamsplitter. Zero points in Vega magnitudes map to instrument flux in \si{\electron/s} (assuming no beamsplitter).}
 \end{deluxetable*}
@@ -60,7 +60,7 @@ There are two broadband absorptive neutral density filters in the pupil mask whe
 \begin{deluxetable}{lcc}
 \tablehead{
     \multirow{2}{*}{Name} &
-    \multicolumn{2}{c}{OD} \\
+    \multicolumn{2}{c}{OD} \vspace{-0.5em}\\
     &
     \colhead{(theory)} &
     \colhead{(meas.)} 

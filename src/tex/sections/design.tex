@@ -11,7 +11,7 @@ The Visible Aperture-Masking Polarimetric Imager/Interferometer for Resolving Ex
 
 
 \subsection{Telescope and facility adaptive optics}
-SCExAO is mounted on the infrared Nasymth platform of Subaru behind the facility adaptive optics instrument, AO188 \citep{minowa_performance_2010}, which provides low-order correction with a curvature wavefront sensor to multiple instruments which are craned in and out of focus. AO188 also houses the K-mirror image rotator and atmospheric dispersion correcter (ADC). The light from AO188 is split with a dichroic beamsplitter which transmits red to infrared light ($\lambda >$\SI{600}{\nano\meter}). 
+SCExAO is mounted on the infrared Nasymth platform of the Subaru telescope downstream of the facility adaptive optics instrument, AO188 \citep{minowa_performance_2010}. AO188 is capable of low-order correction with a its curvature wavefront sensor and 188-element bimorph deformable mirror. It provides wavefront correction for multiple instruments, including SCExAO, which are craned in and out of focus. AO188 also houses the K-mirror image rotator and atmospheric dispersion correcter (ADC). Spectrally, the light from AO188 is split with a dichroic beamsplitter which transmits red to infrared light ($\lambda >$\SI{600}{\nano\meter}) to downstream instruments.
 
 \subsection{SCExAO common path}
 This light enters SCExAO and is immediately collimated and corrected with a 2000-actuator Boston Micro Machines deformable mirror (DM), which has 45 actuators across the SCExAO pupil and operates at $\sim$\si{\kilo\hertz} speeds for extreme AO correction. Following the DM is a pupil mask which slightly undersizes the pupil (95\%, equivalent diameter of \SI{7.8}{\meter}) and blocks out two of the broken DM actuators. The beam is split with a near-IR dichroic filter ($\lambda=$\SI{950}{\nano\meter}), reflecting the visible light into a periscope which routes the beam onto a different optical bench and focuses the light with a reimaging lens.
@@ -39,8 +39,8 @@ There are ghost PSF images produced by repeated reflections between dichroic sur
 \end{figure}
 
 
-\begin{deluxetable}{cl}
-\tabletypesize{\footnotesize}
+\begin{deluxetable}{ll}
+\tabletypesize{\scriptsize}
 \tablehead{
     \colhead{Name} & 
     \colhead{Value(s)}
@@ -57,12 +57,12 @@ Coronagraph & CLC-2, CLC-3, CLC-5, CLC-7, DGVVC \\
 Pupil Masks & 7-hole, 9-hole, 18-hole, Annulus, RAP, \\
  & LyotStop-S, LyotStop-M, LyotStop-L, \\
 & Mirror, ND1.0, ND2.5 \\
-Filters & 625-50, 650-50, 675-50, 725-50, 750-50, 775-50, Open \\
+Filters & Open, 625-50, 650-50, 675-50, 725-50, 750-50, 775-50 \\
 MBI & Dichroic stack (enabled), mirror (disabled) \\
 NB Filters & H$\alpha$, H$\alpha$-Cont, SII, SII-Cont \\
 Beamsplitter & PBS, NPBS, Open \\
 Polarimetry & HWP (modulation $>$\SI{0.5}{\second}), \\
-& Optional FLC (modulation synced to cameras $<$\SI{1}{\second}), \\
-& calibration polarizers, QWP \\
+& FLC (modulation synced to cameras $<$\SI{1}{\second}), \\
+& Calibration polarizers, QWPs \\
 \enddata
 \end{deluxetable}
