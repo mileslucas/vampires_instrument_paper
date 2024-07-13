@@ -1,0 +1,29 @@
+\section{Conclusions}\label{sec:conclusions}
+
+In this paper, we presented upgrades to the visible high-contrast imaging polarimeter VAMPIRES. These upgrades included new detectors, coronagraphs, polarization optics, and a multiband imaging mode. We characterized the instrument and described all current optics and observing modes. A variety of engineering and science validation tests were performed, which confirmed the instrument's readiness.
+
+We highlight key features of VAMPIRES which emphasize its technological capabilities
+\begin{itemize}
+    \item[-] Extreme AO and high-speed lucky imaging makes VAMPIRES capable of visible high-contrast imaging, reaching angular resolutions of $\sim$\SI{20}{\mas} and Strehl ratios up to 60\%.
+    \item[-] Two new qCMOS detectors combine high frame rates, low read noise (\SIrange{0.25}{0.4}{\electron} RMS), and large format arrays with subframe readout, no cosmetic defects, negligible non-linearity, and a high dynamic range (\SI{90}{\deci\bel}).
+    \item[-] We developed a dichroic-based technique for imaging multiple fields at multiple wavelengths multiplexed across the large detector arrays. This technique is used across a variety of instrument modes, effectively increasing the observing efficiency by a factor of four and adding low-resolution spectral information.
+    \item[-] We installed a suite of visible coronagraphs and pupil masks, enabling deep observations. Initial tests reached 5$\sigma$ contrast limits of $10^{-4}$ to $10^{-6}$ from \ang{;;0.1} to $>$\ang{;;0.5}.
+    \item[-] Advanced polarimetric control allows significant attenuation of unpolarized signal. The new achromatic FLC has improved the polarimetric efficiency by $\sim$20\% and can be removed for long exposures ($>$\SI{1}{\second}. Polarimetry can be incorporated into almost all observational modes of VAMPIRES, including multiband imaging.
+\end{itemize}
+
+With its technological capabilities, VAMPIRES enables the study of many interesting astrophysical phenomena and objects. In \autoref{sec:firstlight} we demonstrated VAMPIRES with 
+\begin{itemize}
+\item[-] Spectro-polarimetric imaging of the HD 169142 circumstellar disk, detecting the inner and outer rings and measuring the wavelength dependence of the radial scattering profile
+\item[-] High-contrast spectral differential imaging of the sub-stellar companion HD 1160B, measuring its astrometry and spectrum
+\item[-] Narrowband H$\alpha$ imaging of the R Aqr emission nebula, resolving the compact accretion source for the jet and discovering a new asymmetry
+\item[-] Spectro-polarimetric imaging of gas giant Neptune, confirming the limb polarization of its atmosphere and measuring the wavelength dependence of the radial scattering profile
+\end{itemize}
+These results highlight the utility of VAMPIRES as a visible high-contrast instrument.
+
+\subsection{Future Prospects}
+
+The most exciting prospect for VAMPIRES is the implementation of the new AO3k facility adaptive optics \citep{lozi_ao3000_2022}. This includes upgrading the 188 actuator DM to a 64$\times$64 actuator DM, a NIR pyramid wavefront sensor (NIRWFS), and a visible non-linear curvature wavefront sensor (nlCWFS \citealp{ahn_development_2023}). The AO3k upgrade will enable high-contrast wavefront correction directly from the facility AO,  while the SCExAO PyWFS and DM can act as a second-stage ``touch-up'' loop optimized for small wavefront errors and dark field control.
+
+The NIRWFS is particularly exciting for VAMPIRES since it enables observations of very dusty, red stars. These stars are too faint in the visible for extreme AO but sufficiently bright in the NIR. Circumstellar disk hosts and young stars, in general, are perfect examples of objects optimized to take advantage of the NIRWFS and VAMPIRES' new long exposure capabilities.
+
+While \SI{30}{\meter}-class telescopes are still on the horizon, and their HCI instrumentation perhaps even further, instruments like SCExAO and VAMPIRES are one the best places to develop and implement advanced technology, both software and hardware, for the next generation of ground-based high-contrast instruments: ELT/PCS \citep{kasper_pcs_2021}, TMT/PSI \citep{fitzgerald_planetary_2019}, and GMT/GMagAO-X \citep{kautz_gmagao-x_2023}. The multi-wavelength observing techniques and wavefront control methods studied by SCExAO today will be directly applicable to the development of these future instruments, which will bring us closer to the goals of direct imaging and characterization of planets most similar to Earth.

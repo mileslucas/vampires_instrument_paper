@@ -1,0 +1,65 @@
+\section{Science applications}\label{sec:science}
+
+\subsection{Polarimetric Imaging of Circumstellar Disks}
+
+Polarimetric differential imaging (PDI; \citealt{kuhn_imaging_2001}) is one of the most powerful techniques for high-contrast imaging-- the attenuation of the unpolarized starlight via a linear combination of images is more powerful and simpler than any other PSF control or subtraction method. The only downsides are that polarimetry requires specialized instrumentation with precise calibrations and is only applicable for polarized signals.
+
+One of the primary science cases for VAMPIRES is differential polarimetry of circumstellar disks. These disks are valuable laboratories for understanding the formation processes of planets by both studying the environments they form in (the disks) and looking for signposts of forming planets (ring gaps, spirals, cavities, etc.).
+
+Scattered-light images trace the gas atmosphere of the disk and therefore the characteristic size of any disk features can be derived from thermodynamic principles-- specifically the pressure scale height which is typically on the order of $\sim$\si{au} \citep{andrews_structures_2021}. These disks are found in star-forming regions, of which the closest and brightest regions are $\sim$\SI{150}{\parsec} away. Therefore, the required angular resolution to resolve disk features is $\sim$\SI{70}{\mas}. This level of resolution has only recently been enabled with HCI on large telescopes, as well as through high-angular resolution dust continuum observations with ALMA \citep{andrews_disk_2018}. At visible wavelengths the increased angular resolution compared to NIR enables higher definition images of these nearby disks, or it allows reaching the $\sim$\SI{10}{\au} resolution of disks further away (up to \SI{500}{\parsec}).
+
+Another factor for polarimetric imaging of disks is the relative polarization of the disk signal to the stellar total intensity, which is on the order of $10^{-3}$ or less. This means our polarimeter must be able to attenuate unpolarized signal accurately to a higher precision than the relative disk brightness. This level of precision is not too difficult to obtain \citep{schmid_spherezimpol_2018,holstein_polarimetric_2020,holstein_calibration_2020}, but careful polarimetric calibrations are required for consistent, accurate polarimetric measurements.
+
+Combining visible HCI observations with NIR observations allows more thorough analysis of disk properties themselves, probing different optical depths of the disks and mapping any wavelength-dependent scattering. We see visible polarimetric observations as a natural extension of the NIR, allowing a wider spectrum for analyzing the complexities of the large variety of disks and disk substructures.
+
+\subsection{Reflected-Light Imaging of Extra-solar Planets}
+
+Reflected-light imaging of extra-solar planets is a promising technique for direct detection of old, cold planets close to their stars. At visible wavelengths, the required contrast is on the order of $10^{-7}$ at a few astronomical units (CITE ME), which is far beyond the reach of current ground-based instrumentation. The reflected light will be polarized at the $>$10\% level \citep{hunziker_refplanets_2020}, meaning a polarimetric measurement of the reflected light requires a contrast of $\sim10^{-8}$. While this seems detrimental, the efficiency of PDI can reduce the unpolarized stellar signal by a few orders of magnitude, which makes the relative achievable contrast much better with polarimetry-- if we have a contrast of $10^{-4}$ with 2 orders of magnitude of attenuation of unpolarized signal, we achieve a polarimetric contrast of $10^{-6}$, much closer to our goals than in total intensity, alone.
+
+The performance of our differential polarimetry and coronagraphy is driven by these requirements as well as the over-arching wavefront control required to achieve high-contrast in the visible. While the total number of targets amenable to reflected-light imaging from the ground today is small (only 5 targets were observed for \citealt{hunziker_refplanets_2020}), developing techniques and technologies today is critical for the success of the next generation of both ground- and space-based telescopes for achieving direct imaging of Earth-like planets.
+
+\subsection{Accreting Protoplanets}
+
+Giant-planet formation is a topic of much debate and, in general, the formation pathways are not perfectly understood. Observations of planets acquired as their forming is necessary to fill the gaps in our understanding, but to date the detection of forming protoplanets has been very meager (LkCa15 b, HD 100546 b, HD 169142 b, MWC 758 b, PDS 70 b,c; \citealp{kraus_lkca_2011,quanz_young_2013, reggiani_discovery_2014,biller_likely_2012,keppler_discovery_2018,haffert_two_2019}) compared to the diversity of morphologies and substructures found in planet-forming disks.
+
+In general, the search for protoplanets around young stars is done in the infrared thanks to the bright thermal emission of a forming planet. These observations can be complicated by surrounding disk material, which can obscure the planets or be confused for planetary signal. Another technique includes rotational velocity mapping and studying deviations from Keplerian motion in the disk directly. Our focus, though, is on the detection of accretion shocks in the circumplanetary disk (CPD), which excites Hydrogen atoms that emit H$\alpha$ recombination lines before returning to a lower energy state.
+
+Using H$\alpha$ accretion signatures has already been used for a few detections of protoplanets (LkCa15 b, PDS 70 b,c; \citealp{sallum_accreting_2015,wagner_magellan_2018,haffert_two_2019}). This technique requires efficient spectral differential imaging to extract the H$\alpha$ line emission from the local continuum in the stellar PSF. This requires high levels of wavefront control because the narrowband filters require longer exposures than in broadband to achieve the S/N required for detecting the CPD accretion.
+
+Thanks to the dual-camera set up of VAMPIRES we can perform efficient narrowband spectral differential imaging by putting emission line/continuum filter pairs in front of each camera, similar to ZIMPOL and MagAO-X. As with imaging reflected-light exoplanets, the overarching contrast from coronagraphy and wavefront control ultimately determines the sensitivity limits for this mode.
+
+\subsection{Close Binary Stars}
+
+At visible wavelengths a diffraction-limited PSF on an \SI{8}{\meter} telescope is $\sim$\SI{20}{\mas}, which is much better than the NIR or on smaller telescopes. With extreme AO and lucky imaging this is achievable for sufficiently bright multiple star systems and ultimately allows direct imaging of stellar companions closer to the primary star and with fainter companion flux. In general, these types of observations do not employ coronagraphy but rely on lucky imaging.
+
+Exciting applications of this technique include some of the more exotic archetypes of binary stars, such as symbiotic binaries (like in R Aqr; \autoref{sec:raqr}, \citealp{schmid_spherezimpol_2017}), or white dwarf companions of Barium stars \citep{mcclure_binary_1980,escorza_barium_2019}. The benefit of visible HCI is both being able to probe emission lines (like H$\alpha$) and achieving high enough resolution to resolve the components of the binaries and features in the closest, most dynamically active regions of these systems.
+
+We highlight the ability of visible HCI in \autoref{fig:binary}, which shows a binary with a separation of $\sim$\SI{75}{\mas} at four visible wavelengths. At NIR and TIR wavelengths such a binary would be more difficult to detect as the PSFs would approach the
+
+\begin{figure}
+    \centering
+    \script{HD204827_binary.py}
+    \includegraphics[width=\columnwidth]{figures/20230707_HD204827_binary_mosaic.pdf}
+    \caption{Multiband observations of HD 204827 after lucky imaging reveals a \SI{75}{\mas} binary. The extreme AO correction enables diffraction-limited imaging despite the reported \ang{;;0.83} seeing. All data are rotated to north up and east left and shown in log stretch with the same limits for all frames.\label{fig:binary}}
+\end{figure}
+
+\subsection{Low-Mass Stellar Companion Imaging}
+
+Extending past traditional multiple star systems, the realm of low-mass stars and brown dwarfs requires higher contrast than typical visual binaries, but not as extreme as exoplanet imaging. These observations measure the thermal emission from the companions, which is certainly fainter at visible than NIR wavelengths. What we add with visible observations, though, are valuable additional datapoints in the spectral energy distribution for constraining the spectra of the observed companions.
+
+\subsection{Solar-System objects}
+
+Solar system bodies are interesting targets for furthering our understanding of planets and planet formation-- due to their proximity we can study the atmospheres and evolution of planets with much higher precision than any other stellar system. While space probes and satellites are quite effective tools for planetary research, the high angular resolution achievable with extreme AO on \SI{10}{\meter}-class telescopes offers opportunities to further our knowledge of the solar system with much less expensive instruments and time access. Direct imaging can constrain the geometery of minor bodies, characterize scattering properties, and study time varying behavior \citep{schmid_limb_2006,vernazza_vltsphere_2021}. SCExAO is capable of studying solar system bodies via non-sidereal tracking and can achieve modest AO correction alongside AO188 \citep{groff_first_2017}.
+
+The main limitations for solar-system observations with SCExAO are the loss of wavefront control efficiency from using extended objects as the natural guide stars and the small FOV (\ang{;;3} for VAMPIRES, and \ang{;;1}-\ang{;;2} for CHARIS). Of the major bodies, only Neptune and Pluto fit within the FOV, but many minor bodies are accessible both in size and surface brightness: the Galilean moons of Jupiter (Ganymede, Callisto, Io, Europa), and large asteroid belt objects (Ceres, 4 Vesta, Pallas, etc.).
+
+
+\subsection{Stellar Atmospheres and Mass Loss}
+
+Evolved giant stars produce a variety of stellar processes which are interesting to study. These stars are massively inflated and in certain cases can be resolved directly through direct imaging or sparse-aperture masking (CITE). Studying the atmospheres of these stars provides insight into anisotropies in the photosphere (CITE) and studying their mass-loss provides insight into the complex dust formation processes of planetary nebula (CITE).
+
+The advantages of using an instrument like VAMPIRES for this are the improved angular resolution over seeing-limited visible instruments (or HST, for that matter) which is required for resolving these giant stars. In addition, the sparse-aperture masking mode allows for sub-diffraction limited resolution. Compared to traditional interferometry, VAMPIRES is much simpler to operate and is sensitive to a much broader brightness regime thanks to the high dynamic range, but cannot reach the same resolution limits, making VAMPIRES a very complementary observational tool.
+
+\subsection{Stellar Jets and Outflows}
+
+The study of stellar jets and outflows is an intriguing topic in stellar astrophysics. The benefit of the bright emission lines in the visible makes VAMPIRES well-suited for such observations and the improved inner working angle and resolution compared to HST allows probing the closest regions of these systems (CITE). This allows a direct look at jet emission before it interacts with the interstellar medium and is complementary to a variety of multi-wavelength techniques like X-ray imaging (CITE) and wide FOV imaging with lower resolution instruments (CITE).

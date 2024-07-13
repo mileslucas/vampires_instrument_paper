@@ -1,0 +1,38 @@
+\section{Data processing}\label{sec:processing}
+
+A purpose-built open-source data processing pipeline for VAMPIRES is under development.\footnote{\url{https://github.com/scexao-org/vampires_dpp}} This pipeline is designed to reduce data for both versions of the instrument and focuses on frame calibration, alignment, and polarimetry. The pipeline works for all observing modes, except non-redundant masking, and produces calibrated and coadded data ready for post-processing with other tools.
+
+\subsection{Pre-processing}
+For pre-processing the data is organized by type and object. Master calibration files are prepared from dark frames, sky frames, and flat frames. Multiband flats require an additional step to fit and normalize each multiband field independently. The final pre-processing step prompts the user to click on the approximate center of the field of view to aid in registration.
+
+\subsection{Frame Calibration and Collapsing}
+
+Raw data is calibrated with dark subtraction, flat-field normalization, and bad-pixel correction. Data is converted into units of \si{\electron/\second} and the FITS headers are normalized across the different instrument versions. Precise proper motion-corrected coordinates and parallactic angles are calculated from GAIA astrometry, when available \citep{gaia_collaboration_gaia_2016,gaia_collaboration_gaia_2018,gaia_collaboration_gaia_2021}.
+
+After calibration, the frame centroid is measured using cross-correlation with a PSF model-- for coronagraphic data, the four satellite spots (\autoref{sec:astrogrid}) are measured independently.  The data is registered with the centroids and PSF statistics like Strehl, FWHM, and the photometric flux are measured. The individual FOVs in multiband data are analyzed separately and then cut out and stacked into a spectral cube. Absolute flux calibration is supported by providing a stellar spectrum, either a model or a calibrated spectrum, which is used for synthetic photometry to derive the flux conversion factor.
+
+The data is collapsed with optional frame selection for lucky imaging. The registered and collapsed data frames are saved to disk for post-processing with other tools, such as \texttt{ADI.jl} \citep{lucas_adijl_2020}, \texttt{VIP} \citep{gomez_gonzalez_vip_2017,christiaens_vip_2023}, or \texttt{PyKLIP} \citep{wang_pyklip_2015}.
+
+\subsection{Polarimetry}
+
+Polarimetric data is collated into sets for each HWP cycle and Stokes cubes are produced from the double- or triple-difference procedure. Before differencing, data are corrected for small differences in plate scale and angle offset between the cameras. The Stokes cube is optionally corrected with a Mueller-matrix, following \citet{holstein_polarimetric_2020,zhang_characterizing_2023}. Finally, all the individual Stokes cubes are derotated and median-combined. The Stokes $I$, $Q$, and $U$ frames are saved alongside the azimuthal Stokes parameters $Q_\phi$ and $U_\phi$ \citep{monnier_multiple_2019,boer_polarimetric_2020}, 
+\begin{align}
+\begin{split}
+    \label{eqn:az_stokes}
+    Q_\phi &= -Q\cos{\left(2\phi\right)} - U\sin{\left(2\phi\right)} \\
+    U_\phi &= Q\sin{\left(2\phi\right)} - U\cos{\left(2\phi\right)}
+\end{split}
+\end{align}
+where
+\begin{equation}
+    \phi = \arctan{\left( \frac{x_0 - x}{y - y_0} \right)} + \phi_0
+\end{equation}
+in image coordinates. Note, this is equivalent to the angle east of north when data has been derotated. The total linear polarization
+\begin{equation}
+    P = \sqrt{Q^2 + U^2}
+\end{equation}
+and the angle of linear polarization
+\begin{equation}
+    \chi = \frac12\arctan{\frac{U}{Q}}
+\end{equation}
+are also calculated and saved in the Stokes cube.

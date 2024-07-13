@@ -2,6 +2,7 @@
 \documentclass[twocolumn]{aastex631}
 \usepackage{showyourwork}
 \usepackage{multirow}
+\usepackage{soul}
 \usepackage{datetime}
 \yyyymmdddate
 \usepackage{mathtools}
@@ -25,30 +26,33 @@
 \DeclareSIUnit{\electron}{e^-}
 \DeclareSIUnit{\pixel}{px}
 \DeclareSIUnit{\adu}{adu}
+\DeclareSIUnit{\year}{yr}
+\DeclareSIUnit{\parsec}{pc}
+\DeclareSIUnit{\au}{au}
+
 % Begin!
 \begin{document}
 
 % Title
-\title{The Next Generation of High-Contrast Imaging Polarimetry with SCExAO/VAMPIRES}
-\shorttitle{Next Generation High-Contrast Imaging Polarimetry with SCExAO/VAMPIRES}
+\title{The Next Generation of Visible High-Contrast Imaging and Polarimetry with SCExAO/VAMPIRES}
+\shorttitle{Next Generation High-Contrast Imaging \& Polarimetry with SCExAO/VAMPIRES}
 \input{authors}
 % Abstract with filler text
-\begin{abstract}
-    
-\end{abstract}
+\input{abstract}
 
-\input{sections/intro}
-\input{sections/design}
-\input{sections/detectors}
-\input{sections/control}
-\input{sections/filters}
-\input{sections/psf}
-\input{sections/coronagraphy}
-\input{sections/polarimetry}
-\input{sections/processing}
-\input{sections/first_light_results}
-\input{sections/science_applications}
-\input{sections/conclusions}
+\input{sections/01_intro}
+% \input{sections/02_science_applications}
+\input{sections/03_design}
+\input{sections/04_detectors}
+% \input{sections/05_control}
+\input{sections/06_filters}
+\input{sections/07_psf}
+\input{sections/08_coronagraphy}
+\input{sections/09_polarimetry}
+\input{sections/10_interferometry}
+\input{sections/11_processing}
+\input{sections/12_commissioning_results}
+\input{sections/13_conclusions}
 
 \input{acknowledgements}
 \facility{Subaru (SCExAO)}
@@ -57,9 +61,11 @@
 \bibliography{bib}
 
 \appendix
-\input{sections/observing_log}
-\input{sections/inst_models}
-\input{sections/pnr_derivation}
+\input{sections/appendix_observing_log}
+\input{sections/appendix_inst_models}
+\input{sections/appendix_pnr_derivation}
+\input{sections/appendix_mbi_ghosts}
+\input{sections/appendix_nontelecentricity}
 
 \section{Data and Code Availability}
 This study was carried out using the reproducibility software \href{https://github.com/showyourwork/showyourwork}{\showyourwork} \citep{luger_mapping_2021}, which leverages continuous integration to programmatically create the figures and compile this manuscript. Each figure caption contains a link to the script used to make the figure (at the commit corresponding to the current build of the manuscript). The git repository associated to this study is publicly available at \url{\GitHubURL}.

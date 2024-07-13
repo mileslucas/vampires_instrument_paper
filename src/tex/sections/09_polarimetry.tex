@@ -1,0 +1,66 @@
+\section{Imaging Polarimetry}\label{sec:polarimetry}
+
+Polarimetric differential imaging (PDI; \citealp{kuhn_imaging_2001}) is a powerful technique for high-contrast observations. By measuring orthogonal polarization states simultaneously through nearly the same optical path, the unpolarized signal in the stellar PSF can be canceled to a high degree (less than $\Delta10^{-4}$, \citealp{schmid_spherezimpol_2018}). This differential approach significantly suppresses the stellar PSF, allowing the detection of faint polarized signals from circumstellar disks or exoplanets. Additionally, through polarimetric modulation, it is possible to remove or greatly reduce the effects of instrumental polarization and fast atmospheric seeing.
+ 
+\subsection{Polarimetric Differential Imaging}
+
+VAMPIRES is designed to measure linear polarization with high precision and accuracy. A polarizing beamsplitter cube splits horizontally polarized light ($I_{0^\circ}$) to VCAM1 and vertically polarized light ($I_{90^\circ}$) to VCAM2. This intensity mixes the inherently polarized signal and the inherently unpolarized signal ($I_\star$)
+\begin{equation}
+    I_{C1} = I_{0^\circ} + 0.5\cdot I_\star
+\end{equation}
+\begin{equation}
+    I_{C2} = I_{90^\circ} + 0.5\cdot I_\star
+\end{equation}
+
+Subtracting data from the two cameras yields the Stokes $Q$ parameter, by definition
+\begin{equation}
+    I_{C1} - I_{C2} = I_{0^\circ} - I_{90^\circ} + 0.5\cdot \left( I_\star - I_\star\right) = Q
+\end{equation}
+Conveniently, the unpolarized stellar signal is completely removed by this subtraction.
+
+To measure Stokes $U$, which is the difference of light at \ang{45} and \ang{135}
+\begin{equation}
+    U = I_{45^\circ} - I_{135^\circ}
+\end{equation}
+the input signal is modulated with a HWP so that $I_{45^\circ}$ and $I_{135^\circ}$ is retarded into horizontally and vertically polarized light, which then can be measured by the cameras.
+
+In theory, the subtraction in the definition of the Stokes observables removes the unpolarized signal, but in reality, the imperfections of the polarimeter leave instrumental polarization and non-common path errors \citep{kuhn_imaging_2001,tinbergen_astronomical_2005}. Every inclined reflective surface will partially polarize otherwise unpolarized light, and these reflections are difficult to avoid in a complicated instrument like SCExAO mounted on a Nasymth platform \citep{tinbergen_accurate_2007}. The instrumental polarization is a nuisance term in the analysis, but a majority of it is canceled by the HWP modulation-- rotating the HWP \ang{45} switches the sign of the observable (Stokes $Q$ becomes $-Q$). The difference ($[Q - (-Q)]/2$) removes the instrumental polarization downstream of the HWP.
+
+\subsection{High-Speed Polarimetric Modulation}
+
+Switching orthogonal polarization states at the same rate or faster than the atmospheric speckle timescale ($\sim$\si{\milli\second}) differentially removes these fast speckles with high precision during the polarimetric data reduction \citep{kemp_piezo-optical_1969}. This fast modulation technique has been successfully implemented on a number of aperture polarimeters \citep{rodenhuis_extreme_2012,harrington_innopol_2014,bailey_high-sensitivity_2015,bailey_high-precision_2017,bailey_hippi-2_2020}, seeing-limited polarimeters \citep{safonov_speckle_2017,bailey_picsarr_2023}, and high-contrast polarimeters VAMPIRES \citep{norris_vampires_2015} and ZIMPOL \citep{schmid_spherezimpol_2018}. 
+
+VAMPIRES uses a ferroelectric liquid crystal (FLC) for fast polarimetric modulation. The FLC behaves like a HWP which is rotated \ang{45} when triggered. VAMPIRES was upgraded with an achromatic FLC rotator\footnote{Meadowlark FPA-200-700} which has better retardance across the bandpass than the previous one. The initial characterization of the FLC shows a $\sim$20\% improvement in the efficiency of measuring the linear Stokes parameters.
+
+The FLC switches in less than\SI{100}{\micro\second}, which is synchronized with every detector exposure (\SI{1}{\hertz} to $>$\SI{1}{\kilo\hertz}). The new FLC is mounted in a temperature-controlled optical tube at \SI{45}{\celsius} for consistent, efficient modulation and to avoid any temperature-dependent birefringence of the liquid crystal. When the FLC is inserted, the photometric throughput is 96.8\%. The FLC has a maximum excitation time of \SI{1}{\second}, which means it can only be used with short exposures. The FLC mount was motorized to allow removing it for ``slow'' polarimetry, which only uses the HWP for modulation.
+
+
+% \subsection{Instrumental Birefringence Control}
+
+
+
+
+% One complicated aspect of the SCExAO layout is the optical periscope directing light from the SCExAO infrared bench out of plane up into the visible-light bench.  The first periscope mirror is in a collimated beam and the second periscope mirror is in a converging beam, introducing a significant amount of pupil rotation and birefringence in the instrument. Because the reflections are out of plane, cross-talk noise will be introduced which greatly reduces polarimetric efficiency and accuracy.
+
+% VAMPIRES uses two QWPs mounted before the first periscope mirror to correct for a majority of this birefringence. The pair of QWPs are tuned to an optimal angle pair such that 100\% horizontally polarized light generated at the WPU is 100\% vertically polarized at the VAMPIRES polarizing beamsplitter for each filter. The reason for the change in orientation is simply from legacy: VAMPIRES initially used a Wollaston prism and the ordinary and extraordinary beams were never distinguished, so the previous optimization did not consider whether the output was horizontally or vertically polarized.
+
+% These QWPs have high utility-- in addition to static correction they could potentially be used for another level of slow modulation for calibration or polarimetric control. Future work will explore how to improve the polarimetric efficiency and precision through tracking laws which can correct, for example, the non-ideal polarizing effects of the image rotator \citep{joost_t_hart_full_2021,zhang_characterizing_2023}. We also consider future investigations into how to optimize the instrument polarization for the DGVVC, which uses a polarization grating for diffraction control (\autoref{sec:coronagraphy}).
+
+\subsection{Instrumental Modeling and Correction}
+
+Polarimetric measurements are limited by instrumental polarization due to the many inclined surfaces and reflections in the common path of VAMPIRES, in particular from M3 \citep{tinbergen_accurate_2007}. Mueller calculus is a well-established technique to model and remove the instrumental effects \citep{perrin_polarimetry_2015,holstein_polarimetric_2020,joost_t_hart_full_2021}. The Stokes parameters measured through difference imaging are a measurement of the input Stokes values modified by the telescope and instrument Mueller matrix
+\begin{equation}
+    \mathbf{S}(x, y) = \mathbf{M}\cdot\mathbf{S}_{in}(x, y)
+    \label{eqn:mm}
+\end{equation}
+where $\mathbf{S}$ represents Stokes vector at each point in the field. With a calibrated model of $\mathbf{M}$, the instrument Mueller-matrix, \autoref{eqn:mm} can be solved using a least-squares fit to estimate the input Stokes vector \citep{perrin_polarimetry_2015}.
+
+For VAMPIRES the Mueller matrix, $\mathbf{M}$, is estimated with a forward model. This model includes offset angles, diattenuations, and retardances for the polarizing components in each filter \citep{zhang_characterizing_2023}. The model is fit to calibration data with a polarized flat source-- these calibrations are automated for consistent monitoring of the VAMPIRES' polarimetric performance. 
+
+The telescope tertiary mirror is a significant source of instrument polarization due to the small focal ratio (F/13.9) and \ang{45} inclination \citep{schmid_spherezimpol_2018,van_holstein_polarization-dependent_2023}. Because the internal polarized source is after M3 (\autoref{fig:schematic}), these birefringent effects cannot be easily calibrated without on-sky observations. A full instrument characterization and measurements of unpolarized ($p<$0.01\%) and polarized ($p>$1\%) standard stars to calibrate the effects of M3 is future work \citep{zhang_characterizing_2023}. Observers needing high-precision polarimetry should observe an unpolarized standard star: at least one HWP cycle at the beginning and end of the science sequence.
+
+% \subsection{Polarimetric Spectral Differential Imaging}
+
+% We have developed a new mode for VAMPIRES for polarimetric measurements in the narrowband filters, which had previously not been explored despite being technically possible. Because the narrowband filters are stored in the differential filter wheel only one camera receives light from any specific narrowband filter. To enable polarimetry we must switch the differential filter between the cameras at each HWP position so that we measure both horizontal and vertically polarized light for each filter (four total raw data cubes per HWP position). In post-processing one can choose to do standard double- or triple-differencing separately for each filter to get the Stokes data, or the two filters can be subtracted immediately before differencing for polarimetric spectral differential imaging (PSDI). If SDI is not desired and exposure times are fast enough, only one camera can be used with the FLC for double-difference PDI in a single narrowband filter.
+
+% Polarimetric SDI (PSDI) will allow direct measurement of the polarized fraction of narrowband emission, which is particularly interesting for H$\alpha$ imaging of circumstellar disks. For example, the H$\alpha$ emission around AB Aur may be from a forming protoplanet \citep{currie_images_2022}, in which case the emission should be unpolarized. If the H$\alpha$ image is polarized, though, this points to a different hypothesis, such as stellar emission scattering off dust grains \citep{zhou_uv-optical_2023}. By using SDI the H$\alpha$ image should have the majority of any stellar continuum signal removed, giving a cleaner observable for understanding these complex stellar environments. This technique has been tested with an internal calibration source and future observations will be used to demonstrate LOOKIE HERE method on-sky.

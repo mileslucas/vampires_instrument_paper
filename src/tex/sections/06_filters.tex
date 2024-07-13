@@ -1,0 +1,128 @@
+\section{Filters and Instrument Throughput}\label{sec:filters}
+
+\subsection{Spectral Filters}
+VAMPIRES has five \SI{50}{\nm} bandpass filters, four narrowband filters, an open broadband filter, and the dichroic filters in the multiband optic. All spectral filter transmission curves are compiled from manufacturer data and are shown in \autoref{fig:filters}. The filter characteristics and zero points are summarized in \autoref{tbl:filters}.
+
+The Open filter is the widest and is constrained by the AO188 beamsplitter and the PyWFS pickoff. The multiband filters are defined by the consecutive transmissions/reflections through the stack of dichroics. The effective bandpasses are $\sim$\SI{50}{\nm} wide and have spectral leakage ($<$5\%) between some fields due to the imperfect dichroic transmissions. The narrowband filters come in pairs to enable differential imaging of the emission line and the local continuum. The H$\alpha$ filter is \SI{1}{\nm} wide and the H$\alpha$-continuum filter is \SI{2}{\nm} wide. The SII doublet and continuum filters are both \SI{3}{\nm} wide.
+
+\begin{deluxetable*}{lcccccccccccc}
+\centering
+\tablehead{
+    \multirow{2}{*}{Filter} &
+    \colhead{$\lambda_\mathrm{ave}$} &
+    \colhead{$\lambda_\mathrm{min}-\lambda_\mathrm{max}$} &
+    \colhead{FWHM} &
+    \colhead{$k$} &
+    \colhead{Through.} &
+    \colhead{$\mathrm{QE}_\mathrm{ave}$} &
+    \multicolumn{3}{c}{Zero points} &
+    \colhead{$C_{FD}$} \vspace{-0.5em}\\
+    &
+    \colhead{(\si{\nm})} &
+    \colhead{(\si{\nm})} &
+    \colhead{(\si{\nm})} &
+    \colhead{(\si{mag/airmass})} &
+    \colhead{(\%)} &
+    \colhead{(\%)} &
+    \colhead{(mag)} &
+    \colhead{(\si{\electron/s})} &
+    \colhead{(\si{Jy})} &
+    \colhead{(\si{Jy.s/\electron})}
+}
+\tablecaption{VAMPIRES filter information.\label{tbl:filters}}
+\startdata
+Open & 680 & 580 - 776 & 196 & 0.06 & 6.1 & 68 & 25.8 & \num{2.2e+10} & 3550 & \num{1.6e-07} \\
+625-50 & 625 & 601 - 649 & 49 & 0.08 & 5.1 & 74 & 24.3 & \num{5.3e+09} & 3440 & \num{6.6e-07} \\
+675-50 & 675 & 651 - 699 & 49 & 0.05 & 8.6 & 67 & 24.6 & \num{7.0e+09} & 2990 & \num{4.3e-07} \\
+725-50 & 725 & 700 - 749 & 49 & 0.04 & 11.7 & 61 & 24.7 & \num{7.9e+09} & 2800 & \num{3.6e-07} \\
+750-50 & 748 & 724 - 776 & 48 & 0.03 & 13.0 & 58 & 24.7 & \num{7.7e+09} & 2680 & \num{3.6e-07} \\
+775-50 & 763 & 750 - 776 & 26 & 0.03 & 7.3 & 57 & 23.2 & \num{2.1e+09} & 2610 & \num{1.6e-06} \\
+\cutinhead{Multiband}
+F610 & 614 & 580 - 645 & 65 & 0.09 & 3.0 & 77 & 24.0 & \num{3.9e+09} & 4810 & \num{1.2e-06} \\
+F670 & 670 & 646 - 695 & 49 & 0.06 & 7.4 & 68 & 24.3 & \num{5.2e+09} & 3150 & \num{6.1e-07} \\
+F720 & 721 & 696 - 745 & 50 & 0.04 & 9.2 & 62 & 24.6 & \num{6.7e+09} & 2920 & \num{4.4e-07} \\
+F760 & 761 & 746 - 776 & 30 & 0.03 & 6.0 & 57 & 23.6 & \num{2.7e+09} & 2830 & \num{1.0e-06} \\
+\cutinhead{Narrowband}
+H$\alpha$ & 656.3 & 655.9 - 656.7 & 0.8 & 0.06 & 5.5 & 69 & 19.6 & \num{7.2e+07} & 2170 & \num{3.3e-05} \\
+H$\alpha$-Cont & 647.7 & 646.7 - 648.6 & 1.9 & 0.07 & 6.0 & 70 & 20.9 & \num{2.3e+08} & 3210 & \num{1.4e-05} \\
+SII & 672.7 & 671.2 - 674.1 & 2.9 & 0.05 & 10.8 & 67 & 21.8 & \num{5.5e+08} & 3090 & \num{5.7e-06} \\
+SII-Cont & 681.5 & 680.0 - 683.0 & 3.0 & 0.05 & 8.9 & 66 & 21.6 & \num{4.3e+08} & 3040 & \num{7.0e-06}
+\enddata
+\tablecomments{$\lambda_\mathrm{ave}$: average wavelength, $\lambda_\mathrm{min}$: minimum wavelength with at least 50\% throughput, $\lambda_\mathrm{max}$: maximum wavelength with at least 50\% throughput, FWHM: full width at half-maximum, $k$: average atmospheric extinction from \citet{buton_atmospheric_2013}, Through: estimated instrument throughput (without beamsplitter or FLC), $\mathrm{QE}_\mathrm{ave}$: average detector quantum efficiency, $C_{FD}$: flux density conversion factor. Zero points are in Vega magnitudes and map to instrument flux without any beamsplitter in \si{\electron/s}. Zero points, instrument throughput, and conversion factors were estimated from spectrophotometric standard stars. All values assume there is no beamsplitter.}
+\end{deluxetable*}
+
+\subsection{Neutral Density Filters}
+
+Two broadband reflective neutral density filters in the pupil mask wheel of VAMPIRES can be used to avoid saturating on bright stars. Because these masks are in the pupil wheel, they cannot be used simultaneously with any of the sparse aperture masks or Lyot stops. The optical density was measured for both filters: the ND10 has an optical density of \num{1.0}, and the ND25 has an optical density of \num{2.33}. The polarimetric effects of these filters has not been characterized, and are not recommended for use during polarimetric observations.
+
+\begin{figure}
+    \centering
+    \script{filter_curves.py}
+    \includegraphics[width=\columnwidth]{figures/filter_curves.pdf}
+    \caption{VAMPIRES filter transmission curves. All curves are normalized to the Open filter, which is the bandpass created from the dichroics upstream of VAMPIRES. The average wavelength for each filter is shown with a vertical dashed line.\label{fig:filters}}
+\end{figure}
+
+\subsection{Beamsplitter Throughput}
+
+VAMPIRES has two beamsplitters: a wire-grid polarizing beamsplitter cube (PBS) and a non-polarizing beamsplitter cube (NPBS). The beamaplitter throughput was measured in the Open filter and compared to the flux without any beamsplitter (\autoref{tbl:bs}). To avoid polarization biases, a linear polarizer was inserted after the internal source and rotated in steps of \ang{5} from \ang{0} to \ang{180}.
+
+\begin{deluxetable}{lccc}
+\tablehead{
+    \multirow{2}{*}{Name} &
+    \multicolumn{3}{c}{Throughput (\%)} \\
+    &
+    \colhead{VCAM1} &
+    \colhead{VCAM2} &
+    \colhead{Sum}
+}
+\tablecaption{VAMPIRES beamsplitter throughput measurements.\label{tbl:bs}}
+\startdata
+Open & \num{100} & - & \num{100} \\
+PBS & \num{36.76+-0.04} & \num{42.88+-0.04} & \num{79.64+-0.06} \\
+NPBS & \num{43.95+-0.04} & \num{45.35+-0.04} & \num{89.31+-0.07} \\
+\enddata
+\tablecomments{PBS: Polarizing beamsplitter, NPBS: Non-polarizing beamsplitter.}
+\end{deluxetable}
+
+\subsection{Filter Color Corrections}
+
+The filters in VAMPIRES do not follow any standard photometric system, although the Open filter is similar in central wavelength and width to the Johnson-Cousins R band \citep{bessell_ubvri_1979}. When using photometric values from online catalogs, the magnitudes must be converted from the source filter into the respective VAMPIRES filter, which depends on the spectrum of the observed star.
+
+The Pickles stellar models \citep{pickles_stellar_1998} were used to measure the color correction for varying spectral types of main-sequence stars. For each model spectrum, \texttt{pysynphot} was used to calculate the color correction in Vega magnitude from Johnson-Cousins V, R, and Gaia G to the respective VAMPIRES filter (\autoref{fig:color_correction}). The Johnson V filter deviates up to \num{1} magnitude fainter than the VAMPIRES filters for later spectral types, the R filter is fairly consistent except for the coolest stars, and the G filter deviates up to \num{5} magnitudes brighter at later types.
+
+\begin{figure}
+    \centering
+    \script{color_correction.py}
+    \includegraphics[width=\columnwidth]{figures/color_correction.pdf}
+    \caption{Color correction values for selected filters into the VAMPIRES filters. All correction values are tabulated from main-sequence Pickles stellar models. The spectral types are labeled on the x-axis. (Top) Johnson-Cousins V (Middle) Johnson-Cousins R (Bottom) Gaia G.\label{fig:color_correction}}
+\end{figure}
+
+\subsection{Absolute Flux Calibration}
+
+During commissioning, spectrophotometric standard stars HR 718 ($m^V=$\SI{4.273}{mag}) and HD 19445 ($m^V=$\SI{8.096}{mag}) were observed in each filter to calibrate the photometric zero points in \si{Jy} and \si{\electron/\second} \citep{hamuy_southern_1992,hamuy_southern_1994,stone_spectrophotometry_1996,zacharias_fourth_2013}.
+
+The absolute flux calibration is summarized by the $C_{FD}$ coefficient, following \citet{gordon_james_2022}. This flux density conversion factor converts between instrument flux (in \si{\electron/\second}) and \si{Jy}. The instrument flux was measured using aperture photometry and corrected for atmospheric extinction using an empirical model from  \citet{buton_atmospheric_2013}. The conversion factors are derived from synthetic photometry of the calibrated stellar spectra.
+
+The photometric zero points are mapped from Vega magnitudes to instrument flux in \si{\electron/\second} without a beamsplitter. The traditional zero point can be derived by incorporating each detector's beamsplitter throughput and camera gain rather than specifying all \num{280} unique combinations.
+
+The zero points are used by taking the aperture flux in \si{\electron/\second}, corrected for any beamsplitter or FLC throughputs, and converting to magnitudes with the zero point magnitude
+\begin{equation}
+    m^\mathrm{filt}=\mathrm{ZP}_\mathrm{filt} - 2.5\log{\left(f\right)}
+\end{equation}
+or, equivalently, with the zero point flux
+\begin{equation}
+    m^\mathrm{filt}=-2.5\log{\left(f/f_\mathrm{ZP}\right)}
+\end{equation}
+The surface brightness can be calculated by dividing the calibrated flux by the area of a pixel ($\Omega_{px}=$\SI{3.5e-5}{arcsec^2/\pixel}). For Vega magnitudes, instead, use
+\begin{equation}
+    \label{eqn:surf_bright}
+    \Sigma^\mathrm{filt} = m^\mathrm{filt} + 2.5\log{\left(\Omega_{px}\right)} = m^\mathrm{filt} - 11.1~\mathrm{mag/arcsec}^2
+\end{equation}
+
+The accuracy of the zero points and conversion factors is constrained by atmospheric transmission variations and dust accumulation and coating degradation of the telescope mirrors. For applications demanding the highest photometric precision, observing a spectrophotometric standard at multiple elevation angles will give better accuracy.
+
+\subsection{Limiting Magnitudes}
+
+The limiting observing magnitudes for VAMPIRES under excellent conditions are limited by the detector integration time and saturation limit. The fastest detector integration time is \SI{7.2}{\micro\second} in ``fast'' mode and \SI{48}{\milli\second} in ``slow'' mode (for the standard imaging mode with a \ang{;;3}x\ang{;;3} FOV). For these calculations, the peak count limit is set to \SI{60000}{adu} and it is assumed that the brightest pixel in the PSF will be 30\% of the full aperture flux. The highest-throughput scenario (``Open'' filter, no beamsplitter, no FLC; \autoref{tbl:filters}) translates the limiting instrumental flux into $m^\mathrm{Open}=$\SI{2.1}{mag} in ``fast'' mode and $m^\mathrm{Open}=$\SI{11.7}{mag} in ``slow'' mode. The faint observing limits are constrained by the AO wavefront sensors. The current guider limits of AO188 are $m^R<$\SI{16}{mag} and the wavefront sensor limits for diffraction-limited imaging are roughly $m^R<$\SI{12}{mag} \citep{minowa_performance_2010}.
+
+The sky background above Maunakea at zenith (any lunar phase) is $\Sigma^R=$\SI{17.9}{mag/arcsec^2} \citep{roth_measurements_2016}. Assuming, again, the highest-throughput observing configuration and using a pixel size of \SI{5.9}{mas}, this corresponds to an instrument flux of \SI{5e-2}{\electron/\pixel/\second}. This is an order of magnitude higher than the dark signal (\autoref{tbl:detectors}) and is the limiting noise term for exposures longer than \SI{1.2}{\second}.

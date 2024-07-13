@@ -1,0 +1,164 @@
+\section{Coronagraphy}\label{sec:coronagraphy}
+
+Coronagraphy is another key tool for HCI because it reduces the stellar diffraction pattern and attenuates the photon noise from the on-axis PSF. This is essential for observing faint objects near bright stars, such as exoplanets or circumstellar disks, by significantly reducing the glare from the star itself. Four visible-light Lyot-style coronagraphs were installed in VAMPIRES \citep{lucas_visible-light_2022}. These coronagraphs provide up to three orders of magnitude of attenuation of the stellar PSF, which, when combined with extreme AO correction and low-noise detectors, enables contrasts $<10^{-6}$ (\autoref{fig:onsky_psf_profiles}).
+
+\subsection{Focal Plane Masks}
+
+The four Lyot-style focal plane masks are partially transmissive (0.6\%) circular dots with inner working angles (IWA) of two, three, five, and seven resolution elements ($\lambda/D$). The focal plane masks are mounted in a three-axis translation stage for fine alignment. In addition, a double-grating vector vortex coronagraph (DGVVC; \citealp{doelman_falco_2023}) was deployed in November 2023. This mask is currently being evaluated.
+
+The mask IWAs were measured by rastering the SCExAO internal calibration source across the focal plane mask and measuring the photometric throughput. The normalized throughput curves and IWA in are shown in \autoref{fig:iwa} and the results are summarized in \autoref{tbl:coronagraph}.
+
+In practice, the CLC-2 mask is too small for on-sky observations-- the residual tip-tilt in average conditions causes the PSF to leak out of the side of the mask. The CLC-7 mask is slightly too large for the Lyot stops, creating pinned speckles along the edge of the focal plane mask. The CLC-3 mask is well-suited for good conditions (seeing $<$\ang{;;0.6}) or for polarimetric observations (thanks to the efficiency of PDI). In all other scenarios, the CLC-5 mask offers a good balance between robust diffraction control and IWA.
+
+\begin{deluxetable}{lcc}
+\tablehead{\colhead{Name} & \colhead{Radius (\si{\micron})} & \colhead{IWA (\si{\mas})}}
+\tablecaption{VAMPIRES coronagraph mask specifications.\label{tbl:coronagraph}}
+\startdata
+CLC-2 & 46 & 37 \\
+CLC-3 & 69 & 59 \\
+CLC-5 & 116 & 105 \\
+CLC-7 & 148 & 150 \\
+DGVVC & 7 & 61 \\
+\enddata
+\tablecomments{The radius of the DGVVC is the radius of the central defect amplitude mask, which is resolved.}
+\end{deluxetable}
+
+\begin{figure}
+    \centering
+    \script{iwa.py}
+    \includegraphics{figures/coronagraph_iwa.pdf}
+    \caption{Normalized off-axis throughput for the VAMPIRES coronagraph masks. The throughputs are normalized so the minimum flux is 0 and the maximum flux is 1. The inner working angle (IWA) is marked with vertical dotted lines at the point where the throughput reaches 50\%. $\lambda/D$ is calculated with the average wavelength of the bandpass (\SI{680}{\nano\meter}).\label{fig:iwa}}
+\end{figure}
+
+
+\subsection{Pupil Masks}
+
+VAMPIRES has three Lyot stop masks to reject the light diffracted by the coronagraphic focal plane mask. The first Lyot stop is described in \citet{lucas_visible-light_2022}. This mask is coated with gold for high reflectivity, aiding alignment with the pupil camera and for a future low-order wavefront sensor. Two new masks were designed with higher throughput and deployed in January 2024 (PI: Walk, A.). These masks were laser-cut from \SI{1}{mm}-thick aluminum foil sheets, which are not smooth or  reflective enough to use with the pupil-viewing camera. \autoref{fig:pupil_masks} shows all three Lyot stop masks imaged with a flat lamp alongside the VAMPIRES pupil. The mask specifications and throughput measurements are listed in \autoref{tbl:lyot_stops}.
+
+
+\begin{figure}
+    \centering
+    \script{pupil_masks.py}
+    \includegraphics{figures/pupil_masks.pdf}
+    \caption{Images of the VAMPIRES pupil and coronagraphic pupil masks illuminated by a flat lamp. Images have been binarized to sharpen the edges. Each mask is labeled in the top left. The pupil image has no mask inserted.\label{fig:pupil_masks}}
+\end{figure}
+
+\begin{deluxetable}{lcccc}
+\tabletypesize{\small}
+\tablehead{\multirow{2}{*}{Name} & \colhead{$D_\mathrm{in}$} & \colhead{$D_\mathrm{out}$} &  \colhead{$T_{geom}$} & \colhead{$T_{phot}$}  \vspace{-0.75em}\\
+& \colhead{(\si{\milli\meter})} & \colhead{(\si{\milli\meter})} & \colhead{(\%)} & \colhead{(\%)}
+}
+\tablecaption{Instrument pupil and  Lyot stop specifications.\label{tbl:lyot_stops}}
+\startdata
+Telescope Pupil & 2300 & 7950 & - & -\\
+SCExAO Pupil & 5.27 & 17.92 & - & - \\
+VAMPIRES Pupil & 2.08 & 7.06 & 100 & 100 \\
+\tableline
+LyotStop-S & 2.14 & 7.06 & 95.9 & 89.2 \\
+LyotStop-M & 2.82 & 6.99 & 85.7 & 79.7 \\
+LyotStop-L & 3.16 & 6.33 &  61.5 & 57.2 \\
+\enddata
+\tablecomments{The telescope pupil is the effective pupil with the IR M2 (which undersizes the \SI{8.2}{\meter} aperture).}
+\end{deluxetable}
+
+
+\subsection{Redundant Apodizing Pupil Mask}
+
+A redundant apodized pupil mask (RAP; \citealp{leboulleux_redundant_2022}) was deployed on VAMPIRES in September 2023. This mask apodizes the pupil to create a dark hole resilient to $\sim$\SI{1}{rad} of low-wind effect. The trade-off is the limited inner and outer working angles and the low mask throughput (25\%). The RAP mask, PSF, and profile from bench tests in the Open filter are shown in \autoref{fig:rap}. Further testing and verification of this mask is future work.
+
+\begin{figure}
+    \centering
+    \script{rap.py}
+    \includegraphics{figures/rap.pdf}
+    \caption{The redundant apodized pupil (RAP) mask. (Top left) a pupil image of the mask shows the apodization pattern. (Top right) a \ang{;;2}x\ang{;;2} FOV of the PSF produced by the RAP using the SCExAO internal source in the Open filter. The image is stretched to emphasize the dark hole from approximately \ang{;;0.1} to \ang{;;0.8}. (Bottom) a normalized radial profile of the top right PSF in log scale.\label{fig:rap}}
+\end{figure}
+
+\subsection{Coronagraphic Point-Spread Function}
+
+\autoref{fig:coro_psfs} shows aligned and coadded on-sky coronagraphic PSFs for the CLC-3 and CLC-5 masks. The PSFs show some common features: a dark hole in the DM control region, calibration speckles, and a residual speckle halo that is slightly blurred from the coadding. The CLC-3 image shows a secondary diffraction ring past the edge of the mask. The control region in the CLC-5 image has worse contrast due to poorer atmospheric conditions that night. The radial profile for the CLC-3 mask is shown in blue alongside the non-coronagraphic PSFs in \autoref{fig:onsky_psf_profiles}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{figures/onsky_coro_mosaic.pdf}
+    \caption{On-sky coronagraphic PSFs using the multiband imaging mode. (left) The CLC-3 mask from polarimetric observations of HD 163296. (right) the CLC-5 mask from polarimetric observations of HD 169142, which had slightly worse seeing conditions. Both are aligned and coadded from the F720 frame of single data cube, cropped to the inner \ang{;;1} FOV, and shown with a logarithmic stretch and separate limits for each image. The calibration speckles are $\sim$15.5$\lambda/D$ from the center. The coronagraph mask is overlaid with a white circle, and the approximate location of the star is marked with a cross.\label{fig:coro_psfs}}
+\end{figure}
+
+
+\subsection{Calibration Speckles}\label{sec:astrogrid}
+
+VAMPIRES uses the SCExAO deformable mirror to create calibration speckles (``astrogrid'') for precise astrometry and photometry of the star behind the coronagraph mask \citep{sahoo_precision_2020}. The calibration speckles produce an ``X'' with theoretical separations of 10.3, 15.5, or 31.0 $\lambda/D$. The relative brightness of these speckles with respect to the on-axis PSF allows for the precise photometry of coronagraphic images.
+
+In the linear wavefront error regime ($<$\SI{1}{\radian}), the brightness of a speckle is a quadratic function of the optical path difference (OPD) \citep{sahoo_precision_2020,chen_post-processing_2023,follette_introduction_2023}-
+\begin{equation}
+    \label{eqn:astrogrid}
+    \frac{f_p}{f_*}\left( \lambda, A_{DM} | c \right) = c \cdot \left(A_{DM} / \lambda\right)^2
+\end{equation}
+where $A_{DM}$ is the mechanical displacement of the DM, $\lambda$ is the wavelength, and $c$ is a calibration coefficient. 
+
+The scaling coefficients for the most commonly used astrogrid patterns (10.3, 15.5, and 31 $\lambda/D$) were fit using multiband observations of the internal calibration source. When trying to fit \autoref{eqn:astrogrid} better agreement was found using a model containing an additional linear OPD term--
+\begin{equation}
+    \label{eqn:astrogridmod}
+    \frac{f_p}{f_*}\left( \lambda, A_{DM} | c_0, c_1 \right) = c_0 \cdot \left(A_{DM} / \lambda\right) + c_1 \cdot \left(A_{DM} / \lambda\right)^2
+\end{equation}
+which was fit using weighted linear least-squares, shown in \autoref{tbl:astrogrid} and \autoref{fig:astrogrid_photometry}. The 31$\lambda/D$ separation pattern has very low relative flux for the pattern amplitude due to the influence function of the DM, which has a weaker response for high spatial frequencies.
+
+To minimize the negative effects of astrogrid (namely photon noise in the control radius), the amplitude and separation are tuned so the pattern is barely detectable. A trade-off exists between photometric and astrometric precision with local contrast around the calibration speckles. An astrogrid brightness with a S/N of $\sim$100 above the PSF profile is recommended-- this corresponds to $<10^{-2}$ at 10$\lambda/D$ (\SI{15}{\nano\meter} astrogrid) and $<$\num{1e-3} at 15$\lambda/D$ (\SI{15}{\nano\meter} astrogrid).
+
+There are practical considerations for using astrogrid simultaneously with other SCExAO modules. For example, when using SCExAO/CHARIS for PDI the field stop requires using the 10.3$\lambda/D$ separation grid so that all the speckles land within the CHARIS FOV. The speckle brightness in the NIR is fainter, which means the optimal brightness for CHARIS data might produce brighter than optimal speckles in VAMPIRES. Lastly, for observations in the Open filter, the radial smearing of the satellite spots reduces the astrometric and photometric precision.
+
+\begin{deluxetable}{lccc}
+\tabletypesize{\small}
+\tablehead{
+    \multirow{2}{*}{Pattern} & \colhead{Separation} & \multirow{2}{*}{$c_1$} & \multirow{2}{*}{$c_0$} \\
+                             & \colhead{($\lambda/D$)} & & 
+}
+\tablecaption{Astrogrid relative photometry flux scaling.\label{tbl:astrogrid}}
+\startdata
+XYgrid & 10.3 & \num{11.077+-0.035} & \num{-0.080+-0.002} \\
+XYgrid & 15.5 & \num{6.517+-0.027} & \num{-0.048+-0.001} \\
+XYgrid & 31.0 & \num{0.635+-0.011} & \num{-0.011+-0.001} \\
+\enddata
+\tablecomments{Photometry measured using elliptical apertures with local background subtraction. Astrogrid applied using \SI{1}{\kilo\hertz} modulation speed.}
+\end{deluxetable}
+
+\begin{figure}
+    \centering
+    \script{astrogrid_photometry.py}
+    \includegraphics{figures/astrogrid_photometry.pdf}
+    \caption{Relative photometric flux of the astrogrid calibration speckles. Each plot corresponds to a different speckle pattern, and each curve corresponds to a given pattern amplitude (in mechanical microns applied to the DM). \label{fig:astrogrid_photometry}}
+\end{figure}
+
+
+\subsection{On-Sky Contrast Curves}
+
+Contrast curves were measured for the CLC-3 and CLC-5 coronagraphs during commissioning. The CLC-3 contrast curve is shown and discussed in \autoref{sec:hd1160}. The CLC-5 contrast was measured from a \SI{60}{\minute} sequence of HD 102438 ($R=$6.0 \citealp{zacharias_ucac5_2017}) with $\sim$\ang{10} of field rotation. The conditions were good (\ang{0.45}$\pm$\ang{0.1} seeing), but LWE caused frequent PSF splitting.
+
+The data was post-processed with \texttt{ADI.jl} \citep{lucas_adijl_2020} using principal component analysis (PCA, or KLIP; \citealt{soummer_detection_2012}) with 20 principal components for each multiband field. These results produce residual frames that are derotated and collapsed with a weighted mean \citep{bottom_noise-weighted_2017}. The contrast was measured by dividing the noise in concentric annuli by the stellar flux, correcting for small sample statistics \citep{mawet_fundamental_2014}. Algorithmic throughput was measured by injecting off-axis sources and measuring the recovered flux after PSF subtraction. The contrast curves for each filter are shown in \autoref{fig:contrast_curves}.
+
+The best contrast is achieved at the longest wavelengths, which follows from the inverse wavelength scaling of optical path differences. There is a slight deviation from this behavior in the F760 filter at far separations where the curve becomes background-limited, which can be attributed to the lower average S/N in the truncated bandpass of the F760 filter (\autoref{tbl:filters}). Roughly $10^{\text{-}4}$ contrast was reached at the IWA (\ang{;;0.1}), $10^{\text{-}5}$ at \ang{;;0.4}, and $10^{\text{-}6}$ beyond \ang{;;0.6}.
+
+
+\begin{figure}
+    \centering
+    \script{contrast_curves_HD102438.py}
+    \includegraphics{figures/20230629_HD102438_contrast_curve.pdf}
+    \caption{5$\sigma$ throughput-corrected Student-t contrast curves from multiband imaging of HD102438 with the CLC-5 coronagraph. This was \SI{60}{\minute} of data with \ang{10} of field rotation. The contrast from the PCA (20 components) PSF subtraction for each MBI filter is shown with red curves. The solid black curve is the mean-combined residual contrast from each wavelength, and the dashed line is the median SDI-subtracted contrast curve. \label{fig:contrast_curves}}
+\end{figure}
+
+
+\subsection{Spectral Differential Imaging}\label{sec:sdi}
+
+The wavelength diversity of multiband imaging data was leveraged by performing spectral differential imaging (SDI) in two ways. The first was by taking each collapsed ADI residual frame and doing a mean combination of the residuals, which attenuates any uncorrelated noise (e.g., read noise). The second technique uses another round of PSF subtraction after radially scaling each frame by wavelength and multiplying by a flux factor (``ADI + SDI''). The median PSF from the scaled images was subtracted from the data before rescaling back to sky coordinates (``classical'' SDI).
+
+Fake companions were injected with the same spectrum as the star at equal contrasts for each wavelength for algorithmic throughput analysis. 5$\sigma$ contrasts of $10^{\text{-}4}$ at were reached at tthe IWA (\ang{;;0.1}), $10^{\text{-}5}$ contrast at \ang{;;0.2}, and $10^{\text{-}6}$ beyond \ang{;;0.5}. In general, the SDI reduction achieves better contrast than individual ADI reductions alone, especially from \ang{;;0.1} to \ang{;;0.7}.
+
+\subsection{Residual Atmospheric Dispersion}
+
+There is only a single broadband atmospheric dispersion corrector (ADC) in the common path of SCExAO \citep{egner_atmospheric_2010}, resulting in residual atmospheric dispersion at low elevations. This dispersion causes a differential shift of the PSF at each wavelength, which can be problematic for coronagraphy with multiband imaging because the PSF can leak outside the focal plane mask (\autoref{fig:resid_adc}), With the CLC-3 mask this effect is noticeable above an airmass of $\sim$\num{2.2} ($<$\ang{27} elevation). The larger masks (CLC-5 and CLC-7) are less affected by this leakage.
+
+\begin{figure}
+    \centering
+    \script{resid_adc.py}
+    \includegraphics{figures/resid_adc.pdf}
+    \caption{Coronagraphic multiband imaging with the CLC-3 coronagraph at 2.25 airmass (\ang{26.3} elevation). The filter is labeled at the top left, the apparent location of the star is marked with a cross, and the telescope elevation and azimuth axes are displayed with a compass at the bottom left. The image is shown with a square-root stretch with separate limits for each filter. The residual atmospheric dispersion misaligns the star with respect to the coronagraph mask, reducing the effectiveness of the diffraction control.\label{fig:resid_adc}}
+\end{figure}

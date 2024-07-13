@@ -1,0 +1,76 @@
+\section{Observing log\label{sec:log}}
+
+In \autoref{tbl:obslog} we list all observations used for this work.
+
+
+
+\begin{deluxetable*}{lllllccccccccc}
+\tabletypesize{\footnotesize}
+\tablehead{
+    \colhead{Date} &
+    \multirow{2}{*}{Object} &
+    \multirow{2}{*}{Obs. Mode} &
+    \multirow{2}{*}{Filter(s)} &
+    \colhead{Pol.} &
+    \multirow{2}{*}{Coron.} &
+    \colhead{Pupil} &
+    \colhead{DIT} &
+    \multirow{2}{*}{$N_\mathrm{coadd}$} &
+    \multirow{2}{*}{$N_\mathrm{frame}$} &
+    \colhead{$T_\mathrm{exp}$} &
+    \colhead{Prop.} \vspace{-0.75em} \\
+    \colhead{(UTC)} & % date
+    & % object
+    & % obs mode
+    & % filter
+    \colhead{mode} & % pol mode
+    &  % coron
+    \colhead{mask} & % pupil mask
+    \colhead{(\si{\second})} & % dit
+    & % ncoad
+    & % nfram
+    \colhead{(\si{min})} & %texp
+    \colhead{ID} &% propid
+}
+\tablecaption{Chronologically ordered observing log.\label{tbl:obslog}}
+\startdata
+\formatdate{27}{6}{2023} & Albireo & IMAG & 775-50 & - & - & - & \num{5e-4} & 1380 & 2 & $<$1 & o23013 \\
+\formatdate{27}{6}{2023} & Albireo & IMAG & Open & - & - & - & \num{5e-4} & 3450 & 17 & $<$1 & o23013 \\
+\formatdate{27}{6}{2023} & Albireo & IMAG\_SDI & H$\alpha$/H$\alpha$-Cont & - & - & - & 0.05 & 300 & 12 & 1 & o23013 \\
+\formatdate{27}{6}{2023} & Albireo & IMAG\_SDI & SII/SII-Cont & - & - & - & 0.03 & 313 & 21 & 3 & o23013 \\
+\formatdate{27}{6}{2023} & Albireo & IMAG\_MBI & MBI & - & - & - & \num{2e-3} & 1000 & 20 & 5 & o23013 \\
+\formatdate{29}{6}{2023} & HD 102438 & IMAG\_MBI & MBI & - & CLC-5 & Lyot & 0.01 & 1000 & 383 & 64 & o23149 \\
+\formatdate{7}{7}{2023} & HD 169142 & IPOL\_MBI & MBI & Slow & CLC-5 & Lyot & 1.0 & 10 & 301 & 50 & o23166 \\
+\formatdate{7}{7}{2023} & 21 Oph & IMAG & 625-50 & - & - & - & 0.01 & 500 & 5 & $<$1 & o23166 \\
+\formatdate{7}{7}{2023} & 21 Oph & IMAG & 675-50 & - & - & - & 0.01 & 500 & 5 & $<$1 & o23166 \\
+\formatdate{7}{7}{2023} & 21 Oph & IMAG & 725-50 & - & - & - & 0.01 & 500 & 3 & $<$1 & o23166 \\
+\formatdate{7}{7}{2023} & 21 Oph & IMAG & 750-50 & - & - & - & 0.01 & 500 & 5 & $<$1 & o23166 \\
+\formatdate{7}{7}{2023} & 21 Oph & IMAG & 775-50 & - & - & - & 0.01 & 500 & 6 & $<$1 & o23166 \\
+\formatdate{7}{7}{2023} & 21 Oph & IMAG & Open & - & - & - & 0.01 & 500 & 11 & $<$1 & o23166 \\
+\formatdate{7}{7}{2023} & HD 204827 & IPOL\_MBI & MBI & Fast & - & - & 0.01 & 176 & 52 & 2 & o23166 \\
+\formatdate{7}{7}{2023} & R Aqr & IMAG\_SDI & H$\alpha$/H$\alpha$-Cont & - & - & - & 1.2 & 1 & 348 & 7  & o23166 \\
+\formatdate{10}{7}{2023} & 21 Oph & IMAG\_MBI & MBI & - & - & - & 0.01 & 500 & 555 & 46 & o23166 \\
+\formatdate{10}{7}{2023} & HD 163296 & IPOL\_MBI & MBI & Slow & CLC-3 & Lyot & 0.5 & 17 & 17 & $<$1 & o23166 \\
+\formatdate{11}{7}{2023} & HD 1160 & IMAG\_MBI & MBI & Slow & CLC-3 & Lyot & 0.1 & 100 & 101 & 17 & o23166 \\
+\formatdate{29}{7}{2023} & HIP 3373 & IMAG\_MBI & MBI & - & - & - & 0.1 & 50 & 50 & 4 & o23150 \\
+\formatdate{31}{8}{2023} & HR 718 & IMAG & 625-50 & - & - & - & & & &  & o23013 \\
+\formatdate{31}{8}{2023} & HR 718 & IMAG & 675-50 & - & - & - & & & &  & o23013 \\
+\formatdate{31}{8}{2023} & HR 718 & IMAG & 725-50 & - & - & - & & & &  & o23013 \\
+\formatdate{31}{8}{2023} & HR 718 & IMAG & 750-50 & - & - & - & & & &  & o23013 \\
+\formatdate{31}{8}{2023} & HR 718 & IMAG & 775-50 & - & - & - & & & &  & o23013 \\
+\formatdate{31}{8}{2023} & HR 718 & IMAG & Open & - & - & - & & & & &  o23013 \\
+\formatdate{31}{8}{2023} & HR 718 & IMAG\_MBI & MBI & - & - & - & & & &  & o23013 \\
+\formatdate{31}{8}{2023} & HR 718 & IMAG\_SDI & H$\alpha$/H$\alpha$-Cont & - & - & - & & &  & & o23013 \\
+\formatdate{31}{8}{2023} & HR 718 & IMAG\_SDI & SII/SII-Cont & - & - & - & & & & & o23013 \\
+\formatdate{31}{8}{2023} & HD 19445 & IMAG\_SDI & H$\alpha$/H$\alpha$-Cont & - & - & - & 0.67 & 85 & 50 & 48 & o23013 \\
+\formatdate{30}{4}{2024} & HD 137909 & IMAG & 625-50 & - & - & - & \num{5.7e-4} & 500 & 10 & $<$1 & o24182 \\
+\formatdate{30}{4}{2024} & HD 137909 & IMAG & 675-50 & - & - & - & \num{5.7e-4} & 500 & 10 & $<$1 & o24182 \\
+\formatdate{30}{4}{2024} & HD 137909 & IMAG & 725-50 & - & - & - & \num{5.7e-4} & 500 & 10 & $<$1 & o24182 \\
+\formatdate{30}{4}{2024} & HD 137909 & IMAG & 750-50 & - & - & - & \num{5.7e-4} & 500 & 10 & $<$1 & o24182 \\
+\formatdate{30}{4}{2024} & HD 137909 & IMAG & 775-50 & - & - & - & \num{5.7e-4} & 500 & 10 & $<$1 & o24182 \\
+\formatdate{30}{4}{2024} & HD 137909 & IMAG & Open & - & - & - & \num{5.7e-4} & 500 & 10 & $<$1 & o24182 \\
+\formatdate{30}{4}{2024} & HD 137909 & IMAG\_MBI & MBI & - & - & - & \num{1.6e-3} & 250 & 7 & $<$1 & o24182 \\
+\formatdate{30}{4}{2024} & HD 139341 & IMAG\_MBI & MBI & - & - & - & \num{0.1} & 250 & 2 & $<$1 & o24182 \\
+\enddata
+\tablecomments{The number of coadds and number of frames from each dataset are the average values (not all data cubes have the same number of frames).}
+\end{deluxetable*}
