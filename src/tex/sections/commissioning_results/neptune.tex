@@ -1,0 +1,46 @@
+\subsection{Spectro-Polarimetric Imaging of Neptune\label{sec:neptune}}
+
+\begin{figure*}[t]
+    \centering
+    \script{neptune.py}
+    \includegraphics[width=\textwidth]{figures/20230711_Neptune_mosaic.pdf}
+    \caption{Multiband VAMPIRES observations of Neptune. All data are rotated so to north up and east left in linear scale with different limits for each frame. The multiband filters are shown in each column. The top row is the Stokes $Q_r$ image. The bottom row is Stokes $I$ (total intensity). The apparent diameter of the disk is shown with a circle and the southern polar axis is designated with a line. Flat-field errors in the total intensity images are masked out.\label{fig:neptune_mosaic}}
+\end{figure*}
+
+Neptune is a compelling target for polarimetric imaging due to its dynamic gaseous atmosphere, which presents a unique opportunity to study scattering processes distinct from those in circumstellar disks (where single-scattering events dominate). Neptune has previously been imaged with ZIMPOL \citep{schmid_limb_2006} when it was installed on the ESO \SI{3.6}{\meter} telescope. 
+
+In this work, we present high-resolution spectro-polarimetric observations of Neptune with VAMPIRES, taken on \formatdate{11}{7}{2023} in slow polarimetry mode. The angular diameter of Neptune (\ang{;;2.3}) sat comfortably within the VAMPIRES FOV, eliminating the need for dithering. The AO performance was hindered due to the lack of a clear point source to use as a natural guide star. The planetary ephemeris from JPL horizons\footnote{\url{https://ssd.jpl.nasa.gov/horizons/}} is shown in \autoref{tbl:neptune}. 
+
+\begin{deluxetable}{ll}
+\tablewidth{\columnwidth}
+\tablehead{
+    \colhead{Parameter} & 
+    \colhead{Value}
+}
+\tablecaption{Ephemeris of Neptune for \formatdate{11}{7}{2023} based on JPL horizons data.\label{tbl:neptune}}
+\startdata
+Apparent diameter & \ang{;;2.313} \\
+North pole angle & \ang{318.1} \\
+North pole distance & \ang{;;-1.058} \\
+Sun-observer phase angle & \ang{1.817}
+\enddata
+\end{deluxetable}
+
+For processing, each frame was registered using a cross-correlation with the average image. Calibration factors from \autoref{tbl:filters} were used for absolute flux calibration. Similar to \autoref{sec:hd169142}, the polarimetric reduction used double-differencing with an adapted Mueller-matrix correction. The radial Stokes parameters, $Q_r$ and $U_r$ \citep{schmid_limb_2006}, were calculated using
+\begin{align}
+    \label{eqn:rad_stokes}
+\begin{split}
+    Q_r &= Q\cos{\left(2\theta\right)} + U\sin{\left(2\theta\right)} \\
+    U_r &= -Q\sin{\left(2\theta\right)} + U\cos{\left(2\theta\right)}
+\end{split}
+\end{align}
+For an optically thick planetary atmosphere like Neptune's, the most probable alignment of the electric field due to multiple-scattering is radially from the center of the planet to the limb; therefore, $Q_r$ approximately equal to the polarized intensity \citep{schmid_limb_2006}. Similar to \autoref{sec:hd169142}, residual polarization errors were corrected with photometry, awaiting the updated instrument polarization calibration. The corrected radial Stokes $Q_r$ frames and total intensity frames are shown in \autoref{fig:neptune_mosaic}.
+
+The Stokes $Q_r$ images show clear limb polarization in all filters with little polarization in the center of the image and maximum polarization at the edge. There is azimuthally symmetric polarization along the limb, without significant concentrations at the poles or equator. The total intensity frames show some signs of a polar cloud along with some mild banding structures, especially in the F720 frame. Radial profiles of $Q_r$, $I$, and $Q_r/I$ are shown in \autoref{fig:neptune_flux}.
+
+\begin{figure}
+    \centering
+    \script{neptune.py}
+    \includegraphics[width=\columnwidth]{figures/20230711_Neptune_flux.pdf}
+    \caption{Radial profiles of from spectro-polarimetric observations of Neptune. All profiles use apertures 10 pixels wide. (top) Stokes $I$, total intensity. (middle) radial Stokes $Q_r$. (bottom) the ratio of the $Q_r$ profile to the $I$ profile.\label{fig:neptune_flux}}
+\end{figure}

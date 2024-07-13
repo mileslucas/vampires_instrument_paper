@@ -1,0 +1,29 @@
+
+\subsection{Imaging of HD 1160B\label{sec:hd1160}}
+
+HD 1160 is an A0V star with two substellar companions \citep{nielsen_gemini_2012,maire_first_2016,garcia_scexao_2017,mesa_characterizing_2020}. The inner companion, HD 1160B, is an M5-M7 brown dwarf with \ang{;;0.7} separation on a \SIrange{252}{1627}{yr} orbit \citep{blunt_orbits_2017}. HD 1160 was observed on \formatdate{11}{7}{2023} using VAMPIRES multiband imaging with a \SI{59}{\mas} IWA coronagraph for a relatively short sequence (17 minutes, \ang{14} PA rotation). The data was processed with light frame selection (discarded the worst 25\% of frames) and flux calibrated using an A0V stellar model. HD 1160B was not detected in the calibrated frames, alone.
+
+PSF subtraction was performed at each wavelength using an iterative ADI algorithm (GreeDS; \citealt{pairet_reference-less_2019,pairet_mayonnaise_2020,stapper_iterative_2022}). The companion was easily detected using 20 principal components. The ADI reisudals were combined with and without SDI (\autoref{sec:sdi}). The residual frames are shown in \autoref{fig:hd1160_mosaic}. The throughput-corrected contrast curves (\autoref{fig:hd1160_contrast}) were measured following the same procedure as \autoref{sec:coronagraphy}, except with a mask for the companion to avoid bias.
+
+\begin{figure*}[t]
+    \centering
+    \script{HD1160_mosaic.py}
+    \includegraphics[width=0.9\textwidth]{figures/HD1160_mosaic}
+    \caption{ADI residual frames from VAMPIRES observations of HD 1160 zoomed into a \SI{40}{\pixel}-crop around the companion HD 1160B. Data are shown with a linear scale and different limits for each frame. All frames were processed using the GreeDS algorithm with 20 principal components. The left four frames are residuals from each multiband filter. The top-right frame is the wavelength-collapsed residual, and the bottom-right frame is the ADI+SDI residual which includes a median PSF subtraction in the spectral domain. The ADI+SDI residual has a radial subtraction signature pointing towards the host star due to SDI PSF subtraction.\label{fig:hd1160_mosaic}}
+\end{figure*}
+
+\begin{figure}
+    \centering
+    \script{contrast_curves_HD1160.py}
+    \includegraphics[width=\columnwidth]{figures/20230711_HD1160_contrast_curve}
+    \caption{5$\sigma$ throughput-corrected Student-t contrast curves from multiband imaging of HD 1160 with the CLC-3 coronagraph. This was \SI{16}{\minute} of data with \ang{14.4} of field rotation. The contrast from the GreeDS (20 components) PSF subtraction for each MBI filter is shown with red curves. The solid black curve is the mean-combined residual contrast from each wavelength, and the dashed line is the median SDI-subtracted contrast curve. The contrast of HD 1160B at each wavelength is shown with points.\label{fig:hd1160_contrast}}
+\end{figure}
+
+To determine the precise astrometry of the companion, \texttt{KLIP-FM} \citep{wang_pyklip_2015} was used to forward model a synthetic PSF processed by the KLIP algorithm \citep{pueyo_detection_2016}. For this modeling, 50 principal components were used for each wavelength before mean-collapsing along the spectral axis. The forward-modeled PSF was used to perform an MCMC fit for the position of the companion in the residual frame. The 95\% highest posterior density for the separation was \SI{798.6\pm 1.9}{\mas} at a position angle of \ang{247.07\pm 0.15}. This measurement was used for the astrometric calibration in \autoref{sec:detectors}.
+
+% \subsubsection{Astrometric Fitting and Spectral Extraction}
+
+
+% We perform forward modeling using a synthetic PSF injected with negative flux into our data before processing with our ADI and ADI+SDI PSF subtractions. This method accounts for subtraction biases introduced by the subtraction algorithms, providing a better centroid and amplitude estimate than measured in the residual frames alone. We use a TODO algorithm in a least-squares fashion to estimate the centroid and amplitude of HD 1160B at each wavelength. We report our results in \autoref{tbl:hd1160} and plot best-fitting models (with positive amplitudes) and residuals in \autoref{fig:hd1160_mosaic}. Given the long orbital period and goodness of fit of the orbit in \citet{blunt_orbitize_2020} we use the ephemeride for HD 1160B as a calibration value for astrometric calibration of the detectors (\autoref{sec:detectors}).
+
+% We extract the spectrum of HD 1160B using aperture photometry of our best-fitting models. We plot the results in \autoref{fig:hd1160_flux} alongside the best-fitting spectral model and photometry from \citet{garcia_scexao_2017,mesa_characterizing_2020}. We find TODO agreement with their results.
