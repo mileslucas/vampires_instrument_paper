@@ -1,5 +1,5 @@
 import paths
-from .utils_psf_fitting import fit_moffat, phot_from_model
+from utils_psf_fitting import fit_moffat, phot_from_model
 from astropy.io import fits
 import proplot as pro
 import numpy as np
@@ -152,7 +152,7 @@ tbl_save["F720_diff_err"] = unp.std_devs(np.array(diff_fluxes)[:, 2])
 tbl_save["F760_diff"] = unp.nominal_values(np.array(diff_fluxes)[:, 3])
 tbl_save["F760_diff_err"] = unp.std_devs(np.array(diff_fluxes)[:, 3])
 
-tbl_save.to_csv("astrogrid_diff_photometry.csv")
+tbl_save.to_csv(paths.data / "astrogrid_diff_photometry.csv")
 
 def phot_model(amp, wave, c=1, c1=0):
     opd = amp / wave
@@ -211,7 +211,6 @@ for i, (key, group) in enumerate(subtbl.groupby("X_GRDSEP")):
 
         ys = model_fits_pred[key][j]
 
-        (row["X_GRDAMP"], test_waves / 1e3)
         axes[i].plot(
             test_waves,
             unp.nominal_values(ys),
