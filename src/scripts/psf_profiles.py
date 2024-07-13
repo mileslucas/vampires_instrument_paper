@@ -211,4 +211,4 @@ axes[0].format(
 )
 axes[1].format(ylabel="encircled energy", ylim=(0, None), ytickloc="right")
 # save output
-fig.savefig(paths.figures / "onsky_psf_profiles.pdf", dpi=300)
+fig.savefig(paths.figures / "psf_profiles.pdf", dpi=300)
