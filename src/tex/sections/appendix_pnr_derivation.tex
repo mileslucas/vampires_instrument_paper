@@ -2,7 +2,7 @@
 
 We derive the theoretical noise effects of photon-number resolving data \textit{post-hoc}, wherein data that is assumed to be perfectly bias-subtracted and flat-corrected is converted to electron flux using the detector gain and rounded to the nearest whole number.
 
-Photons which enter the detector have a certain probability of becoming photo-electrons (hereafter electrons) described by the quantum efficiency. We ignore this for now and describe the input flux in electrons. These electrons are subject to counting statistics due to their Poisson nature. Let $H$ be the rate of electrons per pixel (the quanta exposure). The probability of measuring a signal of $k$ electrons is then
+Photons that enter the detector have a certain probability of becoming photo-electrons (hereafter electrons), described by the quantum efficiency. We ignore this for now and describe the input flux in electrons. These electrons are subject to counting statistics due to their Poisson nature. Let $H$ be the rate of electrons per pixel (the quanta exposure). The probability of measuring a signal of $k$ electrons is then
 \begin{equation}
     \mathcal{P}\left(k | H\right) = \frac{H^k e^{-H}}{k!}
 \end{equation}
@@ -51,7 +51,7 @@ Therefore the total noise from photon number resolving is the combination of pho
 \end{equation}
 For practical applications, $k$ is truncated to \num{\pm5} since the probability of observing a Gaussian event over 5 standard deviations away is extremely small, below $10^{-5}$, and therefore $k^2\approx0$.
 
-In \autoref{fig:pnr} the relative improvement in S/N by photon number resolving (i.e., converting signal to electrons and rounding to nearest whole number) is shown. We also show the standard deviation of Monte Carlo samples ($N=10^4$) with and without rounding to confirm our theoretical results. Note that there are more sophisticated algorithms for achieving higher S/N ratios with photon-number resolving than simply rounding after the fact \citep{harpsoe_bayesian_2012}, but this is still a somewhat contrived use case for a ground-based instrument like VAMPIRES which will be photon-noise limited for most observations.
+In \autoref{fig:pnr}, the relative improvement in S/N by photon number resolving (i.e., converting the signal to electrons and rounding to the nearest whole number) is shown. We also show the standard deviation of Monte Carlo samples ($N=10^4$) with and without rounding to confirm our theoretical results. Note that there are more sophisticated algorithms for achieving higher S/N ratios with photon-number resolving than simply rounding after the fact \citep{harpsoe_bayesian_2012}, but this is still a somewhat contrived use case for a ground-based instrument like VAMPIRES which will be photon-noise limited for most observations.
 
 \begin{figure}
     \centering

@@ -8,22 +8,22 @@ The imaging fore-optics were redesigned to accommodate the smaller detector pixe
 
 \subsection{Detector Characterization}
 
-To determine the conversion between detector counts and electrons, we measured photon transfer curves using a calibration flat field source for both detectors in both readout modes. The fixed-pattern noise (FPN) was removed through frame-differencing before a linear model was fit to the average signal and the signal variance \citep{janesick_photon_2007,stefanov_cmos_2022}. 
+To determine the conversion between detector counts and electrons, we measured photon transfer curves using a calibration flat field source for both detectors in both readout modes. The fixed-pattern noise (FPN) was removed through frame-differencing, and then a linear model was fit to the average signal and the signal variance \citep{janesick_photon_2007,stefanov_cmos_2022}. 
 \begin{equation}
     \sigma^2\left(\mu | k, \sigma_{RN}\right) = \frac{\mu}{k} + \sigma^2_{RN}
 \end{equation}
 
-The detector characteristics are reported in \autoref{tbl:detectors}. The readout noise per pixel was measured from the standard deviation of multiple bias frames and combined in quadrature to derive the RMS read noise. The detector photoresponse is linear over the entire dynamic range and saturates at $2^{16}$ \si{adu}. The reported detector full well (\SI{7000}{\electron}) is greater than can be stored in a 16-bit integer. Liquid cooling the detectors to \SI{-45}{\celsius} reduced the dark current to \SI{3.6e-3}{\electron/\second/\pixel}.
+The detector characteristics are reported in \autoref{tbl:detectors}. The readout noise per pixel was measured from the standard deviation of multiple bias frames and combined in quadrature to derive the RMS read noise. The detector photoresponse is linear over the full dynamic range and saturates at $2^{16}$ \si{adu}. The reported detector full well (\SI{7000}{\electron}) is greater than can be stored in a 16-bit integer. Liquid cooling the detectors to \SI{-45}{\celsius} reduced the dark current to \SI{3.6e-3}{\electron/\second/\pixel}.
 
 \subsection{Photon Number Resolution}
 
-Since the qCMOS detectors have read noise below $\sim$\SI{0.3}{\electron}, they can resolve photon numbers, unambiguously detecting the number of individual photons hitting each pixel  \citep{starkey_determining_2016}. The photon number statistic is free from frame-to-frame noise (like readout noise) but requires accurate bias subtraction and flat-fielding for practical use. A derivation of the signal-to-noise ratio (S/N) gained by photon number counting is in \autoref{sec:pnr_derivation}. Photon number resolution is demonstrated in \autoref{fig:pnr}, which shows a histogram of $10^4$ pixels from a long exposure dark frame. The photon peaks from Poisson statistics are clearly resolved. The method from \citet{starkey_determining_2016} was used to determine the gain and quanta exposure directly from the histogram peaks, which was consistent with results from the photon transfer curves.
+Since the qCMOS detectors have read noise below $\sim$\SI{0.3}{\electron}, they can resolve photon numbers, unambiguously detecting the number of individual photons hitting each pixel  \citep{starkey_determining_2016}. The photon number statistic is free from frame-to-frame noise (like readout noise) but requires accurate bias subtraction and flat-fielding for practical use. A derivation of the signal-to-noise ratio (S/N) gained by photon number counting is in \autoref{sec:pnr_derivation}. Photon number resolution is demonstrated in \autoref{fig:pnr}, which shows a histogram of $10^4$ pixels from a long exposure dark frame. The photon peaks from Poisson statistics are clearly resolved. The method from \citet{starkey_determining_2016} was used to determine the gain and quanta exposure directly from the histogram peaks, consistent with results from the photon transfer curves.
 
 \begin{figure}
     \centering
     \script{pnr.py}
     \includegraphics[width=\columnwidth]{figures/pch.pdf}
-    \caption{Histogram of $10^4$ pixels from a long exposure in ``slow'' mode ($\sigma_{RN}$=\SI{0.22}{\electron}). All signal is due to dark current. The Poisson photon number peaks are clearly resolved.\label{fig:pch}}
+    \caption{Histogram of $10^4$ pixels from a long exposure in ``slow'' mode ($\sigma_{RN}$=\SI{0.22}{\electron}). All signals are due to dark current. The Poisson photon number peaks are clearly resolved.\label{fig:pch}}
 \end{figure}
 
 \subsection{qCMOS versus EMCCD}
@@ -47,7 +47,7 @@ For the EMCCDs, extra noise terms unique to the electron-multiplication process 
 \begin{equation}
     S/N_\mathrm{EMCCD} = \frac{S_e}{\sqrt{\left(S_e + D_e + f_{CIC}\right) \cdot \gamma^2 + \left(\sigma_{RN}/g\right)^2}}
 \end{equation}
-where $g$ is the EM gain, $\gamma$ is the excess noise factor ($\sqrt{2}$ with EM gain), and $f_{CIC}$ is the clock-induced charge (CIC). CIC of $10^{-3}$ \si{\electron/\pixel/frame} was used based on empirical tests and vendor values were used for everything else.
+where $g$ is the EM gain, $\gamma$ is the excess noise factor ($\sqrt{2}$ with EM gain), and $f_{CIC}$ is the clock-induced charge (CIC). CIC of $10^{-3}$ \si{\electron/\pixel/frame} was used based on empirical tests, and vendor values were used for everything else.
 
 The qCMOS detectors have an order of magnitude worse dark current and slightly worse QE than the EMCCDs. Despite this, \autoref{fig:detector_snr_relative} shows that the qCMOS detectors have better performance than the EMCCDs when photon-noise or read-noise limited, which is essentially all standard use-cases except for long exposures. The qCMOS detectors are dark-limited in ``slow'' mode at $\sim$\SI{15}{s}, where the relative performance in the low-flux regime drops compared to the EMCCDs. In practice, though, at these exposure times the sky background is the limiting noise term, which has a larger effect on the S/N for the EMCCDs due to excess noise. Using the EMCCDs without electron multiplication is superior at high photon fluxes due to the lack of excess noise factor (compared to the EMCCD) combined with higher QE (compared to the qCMOS).
 
@@ -123,13 +123,13 @@ The changes in optics and detectors, in combination with the non-telecentricity 
 
 We observed six binary systems (Albireo, 21 Oph, HD 1160, HIP 3373, HD 137909, and HD 139341) with separations from \ang{;;0.12} to \ang{;;1.1} (\autoref{tbl:binaries}). The uncertainty in plate scale and position angle was dominated by the statistical uncertainty of the ephemerides rather than centroid precision. The observations of HD 1160 only used VCAM1 and were complicated by the process of PSF subtraction, which was required to detect the low-mass companion (see \autoref{sec:hd1160} for more details).
 
-The derived instrument plate scale and parallactic angle offset are shown in \autoref{tbl:astrometry}. The instrument angle is defined as the pupil rotation of the instrument with respect to the image rotator zero point, which is calculated by
+The derived instrument plate scale and parallactic angle offset are shown in \autoref{tbl:astrometry}. The instrument angle is defined as the pupil rotation of VAMPIRES to the image rotator zero point, which is calculated by
 \begin{equation}
     \theta_\mathrm{inst} = \theta_\mathrm{off} + 180\text{\textdegree} - \theta_\mathrm{PAP}
 \end{equation}
 where $\theta_\mathrm{PAP}$ is the image rotator pupil offset of \ang{-39} (to align with the SCExAO entrance pupil). There is a \ang{180} change in position angle due to a parity flip compared to the previous astrometric solution for VAMPIRES \citep{currie_images_2022}.
 
-Each camera was characterized separately with and without the multiband imaging dichroics (MBI) but did not see significant differences between the modes. Still, observers with the highest astrometric requirements are recommended to take calibrations alongside their observations.
+Each camera was characterized separately with and without the multiband imaging dichroics (MBI), but there were no significant differences between the modes. Still, observers with the highest astrometric requirements should observe calibration targets during their run.
 
 \begin{deluxetable}{lcccl}
 \tabletypesize{\small}

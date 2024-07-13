@@ -48,23 +48,23 @@ H$\alpha$-Cont & 647.7 & 646.7 - 648.6 & 1.9 & 0.07 & 6.0 & 70 & 20.9 & \num{2.3
 SII & 672.7 & 671.2 - 674.1 & 2.9 & 0.05 & 10.8 & 67 & 21.8 & \num{5.5e+08} & 3090 & \num{5.7e-06} \\
 SII-Cont & 681.5 & 680.0 - 683.0 & 3.0 & 0.05 & 8.9 & 66 & 21.6 & \num{4.3e+08} & 3040 & \num{7.0e-06}
 \enddata
-\tablecomments{$\lambda_\mathrm{ave}$: average wavelength, $\lambda_\mathrm{min}$: minimum wavelength with at least 50\% throughput, $\lambda_\mathrm{max}$: maximum wavelength with at least 50\% throughput, FWHM: full width at half-maximum, $k$: average atmospheric extinction from \citet{buton_atmospheric_2013}, Through: estimated instrument throughput (without beamsplitter or FLC), $\mathrm{QE}_\mathrm{ave}$: average detector quantum efficiency, $C_{FD}$: flux density conversion factor. Zero points are in Vega magnitudes and map to instrument flux without any beamsplitter in \si{\electron/s}. Zero points, instrument throughput, and conversion factors were estimated from spectrophotometric standard stars. All values assume there is no beamsplitter.}
+\tablecomments{$\lambda_\mathrm{ave}$: average wavelength, $\lambda_\mathrm{min}$: minimum wavelength with at least 50\% throughput, $\lambda_\mathrm{max}$: maximum wavelength with at least 50\% throughput, FWHM: full width at half-maximum, $k$: average atmospheric extinction from \citet{buton_atmospheric_2013}, Through: estimated instrument throughput (without beamsplitter or FLC), $\mathrm{QE}_\mathrm{ave}$: average detector quantum efficiency, $C_{FD}$: flux density conversion factor. Zero points are in Vega magnitudes and map to instrument flux without a beamsplitter in \si{\electron/s}. Zero points, instrument throughput, and conversion factors were estimated from spectrophotometric standard stars. All values assume there is no beamsplitter.}
 \end{deluxetable*}
 
 \subsection{Neutral Density Filters}
 
-Two broadband reflective neutral density filters in the pupil mask wheel of VAMPIRES can be used to avoid saturating on bright stars. Because these masks are in the pupil wheel, they cannot be used simultaneously with any of the sparse aperture masks or Lyot stops. The optical density was measured for both filters: the ND10 has an optical density of \num{1.0}, and the ND25 has an optical density of \num{2.33}. The polarimetric effects of these filters has not been characterized, and are not recommended for use during polarimetric observations.
+Two broadband reflective neutral density filters in the pupil mask wheel of VAMPIRES can be used to avoid saturating bright stars. Because these masks are in the pupil wheel, they cannot be used simultaneously with sparse aperture masks or Lyot stops. The optical density was measured for both filters: the ND10 has an optical density of \num{1.0}, and the ND25 has an optical density of \num{2.33}. The polarimetric effects of these filters have not been characterized and are not recommended for use during polarimetric observations.
 
 \begin{figure}
     \centering
     \script{filter_curves.py}
     \includegraphics[width=\columnwidth]{figures/filter_curves.pdf}
-    \caption{VAMPIRES filter transmission curves. All curves are normalized to the Open filter, which is the bandpass created from the dichroics upstream of VAMPIRES. The average wavelength for each filter is shown with a vertical dashed line.\label{fig:filters}}
+    \caption{VAMPIRES filter transmission curves. All curves are normalized to the Open filter, the bandpass created from the dichroics upstream of VAMPIRES. The average wavelength for each filter is shown with a vertical dashed line.\label{fig:filters}}
 \end{figure}
 
 \subsection{Beamsplitter Throughput}
 
-VAMPIRES has two beamsplitters: a wire-grid polarizing beamsplitter cube (PBS) and a non-polarizing beamsplitter cube (NPBS). The beamaplitter throughput was measured in the Open filter and compared to the flux without any beamsplitter (\autoref{tbl:bs}). To avoid polarization biases, a linear polarizer was inserted after the internal source and rotated in steps of \ang{5} from \ang{0} to \ang{180}.
+VAMPIRES has two beamsplitters: a wire-grid polarizing beamsplitter cube (PBS) and a non-polarizing beamsplitter cube (NPBS). The beamsplitter throughput was measured in the Open filter and compared to the flux without a beamsplitter (\autoref{tbl:bs}). To avoid polarization biases, a linear polarizer was inserted after the internal source and rotated in steps of \ang{5} from \ang{0} to \ang{180}.
 
 \begin{deluxetable}{lccc}
 \tablehead{
@@ -119,10 +119,10 @@ The surface brightness can be calculated by dividing the calibrated flux by the 
     \Sigma^\mathrm{filt} = m^\mathrm{filt} + 2.5\log{\left(\Omega_{px}\right)} = m^\mathrm{filt} - 11.1~\mathrm{mag/arcsec}^2
 \end{equation}
 
-The accuracy of the zero points and conversion factors is constrained by atmospheric transmission variations and dust accumulation and coating degradation of the telescope mirrors. For applications demanding the highest photometric precision, observing a spectrophotometric standard at multiple elevation angles will give better accuracy.
+The accuracy of the zero points and conversion factors is constrained by atmospheric transmission variations along with dust accumulation and coating degradation of the telescope mirrors. Imaging a spectrophotometric standard at multiple elevation angles for observations demanding the highest photometric precision will give better accuracy.
 
 \subsection{Limiting Magnitudes}
 
-The limiting observing magnitudes for VAMPIRES under excellent conditions are limited by the detector integration time and saturation limit. The fastest detector integration time is \SI{7.2}{\micro\second} in ``fast'' mode and \SI{48}{\milli\second} in ``slow'' mode (for the standard imaging mode with a \ang{;;3}x\ang{;;3} FOV). For these calculations, the peak count limit is set to \SI{60000}{adu} and it is assumed that the brightest pixel in the PSF will be 30\% of the full aperture flux. The highest-throughput scenario (``Open'' filter, no beamsplitter, no FLC; \autoref{tbl:filters}) translates the limiting instrumental flux into $m^\mathrm{Open}=$\SI{2.1}{mag} in ``fast'' mode and $m^\mathrm{Open}=$\SI{11.7}{mag} in ``slow'' mode. The faint observing limits are constrained by the AO wavefront sensors. The current guider limits of AO188 are $m^R<$\SI{16}{mag} and the wavefront sensor limits for diffraction-limited imaging are roughly $m^R<$\SI{12}{mag} \citep{minowa_performance_2010}.
+Under excellent conditions, the limiting observing magnitudes for VAMPIRES are set by the detector integration time and saturation limit. The fastest detector integration time is \SI{7.2}{\micro\second} in ``fast'' mode and \SI{48}{\milli\second} in ``slow'' mode (for the standard imaging mode with a \ang{;;3}x\ang{;;3} FOV). For these calculations, the peak count limit is set to \SI{60000}{adu}, and it is assumed that the brightest pixel in the PSF will be 30\% the full aperture flux. The highest-throughput scenario (``Open'' filter, no beamsplitter, no FLC; \autoref{tbl:filters}) translates the limiting instrumental flux into $m^\mathrm{Open}=$\SI{2.1}{mag} in ``fast'' mode and $m^\mathrm{Open}=$\SI{11.7}{mag} in ``slow'' mode. The AO wavefront sensors constrain the faint observing limits: the current guider limits of AO188 are $m^R<$\SI{16}{mag} and the wavefront sensor limits for diffraction-limited imaging are roughly $m^R<$\SI{12}{mag} \citep{minowa_performance_2010}.
 
 The sky background above Maunakea at zenith (any lunar phase) is $\Sigma^R=$\SI{17.9}{mag/arcsec^2} \citep{roth_measurements_2016}. Assuming, again, the highest-throughput observing configuration and using a pixel size of \SI{5.9}{mas}, this corresponds to an instrument flux of \SI{5e-2}{\electron/\pixel/\second}. This is an order of magnitude higher than the dark signal (\autoref{tbl:detectors}) and is the limiting noise term for exposures longer than \SI{1.2}{\second}.
