@@ -20,7 +20,7 @@ fig, axes = pro.subplots(
     nrows=2, ncols=2, width="3.5in", space=0.25, sharey=1, sharex=1
 )
 
-plate_scale = header["PXSCALE"]
+plate_scale = 5.9
 side_length = cube.shape[-1] * plate_scale * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
 
@@ -43,49 +43,50 @@ for ax, frame, title in zip(axes, calib_data, titles):
     )
 
     ax.text(0.025, 0.9, title, c="white", ha="left", fontsize=9, transform="axes")
-
-bar_width_arc = 0.15
-for ax in axes:
-    rect = patches.Rectangle([-0.35, -0.35], bar_width_arc, 5e-3, color="white")
-    ax.add_patch(rect)
-    ax.text(
-        -0.35 + bar_width_arc / 2,
-        -0.33,
-        f'{bar_width_arc:.02f}"',
-        c="white",
-        ha="center",
-        va="bottom",
-        fontsize=8,
-    )
     ax.scatter([0], [0], m="+", ms=50, c="w", lw=0.75)
 
-    arrow_length = 0.07
-    theta = -np.deg2rad(header["D_IMRPAP"] + header["INST-PA"])
-    rot_mat = np.array(
-        [[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]]
-    )
-    delta = rot_mat @ np.array((0, -arrow_length))
-    ax.plot((0.3, delta[0] + 0.3), (-0.3, delta[1] - 0.3), color="w", lw=0.5)
-    ax.text(
-        delta[0] + 0.29,
-        -0.3 + delta[1],
-        "El",
-        color="w",
-        fontsize=6,
-        ha="left",
-        va="center",
-    )
-    delta = rot_mat @ np.array((-arrow_length, 0))
-    ax.plot((0.3, delta[0] + 0.3), (-0.3, delta[1] - 0.3), color="w", lw=0.5)
-    ax.text(
-        delta[0] + 0.3,
-        -0.29 + delta[1],
-        "Az",
-        color="w",
-        fontsize=6,
-        ha="center",
-        va="bottom",
-    )
+## scale bar
+bar_width_arc = 0.15
+rect = patches.Rectangle([0.35, -0.35], -bar_width_arc, 5e-3, color="white")
+axes[1, 0].add_patch(rect)
+axes[1, 0].text(
+    0.35 - bar_width_arc / 2,
+    -0.33,
+    f'{bar_width_arc:.02f}"',
+    c="white",
+    ha="center",
+    va="bottom",
+    fontsize=8,
+)
+
+## compass rose
+arrow_length = 0.07
+theta = -np.deg2rad(header["D_IMRPAP"] + header["INST-PA"])
+rot_mat = np.array(
+    [[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]]
+)
+delta = rot_mat @ np.array((0, -arrow_length))
+axes[1, 1].plot((-0.26, delta[0] - 0.26), (-0.34, delta[1] - 0.34), color="w", lw=1)
+axes[1, 1].text(
+    delta[0] - 0.27,
+    -0.34 + delta[1],
+    "El",
+    color="w",
+    fontsize=7,
+    ha="left",
+    va="center",
+)
+delta = rot_mat @ np.array((-arrow_length, 0))
+axes[1, 1].plot((-0.26, delta[0] - 0.26), (-0.34, delta[1] - 0.34), color="w", lw=1)
+axes[1, 1].text(
+    delta[0] - 0.26,
+    -0.335 + delta[1],
+    "Az",
+    color="w",
+    fontsize=7,
+    ha="center",
+    va="bottom",
+)
 
 
 ## sup title

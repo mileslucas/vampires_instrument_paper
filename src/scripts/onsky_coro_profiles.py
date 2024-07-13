@@ -9,13 +9,13 @@ pro.rc["image.origin"] = "lower"
 pro.rc["legend.fontsize"] = 6
 pro.rc["font.size"] = 8
 
-with fits.open(paths.data / "20230710_HD163296_good_frame.fits") as hdul:
-    cube = hdul[0].data
+with fits.open(paths.data / "HD102438_adi_cube.fits") as hdul:
+    cube = hdul[0].data[159]
     header = hdul[0].header
 
 
-with fits.open(paths.data / "20230707_HD169142_good_frame.fits") as hdul:
-    cube2 = hdul[0].data
+with fits.open(paths.data / "20230711_HD1160" / "HD1160_adi_cube.fits") as hdul:
+    cube2 = hdul[0].data[39]
     header2 = hdul[0].header
 
 
@@ -23,13 +23,13 @@ titles = ("F610", "F670", "F720", "F760")
 
 fig, axes = pro.subplots(nrows=2, width="3.5in", height="3.5in", hspace=0.5)
 
-plate_scale = header["PXSCALE"]
+plate_scale = 5.9e-3
 side_length = cube.shape[-1] * plate_scale * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
 
 cycle = pro.Colormap("fire")(np.linspace(0.4, 0.9, len(titles)))
 
-rads = np.arange(0, 1e3 / plate_scale)
+rads = np.arange(0, 0.8e3 / plate_scale)
 for i in range(len(cube)):
     cy, cx = np.array(cube[i].shape[-2:]) / 2 - 0.5
     radprof = RadialProfile(cube[i], (cx, cy), rads)

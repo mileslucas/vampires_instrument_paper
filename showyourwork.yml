@@ -58,21 +58,28 @@ overleaf:
     - src/tex/authors.tex
     - src/tex/bib.bib
     - src/tex/ms.tex
-    - src/tex/sections/conclusions.tex
-    - src/tex/sections/control.tex
-    - src/tex/sections/coronagraphy.tex
-    - src/tex/sections/design.tex
-    - src/tex/sections/detectors.tex
-    - src/tex/sections/filters.tex
-    - src/tex/sections/first_light_results.tex
-    - src/tex/sections/inst_models.tex
-    - src/tex/sections/intro.tex
-    - src/tex/sections/observing_log.tex
-    - src/tex/sections/pnr_derivation.tex
-    - src/tex/sections/polarimetry.tex
-    - src/tex/sections/processing.tex
-    - src/tex/sections/psf.tex
-    - src/tex/sections/science_applications.tex
+    - src/tex/sections/01_intro.tex
+    - src/tex/sections/02_science_applications.tex
+    - src/tex/sections/03_design.tex
+    - src/tex/sections/04_detectors.tex
+    - src/tex/sections/05_control.tex
+    - src/tex/sections/06_filters.tex
+    - src/tex/sections/07_psf.tex
+    - src/tex/sections/08_coronagraphy.tex
+    - src/tex/sections/09_polarimetry.tex
+    - src/tex/sections/10_interferometry.tex
+    - src/tex/sections/11_processing.tex
+    - src/tex/sections/12_commissioning_results.tex
+    - src/tex/sections/commissioning_results/hd169142.tex
+    - src/tex/sections/commissioning_results/hd1160.tex
+    - src/tex/sections/commissioning_results/raqr.tex
+    - src/tex/sections/commissioning_results/neptune.tex
+    - src/tex/sections/13_conclusions.tex
+    - src/tex/sections/appendix_inst_models.tex
+    - src/tex/sections/appendix_mbi_ghosts.tex
+    - src/tex/sections/appendix_nontelecentricity.tex
+    - src/tex/sections/appendix_observing_log.tex
+    - src/tex/sections/appendix_pnr_derivation.tex
 
 # Always require all input files to be present on disk for workflow to pass?
 require_inputs: true

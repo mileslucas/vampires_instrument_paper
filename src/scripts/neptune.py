@@ -42,7 +42,7 @@ def radial_stokes(Q, U, phi=0):
 
 def opt_func(phi, stokes_frame):
     Qr, Ur = radial_stokes(stokes_frame[2], stokes_frame[3], phi)
-    return np.abs(np.nansum(Ur))
+    return np.nanmean(Ur**2)
 
 
 def optimize_Qr(stokes_frames, frame=""):
@@ -52,6 +52,17 @@ def optimize_Qr(stokes_frames, frame=""):
     print(f"Neptune {frame} field phi offset: {np.rad2deg(res.x):.01f}°")
     return radial_stokes(stokes_frames[2], stokes_frames[3], phi=res.x)
 
+def mask_circle(image, x, y, rad):
+    Ys, Xs = np.ogrid[: image.shape[-2], : image.shape[-1]]
+    rs = np.hypot(Ys - y, Xs - x)
+    mask = rs <= rad
+    image[mask] = np.nan
+    return image
+    # return np.where(mask, np.nan, image)
+
+def mask_all(image):
+    mask_circle(image, 351.7, 326.3, 11)
+    mask_circle(image, 438.7, 251.4, 8)
 
 for i in range(4):
     Qr, Ur = optimize_Qr(stokes_cube[i], titles[i])
@@ -62,13 +73,19 @@ fig, axes = pro.subplots(
     nrows=2, ncols=4, width="7in", space=0, hspace=0.25, sharey=1, sharex=1
 )
 
-plate_scale = header["PXSCALE"]
+plate_scale = 5.9
 side_length = stokes_cube.shape[-1] * plate_scale * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
 
 ## Plot and save
+bs_fact = 0.7964/2
+
+ext_fact = np.array((0.09, 0.056, 0.040, 0.032))
+extinction = ext_fact * header["AIRMASS"]
+ext_lin = 10**(-0.4 * extinction)
+
 Jy_fact = (
-    np.array((1.4e-6, 7e-7, 4.9e-7, 1.2e-6)) / header["PXAREA"] * 2
+    np.array((1.2e-6, 6.1e-7, 4.4e-7, 1e-6)) / bs_fact / (plate_scale**2/1e6) / ext_lin
 )  # Jy / sq.arcsec / (e-/s)
 calib_data = stokes_cube * Jy_fact[:, None, None, None]
 Qr_frames = calib_data[:, 4]
@@ -102,6 +119,10 @@ arrow_length = 0.3
 
 
 # Intensity images
+mask_all(I_frames[0])
+mask_all(I_frames[1])
+mask_all(I_frames[2])
+mask_all(I_frames[3])
 for ax, frame in zip(axes[1, :], I_frames):
     im = ax.imshow(frame, extent=ext, cmap="magma", vmin=0)
 
@@ -122,6 +143,34 @@ for ax in axes:
         length_includes_head=True,
     )
 
+# compass rose
+arrow_length = 0.2
+delta = np.array((0, arrow_length))
+axes[1, 3].plot((-1.15, delta[0] + -1.15), (-1.15, delta[1] + -1.15), color="w", lw=1)
+axes[1, 3].text(
+    delta[0] - 1.15,
+    -1.15 + delta[1],
+    "N",
+    color="w",
+    fontsize=7,
+    ha="center",
+    va="bottom",
+)
+delta = np.array((arrow_length, 0))
+axes[1, 3].plot((-1.15, delta[0] + -1.15), (-1.15, delta[1] + -1.15), color="w", lw=1)
+axes[1, 3].text(
+    delta[0] - 1.15 + 0.02,
+    -1.15 + delta[1] - 0.01,
+    "E",
+    color="w",
+    fontsize=7,
+    ha="right",
+    va="center",
+)
+
+
+
+
 ## sup title
 axes.format(
     grid=False,
@@ -137,7 +186,6 @@ for ax in axes:
 
 axes[:, 1:].format(yticks=[])
 axes[0, :].format(xticks=[])
-
 fig.savefig(
     paths.figures / "20230711_Neptune_mosaic.pdf",
     dpi=300,
@@ -216,7 +264,7 @@ ny = Qr_frames.shape[-2]
 nx = Qr_frames.shape[-1]
 center = (ny - 1) / 2, (nx - 1) / 2
 
-pxscale = header["PXSCALE"] / 1e3
+pxscale = 5.9 / 1e3
 fwhm = 10
 radii = np.arange(0, 1.5 / pxscale, fwhm)
 for i in range(4):

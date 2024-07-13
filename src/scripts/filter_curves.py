@@ -14,12 +14,12 @@ pro.rc["font.size"] = 8
 pro.rc["title.size"] = 8
 
 fig, axes = pro.subplots(
-    nrows=5,
+    nrows=4,
     width="3.5in",
-    height="4.7in",
+    height="4in",
     space=0,
     sharey=1,
-    hratios=(0.2125, 0.225, 0.2125, 0.2125, 0.15),
+    hratios=(0.2125, 0.225, 0.2125, 0.2125),#, 0.15),
 )
 
 waveset = np.arange(550, 800, 0.1) * u.nm
@@ -136,20 +136,20 @@ for i, filt in enumerate(("Ha-Cont", "Halpha", "SII", "SII-Cont")):
 axes[3].format(title="NB filters", titleloc="ul")
 
 
-cmap = dict(zip(("ND10", "ND25"), ("0.6", "0.3")))
-for i, filt in enumerate(("ND10", "ND25")):
-    sp_elem = load_vampires_filter(filt)
-    color = cmap[filt]
-    plot_nd_filter(
-        axes[4],
-        waveset,
-        sp_elem,
-        filt,
-        color=color,
-    )
-axes[4].format(
-    yscale="log", yformatter="log", ylim=(1e-3, 8e-1), title="ND filters", titleloc="ul"
-)
+# cmap = dict(zip(("ND10", "ND25"), ("0.6", "0.3")))
+# for i, filt in enumerate(("ND10", "ND25")):
+#     sp_elem = load_vampires_filter(filt)
+#     color = cmap[filt]
+#     plot_nd_filter(
+#         axes[4],
+#         waveset,
+#         sp_elem,
+#         filt,
+#         color=color,
+#     )
+# axes[4].format(
+#     yscale="log", yformatter="log", ylim=(1e-3, 8e-1), title="ND filters", titleloc="ul"
+# )
 
 axes.format(ylabel="transmission", xlabel=r"wavelength (nm)", titlesize=7)
 

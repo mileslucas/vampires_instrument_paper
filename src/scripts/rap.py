@@ -5,6 +5,8 @@ import numpy as np
 from astropy.nddata import Cutout2D
 from astropy.visualization import simple_norm
 from photutils.profiles import RadialProfile
+import utils_strehl as strehl
+from scipy.signal import savgol_filter
 
 pro.rc["legend.fontsize"] = 6
 pro.rc["font.size"] = 8
@@ -29,8 +31,7 @@ for path in [
         key = "PSF"
     data_dict[key] = np.nan_to_num(np.squeeze(data))
 
-
-plate_scale = 6.03  # mas / px
+plate_scale = 5.9  # mas / px
 
 fig, axes = pro.subplots(
     [[1, 2], [3, 3]],
@@ -93,11 +94,20 @@ axes[0, 1].text(
 axes[0, :].format(grid=False, xticks=[], yticks=[])
 
 
+ideal_psf = strehl.create_synth_psf("Open", npix=401)
+
 radii = np.arange(0, 1.2e3 / plate_scale)
 cy, cx = np.array(cutout.data.shape) / 2 - 0.5
 prof = RadialProfile(cutout.data, (cx, cy), radii)
 prof.normalize()
-axes[1, :].plot(prof.radius * plate_scale / 1e3, prof.profile, label="Open")
+
+cy, cx = np.array(ideal_psf.shape) / 2 - 0.5
+prof_ideal = RadialProfile(ideal_psf, (cx, cy), radii)
+prof_ideal.normalize()
+axes[1, :].plot(prof.radius * plate_scale / 1e3, prof.profile, label="RAP", zorder=999)
+axes[1, :].plot(prof_ideal.radius * plate_scale / 1e3, prof_ideal.profile, label="PSF", c="C3")
+
+
 axes[1, :].legend()
 axes[1, :].format(
     yscale="log", yformatter="log", xlabel='separation (")', ylabel="norm. profile"

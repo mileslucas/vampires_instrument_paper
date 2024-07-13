@@ -121,7 +121,6 @@ fig, axes = pro.subplots(width="3.5in", height="2.25in")
 # test_bins = np.linspace(bins.min(), bins.max(), 1000)
 # pch_prob = np.array([pch((b - 200) * gain, n_e, 0.25, 0) for b in test_bins])
 axes[0].hist(data.ravel(), bins=bins, label="Data")
-axes[0].legend(ncols=1)
 axes[0].format(
     xlim=(192, 260),
     xformatter="scalar",
@@ -182,7 +181,7 @@ axes[0].scatter(
     mew=0,
     label="Monte Carlo (FAST)",
 )
-axes[0].legend(ncols=1)
+axes[0].legend(ncols=1, frame=False)
 axes[0].axhline(0, c="0.2")
 
 axes[0].format(

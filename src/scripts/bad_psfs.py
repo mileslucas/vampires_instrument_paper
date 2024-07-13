@@ -27,65 +27,87 @@ mbi_cube, hdr_fuzzy = fits.getdata(
 )
 long_expo_frame = mbi_cube[2] + 11
 
+good_cube, good_hdr = fits.getdata(paths.data / "20230707_HD191195_frame.fits", header=True)
+good_frame = good_cube[2]
 
-fig, axes = pro.subplots(ncols=2, wspace=0.25, width="3.5in")
+fig, axes = pro.subplots(ncols=3, wspace=0.25, width="3.5in")
 
 
-side_length = lwe_frame.shape[-1] * lwe_header["PXSCALE"] * 1e-3 / 2
+
+side_length = good_frame.shape[-1] * 5.9 * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
 im = axes[0].imshow(
+    good_frame,
+    extent=ext,
+    norm=simple_norm(good_frame, stretch="sqrt"),
+    vmin=0,
+)
+
+side_length = lwe_frame.shape[-1] * 5.9 * 1e-3 / 2
+ext = (side_length, -side_length, -side_length, side_length)
+im = axes[1].imshow(
     lwe_frame,
     extent=ext,
     norm=simple_norm(lwe_frame, stretch="sqrt"),
     vmin=0,
 )
 
-side_length = long_expo_frame.shape[-1] * hdr_fuzzy["PXSCALE"] * 1e-3 / 2
+side_length = long_expo_frame.shape[-1] * 5.9 * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
-im = axes[1].imshow(
+im = axes[2].imshow(
     long_expo_frame,
     extent=ext,
     norm=simple_norm(long_expo_frame, stretch="sqrt"),
     vmin=0,
 )
 
-axes[0].text(0.05, 0.9, "LWE", transform="axes", c="white", ha="left", fontsize=8)
-axes[1].text(
-    0.05, 0.9, "Bad seeing", transform="axes", c="white", ha="left", fontsize=8
+axes[0].text(0.05, 0.87, "Good PSF", transform="axes", c="white", ha="left", fontsize=8)
+axes[1].text(0.05, 0.87, "LWE", transform="axes", c="white", ha="left", fontsize=8)
+axes[2].text(
+    0.05, 0.87, "Bad seeing", transform="axes", c="white", ha="left", fontsize=8
 )
 
 axes[0].text(
+    0.95,
     0.05,
-    0.07,
-    f"DIT={lwe_header['EXPTIME']*1e3:.01f} ms",
+    f"DIT={good_hdr['EXPTIME']*1e3:.01f} ms",
     transform="axes",
     c="white",
-    ha="left",
+    ha="right",
     fontsize=7,
 )
 axes[1].text(
+    0.95,
     0.05,
-    0.07,
+    f"DIT={lwe_header['EXPTIME']*1e3:.01f} ms",
+    transform="axes",
+    c="white",
+    ha="right",
+    fontsize=7,
+)
+axes[2].text(
+    0.95,
+    0.05,
     f"DIT={hdr_fuzzy['EXPTIME']:.01f} s",
     transform="axes",
     c="white",
-    ha="left",
+    ha="right",
     fontsize=7,
 )
 
 bar_width_arc = 0.1
 
-for ax in axes:
-    rect = patches.Rectangle([-0.17, -0.175], bar_width_arc, 3e-3, color="white")
-    ax.add_patch(rect)
-    ax.text(
-        -0.17 + bar_width_arc / 2,
-        -0.16,
-        f'{bar_width_arc:.01f}"',
-        c="white",
-        ha="center",
-        fontsize=8,
-    )
+## scale bar
+rect = patches.Rectangle([0.17, -0.175], -bar_width_arc, 3e-3, color="white")
+axes[0].add_patch(rect)
+axes[0].text(
+    0.17 - bar_width_arc / 2,
+    -0.158,
+    f'{bar_width_arc:.01f}"',
+    c="white",
+    ha="center",
+    fontsize=7,
+)
 
 
 ## sup title

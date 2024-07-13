@@ -16,7 +16,7 @@ pro.rc["image.origin"] = "lower"
 
 frame, hdr = fits.getdata(paths.data / "20230707_HD191195_frame.fits", header=True)
 
-plate_scale = hdr["PXSCALE"]
+plate_scale = 5.9
 side_length = frame.shape[-1] * plate_scale * 1e-3 / 2
 ext = (-side_length, side_length, -side_length, side_length)
 
@@ -68,6 +68,8 @@ axes.format(
 #     fontsize=7,
 # )
 
+## Filter label
+axes[0].text(0.02, 0.02, r"$\lambda =$720 nm", c="w", ha="left", va="bottom", fontsize=9, transform="axes")
 
 ## speckle labels
 text_kwargs = dict(fontsize=7, c="w", ha="center", va="bottom")

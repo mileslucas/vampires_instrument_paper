@@ -93,7 +93,10 @@ for key in names.keys():
     axes[0].axvline(iwa * 1e3, c=colors[key], ls=":")
 
 # format and legends
-axes.legend(ncols=1)
+axes[0].dualx(
+    lambda x: x / (np.rad2deg(680e-9 / 7.92) * 3.6e6), label=r"separation ($\lambda/D$)"
+)
+axes.legend(ncols=1, frame=False)
 axes.format(
     grid=True, xlabel="separation (mas)", ylabel="normalized throughput", xlim=(0, 255)
 )
