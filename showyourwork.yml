@@ -54,6 +54,7 @@ overleaf:
     - src/tex/output
   # List of files to pull from Overleaf
   pull:
+    - src/tex/abstract.tex
     - src/tex/acknowledgements.tex
     - src/tex/authors.tex
     - src/tex/bib.bib
