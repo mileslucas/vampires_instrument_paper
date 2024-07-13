@@ -11,7 +11,6 @@ pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
 
 names = ("F610", "F670", "F720", "F760")
-
 resid_cube, header = fits.getdata(paths.data / "20230711_HD1160" / "20230711_HD1160_GreeDS20_speccube.fits", header=True)
 
 sdi_names = ("ADI+Mean", "ADI+SDI")
@@ -20,7 +19,6 @@ adi_frame, header = fits.getdata(paths.data / "20230711_HD1160" / "20230711_HD11
 adisdi_frame, header = fits.getdata(paths.data / "20230711_HD1160" / "20230711_HD1160_GreeDS20_ASDI.fits", header=True)
 
 plate_scale = 5.9  # mas / px
-
 fig, axes = pro.subplots([[1, 2, 5], [3, 4, 6]], width="7in", wspace=[0.25, 0.75], hspace=0.25, spanx=False)
 
 exp_sep = 135.18
@@ -107,9 +105,6 @@ axes[1, 1].text(
     va="center",
 )
 
-
-
-
 # save output
 # pro.show()
-fig.savefig(paths.figures / "HD1160_mosaic.pdf", dpi=300)
+fig.savefig(paths.figures / "20230711_HD1160_mosaic.pdf", dpi=300)
