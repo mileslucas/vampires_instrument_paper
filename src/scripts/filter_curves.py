@@ -107,7 +107,7 @@ for i, filt in enumerate(sorted(VAMPIRES_STD_FILTERS - {"Open"})):
     else:
         color = cmap[filt]
     plot_filter(axes[1], waveset, sp_elem, filt, color=color, space=space)
-axes[1].format(title="Standard filters", titleloc="ul")
+axes[1].format(title="Bandpass filters", titleloc="ul")
 
 # plot MBI filters
 cycle = pro.Colormap("fire")(np.linspace(0.4, 0.9, len(VAMPIRES_MBI_FILTERS)))
