@@ -35,7 +35,7 @@ plate_scale = 5.9e-3  # mas / px
 vmin = 0
 # vmax=np.nanmax(stokes_cube[:, 3])
 # vmax=np.nanpercentile(Qphi_frames, 99)
-bar_width_au = 50
+bar_width_au = 50.0
 plx = 2.5931e-3  # "
 bar_width_arc = bar_width_au * plx  # "
 
@@ -159,6 +159,7 @@ wd_ra = 0.0392
 wd_dec = -0.0055
 circ = patches.Circle([wd_ra, wd_dec], fwhm * 1e-3 / 2, ec="white", fc="none", lw=1, alpha=0.6)
 axes[0].add_patch(circ)
+axes[0].scatter([wd_ra], [wd_dec], m="+", ms=50, c="w", lw=1, alpha=0.6)
 
 ## scale bar
 rect = patches.Rectangle([0.105, -0.085], -bar_width_arc, 3e-3, color="white")

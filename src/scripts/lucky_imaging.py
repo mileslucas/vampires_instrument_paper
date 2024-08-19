@@ -24,7 +24,7 @@ def dft_centroid(frame, psf, guess=None, f=30):
         guess = np.unravel_index(np.nanargmax(frame), frame.shape)
     cutout = Cutout2D(frame, (guess[1], guess[0]), psf.shape, mode="partial", fill_value=0)
 
-    dft_off, _, _ = phase_cross_correlation(psf, cutout.data, upsample_factor=f)
+    dft_off, _, _ = phase_cross_correlation(psf, cutout.data, upsample_factor=f, normalization=None)
     # need to update with center of frame
     ctr_off = np.array(cutout.shape)/2 - 0.5 - dft_off
     return np.array((ctr_off[0] + cutout.slices_original[0].start, ctr_off[1] + cutout.slices_original[1].start))

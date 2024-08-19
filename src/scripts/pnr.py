@@ -152,14 +152,14 @@ axes[0].plot(
     (theoretical_curves["SLOW"] - 1) * 100,
     c="C0",
     zorder=999,
-    label="Theoretical (SLOW)",
+    label="Theoretical (slow)",
 )
 axes[0].plot(
     flux,
     (theoretical_curves["FAST"] - 1) * 100,
     c="C3",
     zorder=999,
-    label="Theoretical (FAST)",
+    label="Theoretical (fast)",
 )
 axes[0].scatter(
     flux,
@@ -169,7 +169,7 @@ axes[0].scatter(
     zorder=900,
     ms=5,
     mew=0,
-    label="Monte Carlo (SLOW)",
+    label="Monte Carlo (slow)",
 )
 axes[0].scatter(
     flux,
@@ -179,7 +179,7 @@ axes[0].scatter(
     zorder=900,
     ms=5,
     mew=0,
-    label="Monte Carlo (FAST)",
+    label="Monte Carlo (fast)",
 )
 axes[0].legend(ncols=1, frame=False)
 axes[0].axhline(0, c="0.2")

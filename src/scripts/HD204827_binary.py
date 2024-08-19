@@ -18,7 +18,7 @@ with fits.open(paths.data / "20230707_HD204827_coll.fits") as hdul:
 titles = ("F610", "F670", "F720", "F760")
 
 fig, axes = pro.subplots(
-    nrows=2, ncols=2, width="3.5in", space=0.25, sharey=1, sharex=1
+    nrows=1, ncols=4, width="7in", space=0.25, sharey=1, sharex=1
 )
 
 plate_scale = 5.9
@@ -49,8 +49,8 @@ for ax, frame, title in zip(axes, calib_data, titles):
 # scale bar
 bar_width_arc = 0.075
 rect = patches.Rectangle([0.17, -0.17], -bar_width_arc, 5e-3, color="white")
-axes[1, 0].add_patch(rect)
-axes[1, 0].text(
+axes[0].add_patch(rect)
+axes[0].text(
     0.17 - bar_width_arc / 2,
     -0.15,
     f"{bar_width_arc*1e3:.0f} mas",
@@ -62,8 +62,8 @@ axes[1, 0].text(
 # compass rose
 arrow_length = 0.04
 delta = np.array((0, arrow_length))
-axes[1, 1].plot((-0.12, delta[0] + -0.12), (-0.17, delta[1] + -0.17), color="w", lw=1)
-axes[1, 1].text(
+axes[3].plot((-0.12, delta[0] + -0.12), (-0.17, delta[1] + -0.17), color="w", lw=1)
+axes[3].text(
     delta[0] - 0.12,
     -0.17 + delta[1],
     "N",
@@ -73,8 +73,8 @@ axes[1, 1].text(
     va="bottom",
 )
 delta = np.array((arrow_length, 0))
-axes[1, 1].plot((-0.12, delta[0] + -0.12), (-0.17, delta[1] + -0.17), color="w", lw=1)
-axes[1, 1].text(
+axes[3].plot((-0.12, delta[0] + -0.12), (-0.17, delta[1] + -0.17), color="w", lw=1)
+axes[3].text(
     delta[0] - 0.115,
     -0.163 + delta[1],
     "E",
