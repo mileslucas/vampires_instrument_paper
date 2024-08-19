@@ -15,24 +15,24 @@ The data is collapsed with optional frame selection for lucky imaging. The regis
 
 \subsection{Polarimetry}
 
-Polarimetric data is collated into sets for each HWP cycle and Stokes cubes are produced from the double- or triple-difference procedure. Before differencing, data are corrected for small differences in plate scale and angle offset between the cameras. The Stokes cube is optionally corrected with a Mueller-matrix, following \citet{holstein_polarimetric_2020,zhang_characterizing_2023}. Finally, all the individual Stokes cubes are derotated and median-combined. The Stokes $I$, $Q$, and $U$ frames are saved alongside the azimuthal Stokes parameters $Q_\phi$ and $U_\phi$ \citep{monnier_multiple_2019,boer_polarimetric_2020}, 
+Polarimetric data is collated into sets for each HWP cycle and Stokes cubes are produced from the double- or triple-difference procedure. Before differencing, data are corrected for small differences in plate scale and angle offset between the cameras. The Stokes cube is optionally corrected with a Mueller-matrix, following \citet{holstein_polarimetric_2020,zhang_characterizing_2023}. Finally, all the individual Stokes cubes are derotated and median-combined. The Stokes $I$, $Q$, and $U$ frames are saved alongside the azimuthal Stokes parameters $Q_\phi$ and $U_\phi$ \citep{monnier_multiple_2019,boer_polarimetric_2020}--
 \begin{align}
 \begin{split}
     \label{eqn:az_stokes}
     Q_\phi &= -Q\cos{\left(2\phi\right)} - U\sin{\left(2\phi\right)} \\
-    U_\phi &= Q\sin{\left(2\phi\right)} - U\cos{\left(2\phi\right)}
+    U_\phi &= Q\sin{\left(2\phi\right)} - U\cos{\left(2\phi\right)},
 \end{split}
 \end{align}
 where
 \begin{equation}
     \phi = \arctan{\left( \frac{x_0 - x}{y - y_0} \right)} + \phi_0
 \end{equation}
-in image coordinates. Note, this is equivalent to the angle east of north when data has been derotated. The total linear polarization
+in image coordinates. Note, this is equivalent to the angle east of north when data has been derotated. The total linear polarization,
 \begin{equation}
-    P = \sqrt{Q^2 + U^2}
+    P = \sqrt{Q^2 + U^2},
 \end{equation}
-and the angle of linear polarization
+and the angle of linear polarization,
 \begin{equation}
-    \chi = \frac12\arctan{\frac{U}{Q}}
+    \chi = \frac12\arctan{\frac{U}{Q}},
 \end{equation}
-are also calculated and saved in the Stokes cube.
+are also calculated and saved in the output cube.

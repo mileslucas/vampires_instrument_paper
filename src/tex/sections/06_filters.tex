@@ -99,30 +99,31 @@ The Pickles stellar models \citep{pickles_stellar_1998} were used to measure the
 
 \subsection{Absolute Flux Calibration}
 
-During commissioning, spectrophotometric standard stars HR 718 ($m^V=$\SI{4.273}{mag}) and HD 19445 ($m^V=$\SI{8.096}{mag}) were observed in each filter to calibrate the photometric zero points in \si{Jy} and \si{\electron/\second} \citep{hamuy_southern_1992,hamuy_southern_1994,stone_spectrophotometry_1996,zacharias_fourth_2013}.
+During commissioning, spectrophotometric standard stars HR 718 ($m_{\rm V}=$ \SI{4.273}) and HD 19445 ($m_{\rm V}=$ \SI{8.096}) were observed in each filter to calibrate the photometric zero points in \si{Jy} and \si{\electron/\second} \citep{hamuy_southern_1992,hamuy_southern_1994,stone_spectrophotometry_1996,zacharias_fourth_2013}.
 
 The absolute flux calibration is summarized by the $C_{FD}$ coefficient, following \citet{gordon_james_2022}. This flux density conversion factor converts between instrument flux (in \si{\electron/\second}) and \si{Jy}. The instrument flux was measured using aperture photometry and corrected for atmospheric extinction using an empirical model from  \citet{buton_atmospheric_2013}. The conversion factors are derived from synthetic photometry of the calibrated stellar spectra.
 
 The photometric zero points are mapped from Vega magnitudes to instrument flux in \si{\electron/\second} without a beamsplitter. The traditional zero point can be derived by incorporating each detector's beamsplitter throughput and camera gain rather than specifying all \num{280} unique combinations.
 
-The zero points are used by taking the aperture flux in \si{\electron/\second}, corrected for any beamsplitter or FLC throughputs, and converting to magnitudes with the zero point magnitude
+The zero points are used by taking the aperture flux in \si{\electron\per\second}, corrected for any beamsplitter or FLC throughputs, and converting to magnitudes with the zero point magnitude:
 \begin{equation}
-    m^\mathrm{filt}=\mathrm{ZP}_\mathrm{filt} - 2.5\log{\left(f\right)}
+    m_{\rm filt}=\mathrm{ZP}_\mathrm{filt} - 2.5\log{\left(f\right)},
 \end{equation}
 or, equivalently, with the zero point flux
 \begin{equation}
-    m^\mathrm{filt}=-2.5\log{\left(f/f_\mathrm{ZP}\right)}
+    m_{\rm filt}=-2.5\log{\left(f/f_\mathrm{ZP}\right)}.
 \end{equation}
-The surface brightness can be calculated by dividing the calibrated flux by the area of a pixel ($\Omega_{px}=$\SI{3.5e-5}{arcsec^2/\pixel}). For Vega magnitudes, instead, use
+The surface brightness, $\Sigma_{\rm filt}$, can be calculated by dividing the calibrated flux by the area of a pixel ($\Omega_{px}=$\SI{3.5e-5}{arcsec^2/\pixel}). For Vega magnitudes, instead, use
 \begin{equation}
     \label{eqn:surf_bright}
-    \Sigma^\mathrm{filt} = m^\mathrm{filt} + 2.5\log{\left(\Omega_{px}\right)} = m^\mathrm{filt} - 11.1~\mathrm{mag/arcsec}^2
+    \Sigma_{\rm filt} = m_{\rm filt} + 2.5\log{\left(\Omega_{px}\right)} = m_{\rm filt}- 11.1~\mathrm{mag/arcsec}^2.
 \end{equation}
 
 The accuracy of the zero points and conversion factors is constrained by atmospheric transmission variations along with dust accumulation and coating degradation of the telescope mirrors. Imaging a spectrophotometric standard at multiple elevation angles for observations demanding the highest photometric precision will give better accuracy.
 
 \subsection{Limiting Magnitudes}
 
-Under excellent conditions, the limiting observing magnitudes for VAMPIRES are set by the detector integration time and saturation limit. The fastest detector integration time is \SI{7.2}{\micro\second} in ``fast'' mode and \SI{48}{\milli\second} in ``slow'' mode (for the standard imaging mode with a \ang{;;3}x\ang{;;3} FOV). For these calculations, the peak count limit is set to \SI{60000}{adu}, and it is assumed that the brightest pixel in the PSF will be 30\% the full aperture flux. The highest-throughput scenario (``Open'' filter, no beamsplitter, no FLC; \autoref{tbl:filters}) translates the limiting instrumental flux into $m^\mathrm{Open}=$\SI{2.1}{mag} in ``fast'' mode and $m^\mathrm{Open}=$\SI{11.7}{mag} in ``slow'' mode. The AO wavefront sensors constrain the faint observing limits: the current guider limits of AO188 are $m^R<$\SI{16}{mag} and the wavefront sensor limits for diffraction-limited imaging are roughly $m^R<$\SI{12}{mag} \citep{minowa_performance_2010}.
+Under excellent conditions, the detector integration time and saturation limit set the brighter end of the magnitude range. The fastest detector integration time is \SI{7.2}{\micro\second} in ``fast'' mode and \SI{48}{\milli\second} in ``slow'' mode (for the standard imaging mode with a \ang{;;3}x\ang{;;3} FOV). For these calculations, the peak count limit is set to \SI{60000}{adu}, and it is assumed that the brightest pixel in the PSF will be 30\% the full aperture flux. The highest-throughput scenario (``Open'' filter, no beamsplitter, no FLC; \autoref{tbl:filters}) translates the limiting instrumental flux into $m_{\rm Open}$ = 2.1 in ``fast'' mode and $m_{\rm Open}$ = 11.7 in ``slow'' mode. The AO wavefront sensors constrain the faint observing limits: the current guider limits of AO188 are $m_{\rm R}$ $<$ 16 and the wavefront sensor limits for diffraction-limited imaging are rough $m_{\rm R}$ $<$ 12 \citep{minowa_performance_2010}.
+%roughly $m_{\rm R}<$\SI{12}\citep{minowa_performance_2010}.
 
-The sky background above Maunakea at zenith (any lunar phase) is $\Sigma^R=$\SI{17.9}{mag/arcsec^2} \citep{roth_measurements_2016}. Assuming, again, the highest-throughput observing configuration and using a pixel size of \SI{5.9}{mas}, this corresponds to an instrument flux of \SI{5e-2}{\electron/\pixel/\second}. This is an order of magnitude higher than the dark signal (\autoref{tbl:detectors}) and is the limiting noise term for exposures longer than \SI{1.2}{\second}.
+The sky background above Maunakea at zenith (any lunar phase) is $\Sigma_{\rm R}=$\SI{17.9}{mag/arcsec^2} \citep{roth_measurements_2016}. Assuming, again, the highest-throughput observing configuration and using a pixel size of \SI{5.9}{mas}, this corresponds to an instrument flux of \SI{5e-2}{\electron/\pixel/\second}. This is an order of magnitude higher than the dark signal (\autoref{tbl:detectors}) and is the limiting noise term for exposures longer than \SI{1.2}{\second}.

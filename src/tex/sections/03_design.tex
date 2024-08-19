@@ -3,7 +3,7 @@
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{figures/VAMPIRES_diagram.pdf}
-    \caption{VAMPIRES Instrument Schematic including all common path instruments: the telescope, waveplate unit (WPU), AO188, and SCExAO. Some components are simplified or omitted for clarity and are not to scale. NsIR: Nasymth infrared platform of the Subaru telescope, HWP: half-wave plate, QWP: quarter-wave plate, IMR: image rotator (k-mirror), OAP: off-axis parabolic mirror, ADC: atmospheric dispersion corrector, DM: deformable mirror, BS: beamsplitter, PyWFS: pyramid wavefront sensor, PL: photonic lantern, SMF: single-mode fiber, FLC: ferroelectric liquid crystal, LCC: liquid-crystal controller, TC: temperature controller, ND: neutral density filter.}
+    \caption{VAMPIRES Instrument Schematic including all common path instruments: the telescope, waveplate unit (WPU), AO188, and SCExAO. Some components are simplified or omitted for clarity and are not to scale. NsIR: Nasmyth infrared platform of the Subaru telescope, HWP: half-wave plate, QWP: quarter-wave plate, IMR: image rotator (k-mirror), OAP: off-axis parabolic mirror, ADC: atmospheric dispersion corrector, DM: deformable mirror, BS: beamsplitter, PyWFS: pyramid wavefront sensor, PL: photonic lantern, SMF: single-mode fiber, FLC: ferroelectric liquid crystal, LCC: liquid-crystal controller, TC: temperature controller, ND: neutral density filter.}
     \label{fig:schematic}
 \end{figure*}
 
@@ -32,14 +32,14 @@ Classic Lyot & IWA: 37, 59, 105, or 150 \si{\mas};\newline 5$\sigma$ contrast: $
 Vector vortex & IWA: 61 \si{\mas}; 5$\sigma$ contrast: TBD\newline (not compatible with polarimetry) & Sub-stellar companions and circumstellar disks \\
 \hline \multicolumn{3}{l}{\textit{Aperture masking}} \\
 NRM interferometry & 7, 9, and 18-hole non-redundant masks, plus annulus mask (not compatible with coronagraphs) & Dust shells, stellar atmospheres, circumstellar disks \\
-Redundant apodizing pupil & \ang{;;0.1} to \ang{;;0.8} dark hole resilient to $\sim$\SI{1}{\radian} of low-wind effect (not compatible with coronagraphs) & Circumstellar disks and sub-stellar companions \\
+Redundant apodizing pupil & \ang{;;0.1} to \ang{;;0.8} dark hole resilient to $\sim$\SI{1}{\radian} of low-wind effect (compatible with coronagraphs) & Circumstellar disks and sub-stellar companions \\
 \enddata
 \end{deluxetable*}
 
 
 \subsection{Telescope and Common Path Instruments}
 
-SCExAO is mounted on one of the Nasymth platforms of the Subaru telescope. The first common-path instrument is the facility waveplate unit (WPU; \citealp{watanabe_near-infrared_2018}). The WPU includes a linear polarizer, rotatable half-wave plate (HWP), and rotatable quarter-wave plate (QWP), which is used for polarimetric modulation and calibration (\autoref{sec:polarimetry}). Next is the facility AO instrument (AO188; \citealp{minowa_performance_2010}), which includes a broadband atmospheric dispersion corrector (ADC), low-order (188-element) wavefront sensor (WFS), and deformable mirror (DM). A \SI{600}{\nano\meter} longpass dichroic splits light between the WFS and downstream instruments.
+SCExAO is mounted on one of the Nasmyth platforms of the Subaru telescope. The first common-path instrument is the facility waveplate unit (WPU; \citealp{watanabe_near-infrared_2018}). The WPU includes a linear polarizer, rotatable half-wave plate (HWP), and rotatable quarter-wave plate (QWP), which is used for polarimetric modulation and calibration (\autoref{sec:polarimetry}). Next is Subaru's facility AO instrument, which provides a first-level atmospheric turbulence correction. It includes a broadband atmospheric dispersion corrector (ADC), low-order (188-element) wavefront sensor (WFS), and deformable mirror (DM). A \SI{600}{\nano\meter} longpass dichroic splits light between the WFS and downstream instruments. The results presented in this paper were obtained with a 188-actuator DM used for this stage (AO188; \citealp{minowa_performance_2010}): it has since been replaced by a 3228-count actuator DM (AO3K; see \autoref{sec:futureprospects}). 
 
 \subsection{SCExAO Common Path}
 

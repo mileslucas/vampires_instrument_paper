@@ -1,14 +1,14 @@
 \section{Measuring the Non-telecentricity of VAMPIRES}\label{sec:telecentricity}
 
-VAMPIRES is non-telecentric, which means that a shift in focus affects the plate scale in the detector plane. Given the instrument's space constraints, this is nearly impossible to avoid optically. In theory, if the instrument F-ratio is stable and the detector is reasonably well-focused, then the plate scale should stay stable. Nonetheless, we quantify the change in plate scale as a function of defocus using the SCExAO internal pinhole mask.
-
-For this experiment, we used the pinhole mask and moved the detector stage in steps around the optimal focus. For each frame, PSFs were fit to the pinhole grid, and the average separation was calculated. The relative displacement of the grid as a function of defocus is shown in \autoref{fig:defocusing}.
-
-These data were fit with a linear model correlating the percentage change in plate scale to the absolute defocus in \si{\milli\meter}. The fit is shown in \autoref{fig:defocusing} which has a slope of \SI{1.106(3)}{\%/\milli\meter}. This means the objective lens must stay focused to better than \SI{0.09}{\milli\meter} precision to keep the astrometric precision below 0.1\%, which is not difficult to achieve when focusing with the internal laser.
-
 \begin{figure}
     \centering
     \script{pinhole_defocus.py}
     \includegraphics[width=\columnwidth]{figures/pinhole_defocus.pdf}
     \caption{The percentage change in plate scale as the image passes through focus due to the non-telecentricity of the optical system. A linear model is fit to the data and shown with a solid line.\label{fig:defocusing}}
 \end{figure}
+
+VAMPIRES is non-telecentric, which means that a shift in focus affects the plate scale in the detector plane. Given the instrument's space constraints, this is nearly impossible to avoid optically. In theory, if the instrument F-ratio is stable and the detector is reasonably well-focused, then the plate scale should stay stable. Nonetheless, we quantify the change in plate scale as a function of defocus using the SCExAO internal pinhole mask.
+
+For this experiment, we used the pinhole mask and moved the detector stage in steps around the optimal focus. For each frame, PSFs were fit to the pinhole grid, and the average separation was calculated. The relative displacement of the grid as a function of defocus is shown in \autoref{fig:defocusing}.
+
+These data were fit with a linear model correlating the percentage change in plate scale to the absolute defocus in \si{\milli\meter}. The fit is shown in \autoref{fig:defocusing} which has a slope of \SI{1.106(3)}{\%/\milli\meter}. This means the objective lens must stay focused to better than \SI{0.09}{\milli\meter} precision to keep the astrometric precision below 0.1\%, which is not difficult to achieve when focusing with the internal laser.

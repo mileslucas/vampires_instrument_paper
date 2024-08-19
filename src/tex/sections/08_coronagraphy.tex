@@ -64,7 +64,7 @@ LyotStop-L & 3.16 & 6.33 &  61.5 & 57.2 \\
 
 \subsection{Redundant Apodizing Pupil Mask}
 
-A redundant apodized pupil mask (RAP; \citealp{leboulleux_redundant_2022}) was deployed on VAMPIRES in September 2023. This mask apodizes the pupil, creating a dark hole resilient to $\sim$\SI{1}{rad} of low-wind effect. The trade-off is the limited inner and outer working angles and the low mask throughput (25\%). The RAP mask, PSF, and radial profile are shown in \autoref{fig:rap}. Further testing and verification of this mask is future work.
+A redundant apodized pupil mask (RAP; \citealp{leboulleux_redundant_2022,leboulleux_coronagraphy_2024}) was deployed on VAMPIRES in September 2023. The mask shapes the pupil to create a deep $10^{\text{-}6}$ contrast dark zone in an annulus from 8 to 35$\lambda/D$. The apodization pattern is resilient to up to  $\sim$\SI{1}{rad} of LWE, where the coherence of the PSF core starts to break down. The mask is designed with a trade-off between the size of the dark zone, the LWE resilience, and the mask's overall throughput, which is $\sim$25\%. The RAP mask, PSF, and radial profile are shown in \autoref{fig:rap}. Further testing and verification of this mask is future work.
 
 \begin{figure}
     \centering
@@ -86,25 +86,25 @@ A redundant apodized pupil mask (RAP; \citealp{leboulleux_redundant_2022}) was d
 
 \subsection{Calibration Speckles}\label{sec:astrogrid}
 
-VAMPIRES uses the SCExAO deformable mirror to create calibration speckles (``astrogrid'') for precise astrometry and photometry of the star behind the coronagraph mask \citep{sahoo_precision_2020}. The calibration speckles produce an ``X'' with theoretical separations of 10.3, 15.5, or 31.0 $\lambda/D$. The relative brightness of these speckles with respect to the on-axis PSF allows for the precise photometry of coronagraphic images.
+VAMPIRES uses the SCExAO deformable mirror to create calibration speckles (``astrogrid'') for precise astrometry and photometry of the star behind the coronagraph mask \citep{sahoo_precision_2020}. The calibration speckles produce an ``X'' with theoretical separations of 10.3, 15.5, or 31.0 $\lambda/D$. The relative brightness of these speckles to the on-axis PSF allows for the precise photometry of coronagraphic images.
 
-In the linear wavefront error regime ($<$\SI{1}{\radian}), the brightness of a speckle is a quadratic function of the optical path difference (OPD) \citep{sahoo_precision_2020,chen_post-processing_2023,follette_introduction_2023}-
+In the linear wavefront error regime ($<$\SI{1}{\radian}), the brightness of a speckle is a quadratic function of the optical path difference (OPD) \citep{jovanovic_artificial_2015,currie_laboratory_2018,chen_post-processing_2023} and, therefore, the ratio of the satellite spot flux to the central star (contrast) is
 \begin{equation}
     \label{eqn:astrogrid}
-    \frac{f_p}{f_*}\left( \lambda, A_{DM} | c \right) = c \cdot \left(A_{DM} / \lambda\right)^2
+    \frac{f_p}{f_*}\left( \lambda, A_{DM}\right) \propto \left(A_{DM} / \lambda\right)^2,
 \end{equation}
-where $A_{DM}$ is the mechanical displacement of the DM, $\lambda$ is the wavelength, and $c$ is a calibration coefficient. 
+where $A_{DM}$ is the mechanical displacement of the DM, $\lambda$ is the wavelength of light. 
 
-The scaling coefficients for the most commonly used astrogrid patterns (10.3, 15.5, and 31 $\lambda/D$) were fit using multiband observations of the internal calibration source. When trying to fit \autoref{eqn:astrogrid}, better agreement was found using a model containing an additional linear OPD term--
+The scaling coefficients for the most commonly used astrogrid patterns (10.3, 15.5, and 31 $\lambda/D$) were fit using multiband observations of the internal calibration source. When trying to fit \autoref{eqn:astrogrid}, a better agreement was found using a model containing an additional linear OPD term--
 \begin{equation}
     \label{eqn:astrogridmod}
-    \frac{f_p}{f_*}\left( \lambda, A_{DM} | c_0, c_1 \right) = c_0 \cdot \left(A_{DM} / \lambda\right) + c_1 \cdot \left(A_{DM} / \lambda\right)^2
+    \frac{f_p}{f_*}\left( \lambda, A_{DM} | c_0, c_1 \right) = c_0 \cdot \left(A_{DM} / \lambda\right) + c_1 \cdot \left(A_{DM} / \lambda\right)^2,
 \end{equation}
 which was fit using weighted linear least-squares, shown in \autoref{tbl:astrogrid} and \autoref{fig:astrogrid_photometry}. The 31$\lambda/D$ separation pattern has very low relative flux for the pattern amplitude due to the influence function of the DM, which has a weaker response for high spatial frequencies.
 
 To minimize the negative effects of astrogrid (namely photon noise in the control radius), the amplitude and separation are tuned so the pattern is barely detectable. A trade-off exists between photometric and astrometric precision with local contrast around the calibration speckles. An astrogrid brightness with a S/N of $\sim$100 above the PSF profile is recommended-- this corresponds to $<10^{-2}$ at 10$\lambda/D$ (\SI{15}{\nano\meter} astrogrid) and $<$\num{1e-3} at 15$\lambda/D$ (\SI{15}{\nano\meter} astrogrid).
 
-There are practical considerations for using astrogrid simultaneously with other SCExAO modules. For example, when using SCExAO/CHARIS for PDI the field stop requires using the 10.3$\lambda/D$ separation grid so that all the speckles land within the CHARIS FOV. The speckle brightness in the NIR is fainter, which means the optimal brightness for CHARIS data might produce brighter than optimal speckles in VAMPIRES. Lastly, for observations in the Open filter, the radial smearing of the satellite spots reduces the astrometric and photometric precision.
+There are practical considerations for using astrogrid simultaneously with other SCExAO modules. For example, when using SCExAO/CHARIS for PDI, the field stop requires using the 10.3$\lambda/D$ separation grid so that all the speckles land within the CHARIS FOV. The speckle brightness in the NIR is fainter, which means the optimal brightness for CHARIS data might produce brighter than optimal speckles in VAMPIRES. Lastly, for observations in the Open filter, the radial smearing of the satellite spots reduces the astrometric and photometric precision.
 
 \begin{deluxetable}{lccc}
 \tabletypesize{\small}
@@ -125,13 +125,13 @@ XYgrid & 31.0 & \num{0.635+-0.011} & \num{-0.011+-0.001} \\
     \centering
     \script{astrogrid_photometry.py}
     \includegraphics{figures/astrogrid_photometry.pdf}
-    \caption{Relative photometric flux of the astrogrid calibration speckles. Each plot corresponds to a different speckle pattern, and each curve corresponds to a given pattern amplitude (in mechanical microns applied to the DM). \label{fig:astrogrid_photometry}}
+    \caption{Relative photometric flux of the astrogrid calibration speckles. Each plot corresponds to a speckle pattern, and each curve corresponds to a given pattern amplitude (in mechanical microns applied to the DM). \label{fig:astrogrid_photometry}}
 \end{figure}
 
 
 \subsection{On-Sky Contrast Curves}
 
-Contrast curves were measured for the CLC-3 and CLC-5 coronagraphs during commissioning. The CLC-3 contrast curve is discussed in \autoref{sec:hd1160}. The CLC-5 contrast was measured from a \SI{60}{\minute} sequence of HD 102438 ($R=$6.0 \citealp{zacharias_ucac5_2017}) with $\sim$\ang{10} of field rotation. The conditions were good (\ang{0.45}$\pm$\ang{0.1} seeing), but LWE caused frequent PSF splitting.
+Contrast curves were measured for the CLC-3 and CLC-5 coronagraphs during commissioning. The CLC-3 contrast curve is discussed in \autoref{sec:hd1160}. The CLC-5 contrast was measured from a \SI{60}{\minute} sequence of HD 102438 ($m_{\rm R}=$6.0, \citealp{zacharias_ucac5_2017}) with $\sim$\ang{10} of field rotation. The conditions were good (\ang{;;0.45}$\pm$\ang{;;0.1} seeing), but LWE caused frequent PSF splitting.
 
 The data was post-processed with \texttt{ADI.jl} \citep{lucas_adijl_2020} using principal component analysis (PCA, or KLIP; \citealt{soummer_detection_2012}) with 20 principal components for each multiband field. These results produce residual frames, which are then derotated and collapsed with a weighted mean \citep{bottom_noise-weighted_2017}. The contrast was measured by dividing the noise in concentric annuli by the stellar flux, correcting for small sample statistics \citep{mawet_fundamental_2014}. Algorithmic throughput was measured by injecting off-axis sources and measuring the recovered flux after PSF subtraction. The contrast curves for each filter are shown in \autoref{fig:contrast_curves}.
 
@@ -142,7 +142,7 @@ The best contrast is achieved at the longest wavelengths, following the inverse 
     \centering
     \script{contrast_curves_HD102438.py}
     \includegraphics{figures/20230629_HD102438_contrast_curve.pdf}
-    \caption{5$\sigma$ throughput-corrected Student-t contrast curves from multiband imaging of HD102438 with the CLC-5 coronagraph. This was \SI{60}{\minute} of data with \ang{10} of field rotation. The contrast from the PCA (20 components) PSF subtraction for each MBI filter is shown with red curves. The solid black curve is the mean-combined residual contrast from each wavelength, and the dashed line is the median SDI-subtracted contrast curve. \label{fig:contrast_curves}}
+    \caption{5$\sigma$ throughput-corrected Student-t contrast curves from multiband imaging of HD 102438 with the CLC-5 coronagraph. This was \SI{60}{\minute} of data with \ang{10} of field rotation. The contrast from the PCA (20 components) PSF subtraction for each MBI filter is shown with red curves. The solid black curve is the mean-combined residual contrast from each wavelength, and the dashed line is the median SDI-subtracted contrast curve. \label{fig:contrast_curves}}
 \end{figure}
 
 
@@ -150,7 +150,7 @@ The best contrast is achieved at the longest wavelengths, following the inverse 
 
 The wavelength diversity of multiband imaging data was leveraged by performing spectral differential imaging (SDI) in two ways. The first was by taking each collapsed ADI residual frame and doing a mean combination of the residuals, attenuating uncorrelated noise (e.g., read noise). The second technique uses another round of PSF subtraction after radially scaling each frame by wavelength and multiplying by a flux factor (``ADI + SDI''). The median PSF from the scaled images was subtracted from the data before rescaling back to sky coordinates (``classical'' SDI).
 
-Fake companions were injected with the same spectrum as the star at equal contrasts for each wavelength for algorithmic throughput analysis. 5$\sigma$ contrasts of $10^{\text{-}4}$ at were reached at tthe IWA (\ang{;;0.1}), $10^{\text{-}5}$ contrast at \ang{;;0.2}, and $10^{\text{-}6}$ beyond \ang{;;0.5}. In general, the SDI reduction achieves better contrast than individual ADI reductions alone, especially from \ang{;;0.1} to \ang{;;0.7}.
+Fake companions were injected with the same spectrum as the star at equal contrasts for each wavelength for algorithmic throughput analysis. 5$\sigma$ contrasts of $10^{\text{-}4}$ at were reached at the IWA (\ang{;;0.1}), $10^{\text{-}5}$ contrast at \ang{;;0.2}, and $10^{\text{-}6}$ beyond \ang{;;0.5}. In general, the SDI reduction achieves better contrast than individual ADI reductions alone, especially from \ang{;;0.1} to \ang{;;0.7}.
 
 \subsection{Residual Atmospheric Dispersion}
 

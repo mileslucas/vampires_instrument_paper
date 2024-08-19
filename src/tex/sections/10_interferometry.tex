@@ -6,47 +6,49 @@
 %observable quanitties intrinsically robust against seeing - not directly effected in seeing. Each pair of holes is an interfereomtry - start more general - does a thing thats good, plausible argument that it makes good observables, to understand detail see XY
  
 
-VAMPIRES features a single telescope interferometric mode through the use of non-redundant aperture masking (NRM). NRM is implemented with opaque masks perforated by arrays of holes in the pupil plane of the instrument (\autoref{fig:g18_mask}). The non-redundant spacing of these ``sub-apertures'' -- wherein each has a unique vector separation -- results in the measurement of unique baseline lengths (Fourier components) of the astrophysical scene \citep{tuthill_aperture_2000}. Unambiguous measurement of each Fourier component yields observables that are robust to atmospheric seeing and to redundancy noise. As a result, NRM allows for the reconstruction of information at angular resolutions at and beyond the diffraction limit (citation).
+VAMPIRES features a single telescope interferometric mode through non-redundant aperture masking (NRM). NRM is implemented by placing an opaque mask with a sparse array of sub-apertures in the pupil plane of the instrument (\autoref{fig:nrm_masks}).
 
 
-\begin{figure}[h!]
+\begin{figure*}[t]
 \centering
-\includegraphics[width=0.7\columnwidth]{figures/g18_mask.png}
-    \caption{\label{fig:g18_mask} g18 mask - copied from \citep{norris_vampires_2015}, to be changed for second draft}
-\end{figure}
+\includegraphics[width=\textwidth]{figures/nrm_masks.pdf}
+    \caption{Masks + UV coverage\label{fig:nrm_masks}}
+\end{figure*}
 
-
-VAMPIRES combines these advantages of NRM with the aforementioned benefits of polarimetry (\autoref{sec:design}, \autoref{sec:polarimetry}), to achieve sub-diffraction limited measurement of polarized signal within previously inaccessible regions of the image. In particular, the NRM mode unlocks regions that are obscured within the inner-working angle of the coronagraphic mode (\autoref{sec:coronagraphy}). In this way, the NRM and coronagraphic modes operate in a complementary fashion - the outer working angle of the NRM mode is approximately the inner working angle of the coronagraph \citep{norris_vampires_2015}, and together they provide almost complete coverage of the circumstellar environment, right down to the stellar surface. At the cost of some throughput and some Fourier coverage (though minimal for the 18-hole mask), for an appropriate choice of target the NRM mode of VAMPIRES provides exquisite characterization of polarized circumstellar environments, limited only by contrast.
+The non-redundant spacing of these sub-apertures, wherein each has a unique vector separation, ensures unique measurements of each baseline length (Fourier component) of the astrophysical scene \citep{tuthill_aperture_2000}. Unambiguous measurements of each Fourier component yield observables that are robust to atmospheric seeing and, as such, do not contain ``redundancy'' noise that grows with the square root of the number of measurements. As a result, NRM allows for the reconstruction of information at angular resolutions at and beyond the diffraction limit \citep{labeyrie_introduction_2014}. Combining the advantages of NRM with those of polarimetry (\autoref{sec:design}, \autoref{sec:polarimetry}) enables sub-diffraction limited measurement of polarized signal within the previously inaccessible regions of the image. In particular, the NRM mode unlocks regions obscured within the coronagraphic masks' inner-working angle (\autoref{sec:coronagraphy}). In this way, the NRM and coronagraphic modes operate in a complementary fashion-- the outer working angle of the NRM mode is approximately the inner working angle of the coronagraph \citep{norris_vampires_2015}, and together provide near complete coverage of the circumstellar environment, right down to the stellar surface. For an appropriate choice of target (notably, bright enough to counteract the throughput loss of the mask), the NRM mode of VAMPIRES provides a powerful characterization of polarized circumstellar environments, limited only by contrast. 
 
 
 \begin{figure}[h]
 \centering
     \includegraphics[width=\columnwidth]{figures/diff_vis_all.png}
-    \caption{Polarimetric differential visibilities for a model of a circumstellar shell. \label{fig:diff_vis_all}}
+    \caption{Polarimetric differential visibilities for a model of a circumstellar shell. This is not a PDF and must be changed once first round of feedback has been recieved. \label{fig:diff_vis_all}}
 \end{figure}
 
-The interferometric observables are the differential, polarimetric analogs of standard visibilities and closure phases, and so are self-calibrated (no calibrator star is required, and errors induced by AO are removed) and relatively immune to non-common instrumental noise \citep{norris_vampires_2015}. We reduce the raw data using the VAMPIRES branch of the AMICAL package (cite, and put at end). Models and images of the astrophysical scene can then be fit to these resulting observables. Techniques for model fitting, as well as novel machine learning-based image reconstruction techniques, are currently in development and will be released in the near future, along with early science results obtained using the NRM mode (PI: Lilley, L). 
+The interferometric observables are the differential, polarimetric analogs of standard visibilities and closure phases. They are self-calibrated (no calibrator star is required, and errors induced by AO are removed) and relatively immune to non-common path instrumental noise \citep{norris_vampires_2015}. Raw data is reduced to visibilities and closure phases using the VAMPIRES branch of the \citep{soulain_james_2020}, and further reduced to differential visibilities and closure phases using our pipeline. Models and images of the astrophysical scene can then be fit to these resulting observables. Techniques for model fitting and novel machine learning-based image reconstruction techniques are currently in development. They will be released soon, along with early science results obtained using the NRM mode (Lilley et al., 2024). 
  
-The VAMPIRES upgrade provides several key improvements for NRM. First, the MBI (\autoref{sec:mbi}) mode enables simultaneous measurement of differential observables (e.g. spectral differential phase), allowing for the high-precision characterization of circumstellar dust grain size and species. Not only does this greatly improve observing efficiency compared to repeating observations for different filters, but -- since the time-varying wavefront error is simultaneously sampled across wavelengths -- direct interferometric phase measurements between spectral components can be produced. 
-The increased observing efficiency enables the observer to accumulate more parallactic angle coverage, which is critical for characterizing non-azimuthal scattering symmetries. The new qCMOS cameras provide much greater sensitivity than the previous EMCCD cameras due to their low read noise, which is especially important as the NRM mode requires high frame rates to get high fringe visibility \autoref{sec:detectors}.  
+The VAMPIRES upgrades provide several key improvements for NRM. First, the MBI (\autoref{sec:mbi}) mode enables simultaneous measurement of differential observables (e.g., spectral differential phase), allowing for the high-precision characterization of circumstellar dust grain size and species. This improves observing efficiency by a factor of four, compared to repeating observations for different filters. Since the time-varying wavefront error is simultaneously sampled across wavelengths, direct interferometric phase measurements between spectral components can be produced. The increased observing efficiency enables the observer to accumulate more parallactic angle coverage, which is critical for characterizing non-azimuthal scattering symmetries. The new qCMOS detectors have a higher dynamic range and faster framerate than the previous EMCCDs \autoref{sec:detectors}, which creates sharper fringes without saturation for sufficiently bright targets. The qCMOS detectors also have better sensitivity in the photon-starved regime, as they do not suffer from the excess noise of electron multiplication from which EMCCDs suffer (\autoref{fig:detector_snr_relative}). 
+%Insert quantifying number from Barnaby. 
+The development and characterization of the NRM mode are ongoing, and a comprehensive analysis will be published in the near future (Lilley et al., 2024).
+
+
  
-We have characterized both the polarimetric calibration precision, as well as the signal-to-noise ratio for the 4 masks available to the VAMPIRES instrument (Table \ref{tbl:nrm_masks}). The systematic polarimetric calibration limit is 1e-3. Based on polarimetric calibration precision calculations, the sensitivity provided by VAMPIRES is XX. (adapt). This means that a circumstellar disk at contrast 4e-2 around a 5 mag star, assuming a 1 parameter model, would have a 4 sigma detection within 15 minutes. 
+%We have characterized both the polarimetric calibration precision, as well as the signal-to-noise ratio for the 4 masks available to the VAMPIRES instrument (Table \ref{tbl:nrm_masks}). The systematic polarimetric calibration limit is 10e-3. Based on polarimetric calibration precision calculations, the sensitivity provided by VAMPIRES is XX. (adapt). This means that a circumstellar disk at contrast 4e-2 around a 5 mag star, assuming a 1 parameter model, would have a 4 sigma detection within 15 minutes. 
 
 %Then quantitative numbers, in terms of both raw visibility or closure phase precision for a given stellar mag / integration time, and the polarised-differential-visibilty calibration accuracy.
  
-\begin{deluxetable*}{lccccc}
+%\begin{deluxetable*}{lccccc}
 % TODO - mask throughput, SNR for 0 mag 1s (or similar), time to achieve desired precision (10^-3 error) for typical star mag
-\tablehead{\colhead{Name} & \colhead{N Holes} & \colhead{Hole Radius (m)} & \colhead{Num Baselines} & \colhead{Throughput (\%)} & \colhead{S/N} }
-\tablecaption{VAMPIRES NRM mask specifications.\label{tbl:nrm_masks}}
-\startdata
-SAM-18  & 18 & 0.162  & 153    & 0.74 & XX\\ %3400
-SAM-9   & 9  & 0.32   &  36    & 1.4  & XX\\ %18750
-SAM-7   & 7  & 0.55   &   28   & 3.1  & XX\\%83000 
-SAM-Ann & 4  & XX     &  XX    & XX   & XX
-\enddata
-\tablecomments{S/N is calculated for 10 ms exposures, 100 frames (1 second total integration time), for a 0 mag star}
-\end{deluxetable*} 
-\vspace{3mm}
+%\tablehead{\colhead{Name} & \colhead{N Holes} & \colhead{Hole Radius (m)} & \colhead{Num Baselines} & \colhead{Throughput (\%)} & \colhead{S/N} }
+%\tablecaption{VAMPIRES NRM mask specifications.\label{tbl:nrm_masks}}
+%\startdata
+%SAM-18  & 18 & 0.162  & 153    & 0.74 & %XX\\ %3400
+%SAM-9   & 9  & 0.32   &  36    & 1.4  & %XX\\ %18750
+%SAM-7   & 7  & 0.55   &   28   & 3.1  & %XX\\%83000 
+%SAM-Ann & 4  & XX     &  XX    & XX   & XX
+%\enddata
+%\tablecomments{S/N is calculated for 10 ms exposures, 100 frames (1 second total %integration time), for a 0 mag star}
+%\end{deluxetable*} 
+%\vspace{3mm}
  
   
 

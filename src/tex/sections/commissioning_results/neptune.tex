@@ -13,11 +13,8 @@ In this work, we present high-resolution spectro-polarimetric observations of Ne
 
 \begin{deluxetable}{ll}
 \tablewidth{\columnwidth}
-\tablehead{
-    \colhead{Parameter} & 
-    \colhead{Value}
-}
-\tablecaption{Ephemeris of Neptune for \formatdate{11}{7}{2023} based on JPL horizons data.\label{tbl:neptune}}
+\tablehead{\colhead{Parameter} & \colhead{Value}}
+\tablecaption{Neptune ephemeris for \formatdate{11}{7}{2023} based on JPL horizons data.\label{tbl:neptune}}
 \startdata
 Apparent diameter & \ang{;;2.313} \\
 North pole angle & \ang{318.1} \\
@@ -31,7 +28,7 @@ For processing, each frame was registered using a cross-correlation with the ave
     \label{eqn:rad_stokes}
 \begin{split}
     Q_r &= Q\cos{\left(2\theta\right)} + U\sin{\left(2\theta\right)} \\
-    U_r &= -Q\sin{\left(2\theta\right)} + U\cos{\left(2\theta\right)}
+    U_r &= -Q\sin{\left(2\theta\right)} + U\cos{\left(2\theta\right)}.
 \end{split}
 \end{align}
 For an optically thick planetary atmosphere like Neptune's, the most probable alignment of the electric field due to multiple-scattering is radially from the center of the planet to the limb; therefore, $Q_r$ approximately equal to the polarized intensity \citep{schmid_limb_2006}. Similar to \autoref{sec:hd169142}, residual polarization errors were corrected with photometry, awaiting the updated instrument polarization calibration. The corrected radial Stokes $Q_r$ frames and total intensity frames are shown in \autoref{fig:neptune_mosaic}.

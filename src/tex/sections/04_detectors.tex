@@ -1,6 +1,6 @@
 \section{Detectors}\label{sec:detectors}
 
-Fast, low-noise detectors are a key component for HCI, and a major component of the VAMPIRES upgrades revolved around improving the detectors. Previously VAMPIRES used two Andor iXon Ultra 897 EMCCDs\footnote{\url{https://andor.oxinst.com/products/ixon-emccd-camera-series/ixon-ultra-897}}. Through electron multiplication, the effective root-mean-square (RMS) read noise can be lowered to $\sim$\SI{0.27}{\electron}, but the dynamic range is limited (\SI{64}{\decibel}). In addition, the Andor detectors have a max framerate of \SI{56}{\hertz}, which is not fast enough to freeze the atmospheric speckles, which evolve on timescales of $\sim$\SI{1}{\milli\second} above Maunakea \citep{kooten_climate_2022}. 
+Fast, low-noise detectors are a key component for HCI, and a major component of the VAMPIRES upgrades revolved around improving the detectors. Previously, VAMPIRES used two Andor iXon Ultra 897 EMCCDs\footnote{\url{https://andor.oxinst.com/products/ixon-emccd-camera-series/ixon-ultra-897}}. Through electron multiplication, the effective root-mean-square (RMS) read noise can be lowered to $\sim$\SI{0.27}{\electron}, but the dynamic range is limited (\SI{64}{\decibel}). In addition, the Andor detectors have a max framerate of \SI{56}{\hertz}, which is not fast enough to freeze the atmospheric speckles, which evolve on timescales of $\sim$\SI{1}{\milli\second} above Maunakea \citep{kooten_climate_2022}. 
 
 We upgraded VAMPIRES by replacing the two Andor EMCCDs with Hamamatsu ORCA-Quest qCMOS detectors.\footnote{\url{https://www.hamamatsu.com/us/en/product/cameras/qcmos-cameras/C15550-20UP.html}} The qCMOS detectors were chosen for their fast readout ($\sim$500 Hz at 536x536), low read noise ($\sim$ 0.25 - 0.4 $e^-$ RMS), and high dynamic range ($\sim$ 85 - 90 \si{\decibel}). The new detectors have two readout modes: ``fast'' and ``slow'' mode. In ``fast'' mode the RMS read noise is \SI{0.4}{\electron} and the allowed detector integration times (DIT) are \SI{7.2}{\micro\second} - \SI{1800}{\second} with a maximum framerate of \SI{506}{\hertz} for a \ang{;;3}x\ang{;;3} FOV crop. In ``slow'' mode the RMS read noise is $\sim$\SI{0.25}{\electron}, but the DIT is limited to $>$\SI{48}{\milli\second} (\SI{21}{\hertz}). The detectors have rolling-shutter readout, which causes the pixel rows to have slightly different acquisition times. This effect is exacerbated at the fastest exposure times using the electronic shutter. Detailed analysis of the rolling shutter effect is left for future work.
 
@@ -8,48 +8,48 @@ The imaging fore-optics were redesigned to accommodate the smaller detector pixe
 
 \subsection{Detector Characterization}
 
-To determine the conversion between detector counts and electrons, we measured photon transfer curves using a calibration flat field source for both detectors in both readout modes. The fixed-pattern noise (FPN) was removed through frame-differencing, and then a linear model was fit to the average signal and the signal variance \citep{janesick_photon_2007,stefanov_cmos_2022}. 
+To determine the conversion between detector counts and electrons, we measured photon transfer curves using a calibration flat field source for both detectors in both readout modes. The fixed-pattern noise (FPN) was removed through frame-differencing, and then a linear model was fit to the average signal and the signal variance \citep{janesick_photon_2007,stefanov_cmos_2022}
 \begin{equation}
-    \sigma^2\left(\mu | k, \sigma_{RN}\right) = \frac{\mu}{k} + \sigma^2_{RN}
+    \sigma^2\left(\mu | k, \sigma_{RN}\right) = \frac{\mu}{k} + \sigma^2_{RN}.
 \end{equation}
 
-The detector characteristics are reported in \autoref{tbl:detectors}. The readout noise per pixel was measured from the standard deviation of multiple bias frames and combined in quadrature to derive the RMS read noise. The detector photoresponse is linear over the full dynamic range and saturates at $2^{16}$ \si{adu}. The reported detector full well (\SI{7000}{\electron}) is greater than can be stored in a 16-bit integer. Liquid cooling the detectors to \SI{-45}{\celsius} reduced the dark current to \SI{3.6e-3}{\electron/\second/\pixel}.
+The detector characteristics are reported in \autoref{tbl:detectors}. The readout noise per pixel was measured from the standard deviation of multiple bias frames and combined in quadrature to derive the RMS read noise. The detector photoresponse has non-linearities at low flux levels and around $2^{13}$ adu where the junction of 12-bit ADCs occurs \citep[see][]{strakhov_speckle_2023}. The non-linearities can be corrected to less than 1\% with an approximated function. The signal clips at $2^{16}$ adu, which is less than the full-well capacity of \SI{7000}{\electron} ($\sim$\SI{67,000}{adu}). The detector dark current is \SI{3.6e-3}{\electron/\second/\pixel} at sensor temperatures of \SI{-45}{\celsius} to \SI{-40}{\celsius}.
 
 \subsection{Photon Number Resolution}
 
-Since the qCMOS detectors have read noise below $\sim$\SI{0.3}{\electron}, they can resolve photon numbers, unambiguously detecting the number of individual photons hitting each pixel  \citep{starkey_determining_2016}. The photon number statistic is free from frame-to-frame noise (like readout noise) but requires accurate bias subtraction and flat-fielding for practical use. A derivation of the signal-to-noise ratio (S/N) gained by photon number counting is in \autoref{sec:pnr_derivation}. Photon number resolution is demonstrated in \autoref{fig:pnr}, which shows a histogram of $10^4$ pixels from a long exposure dark frame. The photon peaks from Poisson statistics are clearly resolved. The method from \citet{starkey_determining_2016} was used to determine the gain and quanta exposure directly from the histogram peaks, consistent with results from the photon transfer curves.
+Since the qCMOS detectors have read noise below $\sim$\SI{0.3}{\electron}, they can resolve photon numbers, unambiguously detecting the number of individual photons hitting each pixel  \citep{starkey_determining_2016}. The photon number statistic is free from frame-to-frame noise (like readout noise) but requires accurate bias subtraction and flat-fielding for practical use. A derivation of the signal-to-noise ratio (S/N) gained by photon number counting is in \autoref{sec:pnr_derivation}. Photon number resolution is demonstrated in \autoref{fig:pnr}, which shows a histogram of $10^4$ pixels from a long exposure dark frame. The photon peaks from Poisson statistics are resolved. The method from \citet{starkey_determining_2016} was used to determine the gain and quanta exposure directly from the histogram peaks, consistent with results from the photon transfer curves.
 
 \begin{figure}
     \centering
     \script{pnr.py}
     \includegraphics[width=\columnwidth]{figures/pch.pdf}
-    \caption{Histogram of $10^4$ pixels from a long exposure in ``slow'' mode ($\sigma_{RN}$=\SI{0.22}{\electron}). All signals are due to dark current. The Poisson photon number peaks are clearly resolved.\label{fig:pch}}
+    \caption{Histogram of $10^4$ pixels from a long exposure in ``slow'' mode ($\sigma_{RN}$=\SI{0.22}{\electron}). All signals are due to dark current. The Poisson photon number peaks are resolved.\label{fig:pch}}
 \end{figure}
 
 \subsection{qCMOS versus EMCCD}
 
 The sensitivity of the qCMOS detectors to the previous EMCCD is compared in \autoref{fig:detector_snr_relative}. The number of detected photoelectrons is
 \begin{equation}
-    S_e = f \cdot t \cdot QE
+    S_e = f \cdot t \cdot QE,
 \end{equation}
-where $f$ is the photon flux, $t$ is the detector integration time, and $QE$ is the bandpass-averaged quantum efficiency. Dark-current ($f_{DC}$) is included for both detectors, which is only a factor of exposure time.
+where $f$ is the photon flux, $t$ is the detector integration time, and $QE$ is the bandpass-averaged quantum efficiency. Dark-current ($f_{DC}$) is included for both detectors, which is only a factor of exposure time--
 \begin{equation}
-    D_e = f_{DC} \cdot t
+    D_e = f_{DC} \cdot t.
 \end{equation}
 
-The S/N per frame for the qCMOS detectors contains shot noise, dark current, and read noise \citep{janesick_photon_2007,stefanov_cmos_2022}.
+The S/N per frame for the qCMOS detectors contains shot noise, dark current, and read noise \citep{janesick_photon_2007,stefanov_cmos_2022}--
 \begin{equation}
-    S/N_\mathrm{CMOS} = \frac{S_e}{\sqrt{S_e + D_e + \sigma_{RN}^2}}
+    S/N_\mathrm{CMOS} = \frac{S_e}{\sqrt{S_e + D_e + \sigma_{RN}^2}},
 \end{equation}
 where $\sigma_{RN}$ is the RMS read noise.
 
-For the EMCCDs, extra noise terms unique to the electron-multiplication process \citep{harpsoe_bayesian_2012} are incorporated,
+For the EMCCDs, extra noise terms unique to the electron-multiplication process \citep{harpsoe_bayesian_2012} are incorporated into
 \begin{equation}
-    S/N_\mathrm{EMCCD} = \frac{S_e}{\sqrt{\left(S_e + D_e + f_{CIC}\right) \cdot \gamma^2 + \left(\sigma_{RN}/g\right)^2}}
+    S/N_\mathrm{EMCCD} = \frac{S_e}{\sqrt{\left(S_e + D_e + f_{CIC}\right) \cdot \gamma^2 + \left(\sigma_{RN}/g\right)^2}},
 \end{equation}
 where $g$ is the EM gain, $\gamma$ is the excess noise factor ($\sqrt{2}$ with EM gain), and $f_{CIC}$ is the clock-induced charge (CIC). CIC of $10^{-3}$ \si{\electron/\pixel/frame} was used based on empirical tests, and vendor values were used for everything else.
 
-The qCMOS detectors have an order of magnitude worse dark current and slightly worse QE than the EMCCDs. Despite this, \autoref{fig:detector_snr_relative} shows that the qCMOS detectors have better performance than the EMCCDs when photon-noise or read-noise limited, which is essentially all standard use-cases except for long exposures. The qCMOS detectors are dark-limited in ``slow'' mode at $\sim$\SI{15}{s}, where the relative performance in the low-flux regime drops compared to the EMCCDs. In practice, though, at these exposure times the sky background is the limiting noise term, which has a larger effect on the S/N for the EMCCDs due to excess noise. Using the EMCCDs without electron multiplication is superior at high photon fluxes due to the lack of excess noise factor (compared to the EMCCD) combined with higher QE (compared to the qCMOS).
+The qCMOS detectors have an order of magnitude worse dark current and slightly worse QE than the EMCCDs. Despite this, \autoref{fig:detector_snr_relative} shows that the qCMOS detectors perform better than the EMCCDs over a broad range of illuminations, especially at low-light levels. The qCMOS detectors are dark-limited in ``slow'' mode at $\sim$\SI{15}{s}, where the relative performance in the low-flux regime drops compared to the EMCCDs. In practice, though, the sky background is the limiting noise term at these exposure times, which has a larger effect on the S/N for the EMCCDs due to excess noise. Using the EMCCDs without electron multiplication is superior at high photon fluxes due to the lack of excess noise factor (compared to the EMCCD) combined with higher QE (compared to the qCMOS).
 
 \begin{figure}
     \centering
@@ -100,13 +100,14 @@ The qCMOS detectors have an order of magnitude worse dark current and slightly w
 \startdata
 Gain (\si{\electron/adu})  & 0.103  & 0.105  & 4.5  & 4.5  \\
 RMS read noise (\si{\electron})      & 0.40   & 0.25   & 9.6 & 0.27 \\
-Dark current (\si{\electron/\kilo\second/\pixel}) & 3.6 & 3.6 & 0.15 & 0.15 \\
-Saturation limit$^a$ (\si{\electron}) & 6730 & 6860 & \num{1.5e5} & 2667 \\
-Dyn. range$^b$ (dB)      & 85     & 90     &  84  &  80    \\
-Max framerate (\si{\hertz}) & 506 & 21 & 56 & 56 \\
-Ave. QE$^c$ (\%) & 67 & 67 & 85 & 85
+Dark current (\si{\electron/\second/\pixel}) & \multicolumn{2}{c}{\num{3.6e-3}} & \multicolumn{2}{c}{\num{1.5e-4}} \\
+Saturation limit$^a$ (\si{\electron}) & 6730 & 6860 & \num{1.5e5} & 980 \\
+Dyn. range$^b$ (dB)      & 85     & 90     &  84  &  71    \\
+Max framerate$^c$ (\si{\hertz}) & 506 & 21 & 56 & 56 \\
+Pixel size (\si{\micron}) & \multicolumn{2}{c}{4.6} & \multicolumn{2}{c}{16} \\
+Ave. QE$^d$ (\%) & \multicolumn{2}{c}{67} & \multicolumn{2}{c}{85} \\
 \enddata
-\tablecomments{(a) The qCMOS full well is larger than the bit-depth, so the saturation limit is the maximum signal per pixel that can be recorded. (b) The input-referred dynamic range is derived from the saturation limit divided by the readout noise. (c) Averaged over VAMPIRES bandpass (\SIrange{600}{800}{\nano\meter}).}
+\tablecomments{(a) The qCMOS full well is larger than the bit-depth, so the saturation limit is the maximum input signal per pixel that can be recorded without clipping. (b) The input-referred dynamic range is derived from the saturation limit divided by the readout noise. (c) Maximum framerate for a 512$\times$512 pixel window. (d) Averaged over VAMPIRES bandpass (\SIrange{600}{800}{\nano\meter}).}
 \end{deluxetable}
 
 
@@ -119,13 +120,13 @@ Ave. QE$^c$ (\%) & 67 & 67 & 85 & 85
 
 \subsection{Astrometric Calibration}
 
-The changes in optics and detectors, in combination with the non-telecentricity of VAMPIRES (\autoref{sec:telecentricity}), prompted a new astrometric calibration for VAMPIRES. Previously, \citet{currie_images_2022} derived a plate scale of \SI{6.24\pm0.01}{\mas/\pixel} and parallactic angle offset of \ang{78.6\pm1.2} using a single epoch of observations of HD 1160B. We derive a new astrometric solution for each of the new detectors using a variety of binary observations.
+Previously, \citet{currie_images_2022} derived a plate scale of \SI{6.24\pm0.01}{\mas/\pixel} and parallactic angle offset of \ang{78.6\pm1.2} using a single epoch of observations of HD 1160B.  However, the changes in optics and detectors, in combination with the non-telecentricity of VAMPIRES (\autoref{sec:telecentricity}), prompted a new astrometric calibration for VAMPIRES.  We derive a new astrometric solution for each of the new detectors using a variety of binary observations.
 
 We observed six binary systems (Albireo, 21 Oph, HD 1160, HIP 3373, HD 137909, and HD 139341) with separations from \ang{;;0.12} to \ang{;;1.1} (\autoref{tbl:binaries}). The uncertainty in plate scale and position angle was dominated by the statistical uncertainty of the ephemerides rather than centroid precision. The observations of HD 1160 only used VCAM1 and were complicated by the process of PSF subtraction, which was required to detect the low-mass companion (see \autoref{sec:hd1160} for more details).
 
 The derived instrument plate scale and parallactic angle offset are shown in \autoref{tbl:astrometry}. The instrument angle is defined as the pupil rotation of VAMPIRES to the image rotator zero point, which is calculated by
 \begin{equation}
-    \theta_\mathrm{inst} = \theta_\mathrm{off} + 180\text{\textdegree} - \theta_\mathrm{PAP}
+    \theta_\mathrm{inst} = \theta_\mathrm{off} + 180\text{\textdegree} - \theta_\mathrm{PAP},
 \end{equation}
 where $\theta_\mathrm{PAP}$ is the image rotator pupil offset of \ang{-39} (to align with the SCExAO entrance pupil). There is a \ang{180} change in position angle due to a parity flip compared to the previous astrometric solution for VAMPIRES \citep{currie_images_2022}.
 

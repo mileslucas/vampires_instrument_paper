@@ -6,33 +6,33 @@ Polarimetric differential imaging (PDI; \citealp{kuhn_imaging_2001}) is a powerf
 
 VAMPIRES is designed to measure linear polarization with high precision and accuracy. A polarizing beamsplitter cube splits horizontally polarized light ($I_{0^\circ}$) to VCAM1 and vertically polarized light ($I_{90^\circ}$) to VCAM2. This intensity mixes the inherently polarized signal and the inherently unpolarized signal ($I_\star$)
 \begin{equation}
-    I_{C1} = I_{0^\circ} + 0.5\cdot I_\star
+    I_{C1} = I_{0^\circ} + 0.5\cdot I_\star,
 \end{equation}
 \begin{equation}
-    I_{C2} = I_{90^\circ} + 0.5\cdot I_\star
+    I_{C2} = I_{90^\circ} + 0.5\cdot I_\star.
 \end{equation}
 
-Subtracting data from the two cameras yields the Stokes $Q$ parameter, by definition
+Subtracting data from the two cameras yields the Stokes $Q$ parameter, by definition--
 \begin{equation}
-    I_{C1} - I_{C2} = I_{0^\circ} - I_{90^\circ} + 0.5\cdot \left( I_\star - I_\star\right) = Q
+    I_{C1} - I_{C2} = I_{0^\circ} - I_{90^\circ} + 0.5\cdot \left( I_\star - I_\star\right) = Q.
 \end{equation}
 Conveniently, the unpolarized stellar signal is completely removed by this subtraction.
 
-To measure Stokes $U$, which is the difference of light at \ang{45} and \ang{135}
+To measure Stokes $U$, which is the difference of light at \ang{45} and \ang{135}--
 \begin{equation}
-    U = I_{45^\circ} - I_{135^\circ}
+    U = I_{45^\circ} - I_{135^\circ}.
 \end{equation}
-the input signal is modulated with a HWP so that $I_{45^\circ}$ and $I_{135^\circ}$ are retarded into horizontally and vertically polarized light, which then can be measured by the cameras.
+The input signal is modulated with a HWP so that $I_{45^\circ}$ and $I_{135^\circ}$ are retarded into horizontally and vertically polarized light, which then can be measured by the cameras.
 
-In theory, the subtraction in the definition of the Stokes observables removes the unpolarized signal, but in reality, the imperfections of the polarimeter leave instrumental polarization and non-common path errors \citep{kuhn_imaging_2001,tinbergen_astronomical_2005}. Every inclined reflective surface will partially polarize otherwise unpolarized light, and these reflections are difficult to avoid in a complicated instrument like SCExAO mounted on a Nasymth platform \citep{tinbergen_accurate_2007}. The instrumental polarization is a nuisance term in the analysis, but a majority of it is canceled by the HWP modulation-- rotating the HWP \ang{45} switches the sign of the observable (Stokes $Q$ becomes $-Q$). The difference ($[Q - (-Q)]/2$) removes the instrumental polarization downstream of the HWP.
+In theory, the subtraction in the definition of the Stokes observables removes the unpolarized signal, but, in reality, the imperfections of the polarimeter leave instrumental polarization and non-common path errors \citep{kuhn_imaging_2001,tinbergen_astronomical_2005}. Every inclined reflective surface will partially polarize otherwise unpolarized light, and these reflections are difficult to avoid in a complicated instrument like SCExAO mounted on a Nasymth platform \citep{tinbergen_accurate_2007}. The instrumental polarization is a nuisance term in the analysis, but a majority of it is canceled by the HWP modulation-- rotating the HWP \ang{45} switches the sign of the observable (Stokes $Q$ becomes $-Q$). The difference ($[Q - (-Q)]/2$) removes the instrumental polarization downstream of the HWP.
 
 \subsection{High-Speed Polarimetric Modulation}
 
-Switching orthogonal polarization states at the same rate or faster than the atmospheric speckle timescale ($\sim$\si{\milli\second}) differentially removes these fast speckles with high precision during the polarimetric data reduction \citep{kemp_piezo-optical_1969}. This fast modulation technique has been successfully implemented on a number of aperture polarimeters \citep{rodenhuis_extreme_2012,harrington_innopol_2014,bailey_high-sensitivity_2015,bailey_high-precision_2017,bailey_hippi-2_2020}, seeing-limited polarimeters \citep{safonov_speckle_2017,bailey_picsarr_2023}, and high-contrast polarimeters VAMPIRES \citep{norris_vampires_2015} and ZIMPOL \citep{schmid_spherezimpol_2018}. 
+Switching orthogonal polarization states at the same rate or faster than the atmospheric speckle timescale ($\sim$\si{\milli\second}) differentially removes these fast speckles with high precision during the polarimetric data reduction \citep{kemp_piezo-optical_1969}. This fast modulation technique has been successfully implemented on several aperture polarimeters \citep{rodenhuis_extreme_2012,harrington_innopol_2014,bailey_high-sensitivity_2015,bailey_high-precision_2017,bailey_hippi-2_2020}, seeing-limited polarimeters \citep{safonov_speckle_2017,bailey_picsarr_2023}, and high-contrast polarimeters \citep{norris_vampires_2015,schmid_spherezimpol_2018}. 
 
-VAMPIRES uses a ferroelectric liquid crystal (FLC) for fast polarimetric modulation. The FLC behaves like a HWP which is rotated \ang{45} when triggered. VAMPIRES was upgraded with an achromatic FLC rotator\footnote{Meadowlark FPA-200-700} which has better retardance across the bandpass than the previous one. The initial characterization of the FLC shows a $\sim$20\% improvement in the efficiency of measuring the linear Stokes parameters.
+VAMPIRES uses a ferroelectric liquid crystal (FLC) for fast polarimetric modulation. The FLC behaves like a HWP whose fast-axis rotates \ang{45} when a voltage is applied. VAMPIRES was upgraded with an achromatic FLC rotator\footnote{Meadowlark FPA-200-700}, which has better retardance across the bandpass than the previous one. The initial characterization of the FLC shows a $\sim$20\% improvement in the efficiency of measuring the linear Stokes parameters.
 
-The FLC switches in less than\SI{100}{\micro\second}, which is synchronized with every detector exposure (\SI{1}{\hertz} to $>$\SI{1}{\kilo\hertz}). The new FLC is mounted in a temperature-controlled optical tube at \SI{45}{\celsius} for consistent, efficient modulation and to avoid any temperature-dependent birefringence of the liquid crystal. When the FLC is inserted, the photometric throughput is 96.8\%. The FLC has a maximum excitation time of \SI{1}{\second}, which means it can only be used with short exposures. The FLC mount was motorized to allow removing it for ``slow'' polarimetry, which only uses the HWP for modulation.
+The FLC switches in less than\SI{100}{\micro\second}, which is synchronized with every detector exposure (\SI{1}{\hertz} to $>$\SI{1}{\kilo\hertz}). The new FLC is mounted in a temperature-controlled optical tube at \SI{45}{\celsius} for consistent, efficient modulation and to avoid any temperature-dependent birefringence of the liquid crystal. When the FLC is inserted, the photometric throughput is 96.8\% of the total flux. The FLC has a maximum excitation time of \SI{1}{\second}, which means it can only be used with short exposures. The FLC mount was motorized to allow removing it for ``slow'' polarimetry, which only uses the HWP for modulation.
 
 
 % \subsection{Instrumental Birefringence Control}
@@ -48,9 +48,9 @@ The FLC switches in less than\SI{100}{\micro\second}, which is synchronized with
 
 \subsection{Instrumental Modeling and Correction}
 
-Polarimetric measurements are limited by instrumental polarization due to the many inclined surfaces and reflections in the common path of VAMPIRES, in particular from M3 \citep{tinbergen_accurate_2007}. Mueller calculus is a well-established technique to model and remove the instrumental effects \citep{perrin_polarimetry_2015,holstein_polarimetric_2020,joost_t_hart_full_2021}. The Stokes parameters measured through difference imaging are a measurement of the input Stokes values modified by the telescope and instrument Mueller matrix
+Polarimetric measurements are limited by instrumental polarization due to the many inclined surfaces and reflections in the common path of VAMPIRES, in particular from M3 \citep{tinbergen_accurate_2007}. Mueller calculus is a well-established technique to model and remove the instrumental effects \citep{perrin_polarimetry_2015,holstein_polarimetric_2020,joost_t_hart_full_2021}. The Stokes parameters measured through difference imaging are a measurement of the input Stokes values modified by the telescope and instrument Mueller matrix--
 \begin{equation}
-    \mathbf{S}(x, y) = \mathbf{M}\cdot\mathbf{S}_{in}(x, y)
+    \mathbf{S}(x, y) = \mathbf{M}\cdot\mathbf{S}_{in}(x, y),
     \label{eqn:mm}
 \end{equation}
 where $\mathbf{S}$ represents Stokes vector at each point in the field. With a calibrated model of $\mathbf{M}$, the instrument Mueller-matrix, \autoref{eqn:mm} can be solved using a least-squares fit to estimate the input Stokes vector \citep{perrin_polarimetry_2015}.
