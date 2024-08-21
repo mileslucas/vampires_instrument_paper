@@ -8,15 +8,6 @@
 \usepackage{savesym}
 \let\tablenum\relax
 \usepackage{siunitx}[=v2]
-% redefine deluxetable for compatibility with the array package.
-\let\oldenddeluxetable\endxdeluxetable
-\let\olddeluxetable\xdeluxetable
-\makeatletter
-\renewenvironment{xdeluxetable}[1]{
-\olddeluxetable{[#1]}
-\def\pt@format{\string#1}%
-}{\oldenddeluxetable}
-\makeatother
 
 \sisetup{separate-uncertainty=true}
 
