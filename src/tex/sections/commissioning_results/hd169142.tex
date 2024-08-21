@@ -8,7 +8,7 @@ HD 169142 was observed with VAMPIRES in the ``slow'' polarimetry mode (no FLC) w
 
 The data was reduced as described in \autoref{sec:processing} with background subtraction and double-difference polarimetric reduction. Mueller matrices were adapted from \citet{zhang_characterizing_2023} for the common-path HWP, image rotator, and generic optics term (i.e., excluding the detector intensity ratio and the FLC, since these components were modified in the upgrade). Residual instrumental polarization was corrected using the photometric sums in an annulus from \ang{;;0.24} to \ang{;;0.33}, which matches the cavity of the disk \citep{bertrang_hd_2018}.
 
-The Stokes $Q_\phi$ frames, which are approximately equal to the polarized intensity, are shown in \autoref{fig:hd169142_mosaic}. The inner disk is obvious, with some diminished intensity to the southwest. A version scaled by the squared stellocentric distance to normalize the stellar irradiation is also shown, highlighting the disk gap and the inner rim of the outer disk.
+The Stokes $Q_\phi$ frames, which are approximately equal to the polarized intensity, are shown in \autoref{fig:hd169142_mosaic}. The inner disk is evident, with some diminished intensity to the southwest. A version scaled by the squared stellocentric distance to normalize the stellar irradiation is also shown, highlighting the disk gap and the inner rim of the outer disk.
 
 \begin{figure*}[t]
     \centering
@@ -19,11 +19,11 @@ The Stokes $Q_\phi$ frames, which are approximately equal to the polarized inten
 
 Radial profiles with bin sizes of 4 pixels from each $Q_\phi$ frame and each Stokes $I$ frame were measured from the coronagraph IWA (\ang{;;0.1} out to \ang{;;1.4}). The ratio of these profiles is shown alongside the $Q_\phi$ profiles in \autoref{fig:hd169142_flux}. The mean integrated partial-polarization of the disk is \SI{0.6}{\%} across all wavelengths and the scattering intensity is higher at redder wavelengths. 
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \script{HD169142.py}
     \includegraphics[width=\columnwidth]{figures/20230707_HD169142_Qphi_flux.pdf}
     \caption{Radial profiles from multiband polarimetric images of HD 169142 for the polarized intensity (top; taken from $Q_\phi$ frame) and fractional polarized flux (bottom; $Q_\phi/I$). The profiles are taken with annuli of a width of 4 pixels starting from the coronagraph IWA (\si{105}{mas}). The region of the inner disk shows clearly that there is more dust scattering at redder wavelengths.\label{fig:hd169142_flux}}
 \end{figure}
 
-Future work includes modeling geometric disk profiles to analyze the scattering geometry of this disk, allowing a measurement of the scattering phase function of the dust at multiple wavelengths. These measurements give color information about the scattering properties of the dust, which normally requires multiple observations for each filter or integral-field spectroscopy, but with VAMPIRES are obtained in one observing sequence using multiband imaging.
+Future work includes modeling geometric disk profiles to analyze the scattering geometry of this disk, allowing a measurement of the scattering phase function of the dust at multiple wavelengths. These measurements give color information about the scattering properties of the dust, which generally requires multiple observations for each filter or integral-field spectroscopy, but with VAMPIRES, they are obtained in one observing sequence using multiband imaging.
