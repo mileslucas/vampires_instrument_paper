@@ -8,7 +8,7 @@ The four Lyot-style focal plane masks are partially transmissive (0.6\%) circula
 
 The mask IWAs were measured by rastering the SCExAO internal calibration source across the focal plane mask and measuring the photometric throughput. The normalized throughput curves and IWA are shown in \autoref{fig:iwa}, and the results are summarized in \autoref{tbl:coronagraph}.
 
-In practice, the CLC-2 mask is too small for on-sky observations-- the residual tip-tilt in average conditions causes the PSF to leak out of the side of the mask. The CLC-7 mask is slightly too large for the Lyot stops, creating pinned speckles along the edge of the focal plane mask. The CLC-3 mask is well-suited for good conditions (seeing $<$\ang{;;0.6}) or for polarimetric observations (thanks to the efficiency of PDI). The CLC-5 mask offers a good balance between robust diffraction control and IWA in all other scenarios.
+In practice, the CLC-2 mask is too small for on-sky observations-- the residual tip-tilt in average conditions causes the PSF to leak out of the side of the mask. Due to the large size of the CLC-7 mask and because the Lyot stop was tuned to the CLC-3 and CLC-5 masks, the CLC-7 mask produces some diffraction that is not rejected by the Lyot stop. In poor observing conditions, this can create speckles that appear pinned to the edge of the mask. The CLC-3 mask is well-suited for good conditions (seeing $<$\ang{;;0.6}) or for polarimetric observations (thanks to the efficiency of PDI). The CLC-5 mask offers a good balance between robust diffraction control and IWA for all other scenarios.
 
 \begin{deluxetable}{lcc}
 \tablehead{\colhead{Name} & \colhead{Radius (\si{\micron})} & \colhead{IWA (\si{\mas})}}
@@ -64,7 +64,7 @@ LyotStop-L & 3.16 & 6.33 &  61.5 & 57.2 \\
 
 \subsection{Redundant Apodizing Pupil Mask}
 
-A redundant apodized pupil mask (RAP; \citealp{leboulleux_redundant_2022,leboulleux_coronagraphy_2024}) was deployed on VAMPIRES in September 2023. The mask shapes the pupil to create a deep $10^{\text{-}6}$ contrast dark zone in an annulus from 8 to 35$\lambda/D$. The apodization pattern is resilient to up to  $\sim$\SI{1}{rad} of LWE, where the coherence of the PSF core starts to break down. The mask is designed with a trade-off between the size of the dark zone, the LWE resilience, and the mask's overall throughput, which is $\sim$25\%. The RAP mask, PSF, and radial profile are shown in \autoref{fig:rap}. Further testing and verification of this mask is future work.
+A redundant apodized pupil mask (RAP; \citealp{leboulleux_redundant_2022,leboulleux_coronagraphy_2024}) was deployed on VAMPIRES in September 2023. The mask shapes the pupil and was designed to create a deep $10^{\text{-}6}$ contrast dark zone in an annulus from 8 to 35$\lambda/D$. The apodization pattern is resilient to up to  $\sim$\SI{1}{rad} of LWE, where the coherence of the PSF core starts to break down. The mask is designed with a trade-off between the size of the dark zone, the LWE resilience, and the mask's overall throughput, which is $\sim$25\%. The RAP mask, PSF, and radial profile are shown in \autoref{fig:rap}. Further testing and verification of this mask is future work.
 
 \begin{figure}
     \centering
@@ -102,7 +102,7 @@ The scaling coefficients for the most commonly used astrogrid patterns (10.3, 15
 \end{equation}
 which was fit using weighted linear least-squares, shown in \autoref{tbl:astrogrid} and \autoref{fig:astrogrid_photometry}. The 31$\lambda/D$ separation pattern has very low relative flux for the pattern amplitude due to the influence function of the DM, which has a weaker response for high spatial frequencies.
 
-To minimize the negative effects of astrogrid (namely photon noise in the control radius), the amplitude and separation are tuned so the pattern is barely detectable. A trade-off exists between photometric and astrometric precision with local contrast around the calibration speckles. An astrogrid brightness with a S/N of $\sim$100 above the PSF profile is recommended-- this corresponds to $<10^{-2}$ at 10$\lambda/D$ (\SI{15}{\nano\meter} astrogrid) and $<$\num{1e-3} at 15$\lambda/D$ (\SI{15}{\nano\meter} astrogrid).
+A trade-off exists between photometric and astrometric precision of the calibration speckles with increased contrast due to photon noise around them. The amplitude and separation of the astrogrid pattern should be tuned for optimal contrast over most of the control region. The wings of the PSF quickly fall below contrasts of $\sim10^{\text -2}$ and the radial profile of the on-axis PSF is $\sim10^{\text -4}$ where the calibration speckles land (\autoref{fig:onsky_psf_profiles}). If the speckle contrast is $<10^{\text{-}2}$, then the astrogrid will not affect contrast outside of the speckle PSF cores. A relative brightness of $10^{\text{-}2}$ corresponds to an amplitude of \SI{24}{\nano\meter} for the 10$\lambda/D$ pattern, \SI{28}{\nano\meter} for the 15.5$\lambda/D$ pattern, and \SI{103}{\nano\meter} for the 31$\lambda/D$ pattern.
 
 There are practical considerations for using astrogrid simultaneously with other SCExAO modules. For example, when using SCExAO/CHARIS for PDI, the field stop requires using the 10.3$\lambda/D$ separation grid so that all the speckles land within the CHARIS FOV. The speckle brightness in the NIR is fainter, which means the optimal brightness for CHARIS data might produce brighter than optimal speckles in VAMPIRES. Lastly, for observations in the Open filter, the radial smearing of the satellite spots reduces the astrometric and photometric precision.
 
@@ -114,9 +114,9 @@ There are practical considerations for using astrogrid simultaneously with other
 }
 \tablecaption{Astrogrid relative photometry flux scaling.\label{tbl:astrogrid}}
 \startdata
-XYgrid & 10.3 & \num{11.077+-0.035} & \num{-0.080+-0.002} \\
-XYgrid & 15.5 & \num{6.517+-0.027} & \num{-0.048+-0.001} \\
-XYgrid & 31.0 & \num{0.635+-0.011} & \num{-0.011+-0.001} \\
+XYgrid & 10.3 & \num{14.217+-1.489} & \num{-0.111+-0.093} \\
+XYgrid & 15.5 & \num{7.634+-1.321} & \num{-0.043+-0.082} \\
+XYgrid & 31.0 & \num{0.561+-0.256} & \num{-0.002+-0.023} \\
 \enddata
 \tablecomments{Photometry measured using elliptical apertures with local background subtraction. Astrogrid applied using \SI{1}{\kilo\hertz} modulation speed.}
 \end{deluxetable}
@@ -124,8 +124,8 @@ XYgrid & 31.0 & \num{0.635+-0.011} & \num{-0.011+-0.001} \\
 \begin{figure}
     \centering
     \script{astrogrid_photometry.py}
-    \includegraphics{figures/astrogrid_photometry.pdf}
-    \caption{Relative photometric flux of the astrogrid calibration speckles. Each plot corresponds to a speckle pattern, and each curve corresponds to a given pattern amplitude (in mechanical microns applied to the DM). \label{fig:astrogrid_photometry}}
+    \includegraphics[width=\columnwidth]{figures/astrogrid_photometry.pdf}
+    \caption{Relative photometric flux of the astrogrid calibration speckles. Each plot corresponds to a speckle pattern, and each curve corresponds to a given pattern amplitude (in mechanical microns applied to the DM) The best-fitting models with 1-$\sigma$ uncertainty bands are shown for each configuration. \label{fig:astrogrid_photometry}}
 \end{figure}
 
 

@@ -53,7 +53,7 @@ SII-Cont & 681.5 & 680.0 - 683.0 & 3.0 & 0.05 & 8.9 & 66 & 21.6 & \num{4.3e+08} 
 
 \subsection{Neutral Density Filters}
 
-Two broadband reflective neutral density filters in the pupil mask wheel of VAMPIRES can be used to avoid saturating bright stars. Because these masks are in the pupil wheel, they cannot be used simultaneously with sparse aperture masks or Lyot stops. The optical density was measured for both filters: the ND10 has an optical density of \num{1.0}, and the ND25 has an optical density of \num{2.33}. The polarimetric effects of these filters have not been characterized and are not recommended for use during polarimetric observations.
+Two broadband reflective neutral density filters in the pupil mask wheel of VAMPIRES can be used to avoid saturating bright stars. Because these masks are in the pupil wheel, they cannot be used simultaneously with sparse aperture masks or Lyot stops. The optical density was measured for both filters: the ND10 has an optical density of \num{1.0}, and the ND25 has an optical density of \num{2.33}. The polarimetric effects of these filters have not been characterized and they are not recommended for use during polarimetric observations.
 
 \begin{figure}
     \centering
@@ -88,7 +88,7 @@ NPBS & \num{43.95+-0.04} & \num{45.35+-0.04} & \num{89.31+-0.07} \\
 
 The filters in VAMPIRES do not follow any standard photometric system, although the Open filter is similar in central wavelength and width to the Johnson-Cousins R band \citep{bessell_ubvri_1979}. When using photometric values from online catalogs, the magnitudes must be converted from the source filter into the respective VAMPIRES filter, which depends on the spectrum of the observed star.
 
-The Pickles stellar models \citep{pickles_stellar_1998} were used to measure the color correction for varying spectral types of main-sequence stars. For each model spectrum, \texttt{pysynphot} was used to calculate the color correction in Vega magnitude from Johnson-Cousins V, R, and Gaia G to the respective VAMPIRES filter (\autoref{fig:color_correction}). The Johnson V filter deviates up to \num{1} magnitude fainter than the VAMPIRES filters for later spectral types, the R filter is fairly consistent except for the coolest stars, and the G filter deviates up to \num{5} magnitudes brighter at later types.
+The Pickles stellar models \citep{pickles_stellar_1998} were used to measure the color correction for varying spectral types of main-sequence stars. For each model spectrum, \texttt{pysynphot} was used to calculate the color correction in Vega magnitude from Johnson-Cousins V, R, and Gaia G to the respective VAMPIRES filter (\autoref{fig:color_correction}). The Johnson V filter deviates up to \num{1} magnitude fainter than the VAMPIRES filters for later spectral types, the R filter has consistent colors compared to VAMPIRES except for the coolest stars, and the G filter can deviate up to \num{5} magnitudes brighter compared to VAMPIRES, depending on the spectral type.
 
 \begin{figure}
     \centering
@@ -124,6 +124,5 @@ The accuracy of the zero points and conversion factors is constrained by atmosph
 \subsection{Limiting Magnitudes}
 
 Under excellent conditions, the detector integration time and saturation limit set the brighter end of the magnitude range. The fastest detector integration time is \SI{7.2}{\micro\second} in ``fast'' mode and \SI{48}{\milli\second} in ``slow'' mode (for the standard imaging mode with a \ang{;;3}x\ang{;;3} FOV). For these calculations, the peak count limit is set to \SI{60000}{adu}, and it is assumed that the brightest pixel in the PSF will be 30\% the full aperture flux. The highest-throughput scenario (``Open'' filter, no beamsplitter, no FLC; \autoref{tbl:filters}) translates the limiting instrumental flux into $m_{\rm Open}$ = 2.1 in ``fast'' mode and $m_{\rm Open}$ = 11.7 in ``slow'' mode. The AO wavefront sensors constrain the faint observing limits: the current guider limits of AO188 are $m_{\rm R}$ $<$ 16 and the wavefront sensor limits for diffraction-limited imaging are rough $m_{\rm R}$ $<$ 12 \citep{minowa_performance_2010}.
-%roughly $m_{\rm R}<$\SI{12}\citep{minowa_performance_2010}.
 
 The sky background above Maunakea at zenith (any lunar phase) is $\Sigma_{\rm R}=$\SI{17.9}{mag/arcsec^2} \citep{roth_measurements_2016}. Assuming, again, the highest-throughput observing configuration and using a pixel size of \SI{5.9}{mas}, this corresponds to an instrument flux of \SI{5e-2}{\electron/\pixel/\second}. This is an order of magnitude higher than the dark signal (\autoref{tbl:detectors}) and is the limiting noise term for exposures longer than \SI{1.2}{\second}.

@@ -1,16 +1,14 @@
 \section{The VAMPIRES instrument}\label{sec:design}
 
-The Visible Aperture-Masking Polarimetric Imager/Interferometer for Resolving Exoplanetary Signatures (VAMPIRES) is the visible-light (\SIrange{600}{775}{\nano\meter}) sub-instrument of the Subaru Coronagraphic Extreme Adaptive Optics testbed (SCExAO; \citealp{jovanovic_subaru_2015}). SCExAO is a platform for high-contrast imaging and technology development on the \SI{8.2}{\meter} Subaru telescope; the multi-stage adaptive optics achieves diffraction-limited imaging at visible wavelengths, and the large telescope diameter produces angular resolutions of $\sim$\SI{20}{\mas}. Observing modes and science use cases for VAMPIRES are detailed in \autoref{tbl:modes}.
-
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{figures/VAMPIRES_diagram.pdf}
     \caption{VAMPIRES Instrument Schematic including all common path instruments: the telescope, waveplate unit (WPU), AO188, and SCExAO. Some components are simplified or omitted for clarity and are not to scale. NsIR: Nasmyth infrared platform of the Subaru telescope, HWP: half-wave plate, QWP: quarter-wave plate, IMR: image rotator (K-mirror), OAP: off-axis parabolic mirror, ADC: atmospheric dispersion corrector, DM: deformable mirror, BS: beamsplitter, PyWFS: pyramid wavefront sensor, PL: photonic lantern, SMF: single-mode fiber, FLC: ferroelectric liquid crystal, LCC: liquid-crystal controller, TC: temperature controller, ND: neutral density filter.\label{fig:schematic}}
 \end{figure*}
 
+The Visible Aperture-Masking Polarimetric Imager/Interferometer for Resolving Exoplanetary Signatures (VAMPIRES) is the visible-light (\SIrange{600}{775}{\nano\meter}) sub-instrument of the Subaru Coronagraphic Extreme Adaptive Optics testbed (SCExAO; \citealp{jovanovic_subaru_2015}). SCExAO is a platform for high-contrast imaging and technology development on the \SI{8.2}{\meter} Subaru telescope; the multi-stage adaptive optics achieves diffraction-limited imaging at visible wavelengths, and the large telescope diameter produces angular resolutions of $\sim$\SI{20}{\mas}. Observing modes and science use cases for VAMPIRES are detailed in \autoref{tbl:modes}.
 
 \begin{deluxetable*}{p{1.2in}p{2.5in}p{3in}}
-\centering
 \tabletypesize{\small}
 \tablecaption{VAMPIRES observing configurations.\label{tbl:modes}}
 \tablehead{
@@ -39,11 +37,11 @@ Redundant apodizing pupil & 8 to 35 $\lambda/D$ dark hole resilient to $<$\SI{1}
 
 \subsection{Telescope and Common Path Instruments}
 
-SCExAO is mounted on one of the Nasmyth platforms of the Subaru telescope. The first common-path instrument is the facility waveplate unit (WPU; \citealp{watanabe_near-infrared_2018}). The WPU includes a linear polarizer, rotatable half-wave plate (HWP), and rotatable quarter-wave plate (QWP), which is used for polarimetric modulation and calibration (\autoref{sec:polarimetry}). Next is Subaru's facility AO instrument, which provides a first-level atmospheric turbulence correction. It includes a broadband atmospheric dispersion corrector (ADC), low-order (188-element) wavefront sensor (WFS), and deformable mirror (DM). A \SI{600}{\nano\meter} longpass dichroic splits light between the WFS and downstream instruments. The results presented in this paper were obtained with a 188-actuator DM used for this stage (AO188; \citealp{minowa_performance_2010}): it has since been replaced by a 3228-count actuator DM (AO3K; see \autoref{sec:futureprospects}). 
+SCExAO is mounted on one of the Nasmyth platforms of the Subaru telescope. The first common-path instrument is the facility waveplate unit (WPU; \citealp{watanabe_near-infrared_2018}). The WPU includes a linear polarizer, rotatable half-wave plate (HWP), and rotatable quarter-wave plate (QWP), which is used for polarimetric modulation and calibration (\autoref{sec:polarimetry}). Next is Subaru's facility AO instrument, which provides a first-level atmospheric turbulence correction. It includes a broadband atmospheric dispersion corrector (ADC), low-order (188-element) wavefront sensor (WFS), and deformable mirror (DM). A \SI{600}{\nano\meter} longpass dichroic splits light between the WFS ($<$\SI{600}{\nano\meter}) and downstream instruments ($>$\SI{600}{\nano\meter}). The results presented in this paper were obtained with a 188-actuator DM used for this stage (AO188; \citealp{minowa_performance_2010}): it has since been replaced by a 3228-count actuator DM (AO3K; see \autoref{sec:futureprospects}). 
 
 \subsection{SCExAO Common Path}
 
-Light entering SCExAO is corrected with a 2000-actuator DM at up to \SI{3.6}{\kilo\hertz} speeds for extreme AO correction \citep{lozi_new_2020,ahn_scexao_2021}. The corrected beam is split with NIR light sent to a suite of sub-instruments, including CHARIS, MEC, and FastPDI \citep{groff_charis_2015,steiger_probing_2022,lozi_status_2020}, while visible light is reflected into a periscope and reimaging lens.
+Light entering SCExAO is corrected with a 2000-actuator DM at up to \SI{3.6}{\kilo\hertz} speeds for extreme AO correction \citep{lozi_new_2020,ahn_scexao_2021}. The corrected beam is split with NIR light sent to a suite of sub-instruments, including CHARIS \citep{groff_charis_2015}, MEC \citep{steiger_probing_2022}, and FastPDI \citep{lozi_status_2020}, while visible light is reflected into a periscope and reimaging lens.
 
 A portion of the light exiting the periscope is sent to the visible pyramid WFS (PyWFS; \citealp{lozi_visible_2019}). Various dichroic and gray beamsplitters are available, but the typical configuration uses an \SI{800}{\nano\meter} shortpass dichroic. The tilt angle of this dichroic ($\sim$\ang{20}) shifts the cut-off wavelength closer to $\sim$\SI{775}{\nano\meter}. Following this pickoff is a focal plane mount that hosts a \ang{;;3}x\ang{;;3} field stop and a suite of visible coronagraphs (\autoref{sec:coronagraphy}). Following the field stop are two gray beamsplitters for fiber-fed sub-instruments \citep{vievard_single-aperture_2023,vievard_photonic_2023}.
 

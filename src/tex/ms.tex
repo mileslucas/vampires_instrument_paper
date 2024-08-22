@@ -8,6 +8,15 @@
 \usepackage{savesym}
 \let\tablenum\relax
 \usepackage{siunitx}[=v2]
+% redefine deluxetable for compatibility with the array package.
+\let\oldenddeluxetable\endxdeluxetable
+\let\olddeluxetable\xdeluxetable
+\makeatletter
+\renewenvironment{xdeluxetable}[1]{
+\olddeluxetable{[#1]}
+\def\pt@format{\string#1}%
+}{\oldenddeluxetable}
+\makeatother
 
 \sisetup{separate-uncertainty=true}
 
@@ -75,6 +84,6 @@
 \input{sections/appendix_nontelecentricity}
 
 \section{Data and Code Availability}
-This study was carried out using the reproducibility software \href{https://github.com/showyourwork/showyourwork}{\showyourwork} \citep{luger_mapping_2021}, which leverages continuous integration to programmatically create the figures and compile this manuscript. Each figure caption contains a link to the script used to make the figure (at the commit corresponding to the current build of the manuscript). The git repository associated with this study is publicly available at \url{\GitHubURL}.
+This study used the reproducibility software \texttt{showyourwork} \citep{luger_mapping_2021}, which leverages continuous integration to create the figures and compile this manuscript programmatically. Each figure caption contains a link to the script used to make the figure (at the commit corresponding to the current build of the manuscript). The git repository associated with this study is publicly available at \url{https://github.com/mileslucas/vampires_instrument_paper}. Reduced data is available upon request, and raw observational data is available from the SMOKA archive\footnote{\url{https://smoka.nao.ac.jp/}}.
 
 \end{document}
