@@ -20,7 +20,9 @@ with fits.open(paths.data / "20230707_HD169142_good_frame.fits") as hdul:
 
 titles = ("CLC-3", "CLC-5")
 
-fig, axes = pro.subplots(ncols=2, width="3.5in", wspace=0.2, hspace=0.75, sharey=1, sharex=1)
+fig, axes = pro.subplots(
+    ncols=2, width="3.5in", wspace=0.2, hspace=0.75, sharey=1, sharex=1
+)
 
 plate_scale = 5.9
 side_length = clc3_cube.shape[-1] * plate_scale * 1e-3 / 2
@@ -59,7 +61,7 @@ for ax in axes:
     rect = patches.Rectangle([-0.45, -0.45], bar_width_arc, 5e-3, color="white")
     ax.add_patch(rect)
     ax.text(
-        -0.45  + bar_width_arc / 2,
+        -0.45 + bar_width_arc / 2,
         -0.43,
         f'{bar_width_arc:.01f}"',
         c="white",

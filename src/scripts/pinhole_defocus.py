@@ -5,8 +5,8 @@ import pandas as pd
 from astropy.modeling import models, fitting
 from uncertainties import ufloat
 
-pro.rc["legend.fontsize"] = 6
-pro.rc["font.size"] = 8
+pro.rc["legend.fontsize"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["cycle"] = "ggplot"
 
@@ -22,11 +22,10 @@ fig, axes = pro.subplots(
 )
 
 
-
 fitter = fitting.LinearLSQFitter(calc_uncertainties=True)
 mod = models.Polynomial1D(1, domain=(X.min(), X.max()))
 mod.c0.fixed = True
-res = fitter(mod, X, ave_vals)#, weights=1/std_vals)
+res = fitter(mod, X, ave_vals)  # , weights=1/std_vals)
 stds = np.sqrt(res.cov_matrix.cov_matrix.diagonal())
 res_slope = ufloat(res.c1.value, stds[0])
 print(res_slope)
@@ -37,22 +36,15 @@ axes[0].scatter(
     label="data",
 )
 test_X = np.linspace(X.min() - 0.1, X.max() + 0.1, 100)
-axes[0].plot(
-    test_X,
-    res(test_X) * 100,
-    c="C0",
-    label="model"
+axes[0].plot(test_X, res(test_X) * 100, c="C0", label="model")
+
+axes[0].format(ylabel="Change in platescale (%)", xlabel="Lens defocus (mm)")
+axes[0].legend(
+    ncols=1,
+    frame=False,
 )
 
-axes[0].format(
-    ylabel="Change in platescale (%)",
-    xlabel="Lens defocus (mm)"
-)
-axes[0].legend(ncols=1, frame=False, )
-
-axes.format(
-    grid=True
-)
+axes.format(grid=True)
 
 # save output
 fig.savefig(paths.figures / "pinhole_defocus.pdf", dpi=300)

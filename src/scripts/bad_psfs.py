@@ -6,8 +6,8 @@ from matplotlib import patches
 from astropy.visualization import simple_norm
 from scipy.ndimage import shift
 
-pro.rc["legend.fontsize"] = 7
-pro.rc["font.size"] = 8
+pro.rc["legend.fontsize"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
 pro.rc["cmap"] = "magma"
@@ -27,11 +27,12 @@ mbi_cube, hdr_fuzzy = fits.getdata(
 )
 long_expo_frame = mbi_cube[2] + 11
 
-good_cube, good_hdr = fits.getdata(paths.data / "20230707_HD191195_frame.fits", header=True)
+good_cube, good_hdr = fits.getdata(
+    paths.data / "20230707_HD191195_frame.fits", header=True
+)
 good_frame = good_cube[2]
 
 fig, axes = pro.subplots(ncols=3, wspace=0.25, width="3.5in")
-
 
 
 side_length = good_frame.shape[-1] * 5.9 * 1e-3 / 2

@@ -2,10 +2,9 @@ import paths
 import proplot as pro
 import numpy as np
 import pandas as pd
-from astropy.io import fits
 
-pro.rc["legend.fontsize"] = 7
-pro.rc["font.size"] = 8
+pro.rc["legend.fontsize"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
 pro.rc["cycle"] = "ggplot"
@@ -20,18 +19,24 @@ sdi_dfs = [pd.read_csv(f) for f in filenames_sdi]
 
 
 plate_scale = 5.9e-3  # arc / px
-iwa = 0.105 # arc
+iwa = 0.105  # arc
 iwa_px = iwa / plate_scale
 
 
 labels = ("F610", "F670", "F720", "F760")
 cycle = pro.Colormap("fire")(np.linspace(0.4, 0.8, 4))
 
+
 def plot_cc(dataframe, ax, **kwargs):
     cc = dataframe.query(f"distance >= {iwa_px}")
     rad_arc = cc["distance"] * plate_scale
     contr = cc["contrast_corr"]
-    ax.plot(rad_arc.values, contr.values, **kwargs,)
+    ax.plot(
+        rad_arc.values,
+        contr.values,
+        **kwargs,
+    )
+
 
 for i in range(len(labels)):
     plot_cc(adi_dfs[i], axes[0], label=labels[i], c=cycle[i], lw=1)
@@ -58,6 +63,7 @@ axes[0].format(
     yscale="log",
     yformatter="log",
     xlim=(0, 1.4),
+    ylim=(2e-7, 2e-2),
 )
 fig.savefig(
     paths.figures / "20230629_HD102438_contrast_curve.pdf",

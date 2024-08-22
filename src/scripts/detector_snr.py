@@ -2,9 +2,9 @@ import paths
 import proplot as pro
 import numpy as np
 
-pro.rc["legend.fontsize"] = 7
+pro.rc["legend.fontsize"] = 8
 pro.rc["cycle"] = "ggplot"
-pro.rc["font.size"] = 8
+pro.rc["font.size"] = 9
 
 
 def get_emccd_noise(photons, texp, emgain=300):

@@ -10,8 +10,8 @@ import numpy as np
 import astropy.units as u
 from matplotlib import ticker
 
-pro.rc["font.size"] = 8
-pro.rc["title.size"] = 8
+pro.rc["font.size"] = 9
+pro.rc["title.size"] = 9
 
 fig, axes = pro.subplots(
     nrows=4,
@@ -19,7 +19,7 @@ fig, axes = pro.subplots(
     height="4in",
     space=0,
     sharey=1,
-    hratios=(0.2125, 0.225, 0.2125, 0.2125),#, 0.15),
+    hratios=(0.2125, 0.225, 0.2125, 0.2125),  # , 0.15),
 )
 
 waveset = np.arange(550, 800, 0.1) * u.nm

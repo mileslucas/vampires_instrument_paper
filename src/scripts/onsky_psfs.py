@@ -3,11 +3,10 @@ from astropy.io import fits
 import proplot as pro
 import numpy as np
 from astropy.visualization import simple_norm
-from photutils.profiles import RadialProfile
 
-pro.rc["legend.fontsize"] = 6
+pro.rc["legend.fontsize"] = 8
 pro.rc["legend.frameon"] = True
-pro.rc["font.size"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["grid"] = False
 pro.rc["cmap"] = "magma"
@@ -53,6 +52,8 @@ axes.format(
     ylim=(-1, 1),
     xlabel=r'$\Delta$x (")',
     ylabel=r'$\Delta$y (")',
+    ylocator=0.5,
+    xlocator=0.5,
 )
 
 # bar_width_arc = 0.2
@@ -69,7 +70,16 @@ axes.format(
 # )
 
 ## Filter label
-axes[0].text(0.02, 0.02, r"$\lambda =$720 nm", c="w", ha="left", va="bottom", fontsize=9, transform="axes")
+axes[0].text(
+    0.02,
+    0.02,
+    r"$\lambda =$720 nm",
+    c="w",
+    ha="left",
+    va="bottom",
+    fontsize=9,
+    transform="axes",
+)
 
 ## speckle labels
 text_kwargs = dict(fontsize=7, c="w", ha="center", va="bottom")

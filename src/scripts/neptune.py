@@ -9,8 +9,8 @@ from scipy.optimize import minimize_scalar
 
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
-pro.rc["font.size"] = 8
-pro.rc["legend.fontsize"] = 6
+pro.rc["font.size"] = 9
+pro.rc["legend.fontsize"] = 8
 
 with fits.open(paths.data / "20230711_Neptune_stokes_cube.fits") as hdul:
     stokes_cube = hdul[0].data
@@ -52,6 +52,7 @@ def optimize_Qr(stokes_frames, frame=""):
     print(f"Neptune {frame} field phi offset: {np.rad2deg(res.x):.01f}°")
     return radial_stokes(stokes_frames[2], stokes_frames[3], phi=res.x)
 
+
 def mask_circle(image, x, y, rad):
     Ys, Xs = np.ogrid[: image.shape[-2], : image.shape[-1]]
     rs = np.hypot(Ys - y, Xs - x)
@@ -60,9 +61,11 @@ def mask_circle(image, x, y, rad):
     return image
     # return np.where(mask, np.nan, image)
 
+
 def mask_all(image):
     mask_circle(image, 351.7, 326.3, 11)
     mask_circle(image, 438.7, 251.4, 8)
+
 
 for i in range(4):
     Qr, Ur = optimize_Qr(stokes_cube[i], titles[i])
@@ -78,14 +81,17 @@ side_length = stokes_cube.shape[-1] * plate_scale * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
 
 ## Plot and save
-bs_fact = 0.7964/2
+bs_fact = 0.7964 / 2
 
 ext_fact = np.array((0.09, 0.056, 0.040, 0.032))
 extinction = ext_fact * header["AIRMASS"]
-ext_lin = 10**(-0.4 * extinction)
+ext_lin = 10 ** (-0.4 * extinction)
 
 Jy_fact = (
-    np.array((1.2e-6, 6.1e-7, 4.4e-7, 1e-6)) / bs_fact / (plate_scale**2/1e6) / ext_lin
+    np.array((1.2e-6, 6.1e-7, 4.4e-7, 1e-6))
+    / bs_fact
+    / (plate_scale**2 / 1e6)
+    / ext_lin
 )  # Jy / sq.arcsec / (e-/s)
 calib_data = stokes_cube * Jy_fact[:, None, None, None]
 Qr_frames = calib_data[:, 4]
@@ -169,8 +175,6 @@ axes[1, 3].text(
 )
 
 
-
-
 ## sup title
 axes.format(
     grid=False,
@@ -179,10 +183,9 @@ axes.format(
     xlabel=r'$\Delta$RA (")',
     ylabel=r'$\Delta$DEC (")',
     facecolor="k",
+    xlocator=0.5,
+    ylocator=0.5,
 )
-for ax in axes:
-    ax.xaxis.set_major_locator(MaxNLocator(nbins=3, prune="both"))
-    ax.yaxis.set_major_locator(MaxNLocator(nbins=5, prune="both"))
 
 axes[:, 1:].format(yticks=[])
 axes[0, :].format(xticks=[])

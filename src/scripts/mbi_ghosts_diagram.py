@@ -129,9 +129,9 @@ axes[0].text(
 
 
 # figure 3, reflect off second surface with internal reflection
-l = beam_length * 1.8
-xs = [0, offset, offset - l * cos2t]
-ys = [0, np.tan(2 * theta) * offset, np.tan(2 * theta) * offset + l * sin2t]
+length = beam_length * 1.8
+xs = [0, offset, offset - length * cos2t]
+ys = [0, np.tan(2 * theta) * offset, np.tan(2 * theta) * offset + length * sin2t]
 # add in final ray
 axes[0].plot(xs, ys, color="C1", ls="--")
 axes[0].arrow(

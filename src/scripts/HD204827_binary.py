@@ -4,7 +4,6 @@ from astropy.io import fits
 import numpy as np
 from astropy.visualization import simple_norm
 from matplotlib import patches
-from skimage import transform
 
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
@@ -17,9 +16,7 @@ with fits.open(paths.data / "20230707_HD204827_coll.fits") as hdul:
 
 titles = ("F610", "F670", "F720", "F760")
 
-fig, axes = pro.subplots(
-    nrows=1, ncols=4, width="7in", space=0.25, sharey=1, sharex=1
-)
+fig, axes = pro.subplots(nrows=1, ncols=4, width="7in", space=0.25, sharey=1, sharex=1)
 
 plate_scale = 5.9
 side_length = cube.shape[-1] * plate_scale * 1e-3 / 2
@@ -28,9 +25,7 @@ ext = (side_length, -side_length, -side_length, side_length)
 
 ## Plot and save
 bs_fact = 0.3767
-Jy_fact = (
-    np.array((1.2e-6, 6.1e-7, 4.4e-7, 1e-6)) / bs_fact
-)  # Jy / sq.arcsec / (e-/s)
+Jy_fact = np.array((1.2e-6, 6.1e-7, 4.4e-7, 1e-6)) / bs_fact  # Jy / sq.arcsec / (e-/s)
 calib_data = cube * Jy_fact[:, None, None]
 
 # PDI images
@@ -83,7 +78,6 @@ axes[3].text(
     ha="right",
     va="top",
 )
-
 
 
 ## sup title

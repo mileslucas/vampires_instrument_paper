@@ -4,8 +4,11 @@ import proplot as pro
 import numpy as np
 import pandas as pd
 from astropy.nddata import Cutout2D
-from astropy.visualization import simple_norm
 import tqdm.auto as tqdm
+
+from skimage import measure
+from skimage import morphology
+from skimage import feature
 
 pro.rc["legend.fontsize"] = 6
 pro.rc["font.size"] = 8
@@ -32,15 +35,6 @@ for path in (paths.data / "pupil_flats" / "vcam1").glob("*.fits"):
 
 threshold = 1e4
 bin_dict = {k: (d > threshold).astype(int) for k, d in data_dict.items()}
-
-from skimage import measure
-from skimage import morphology
-from skimage import feature
-from skimage.feature import canny
-from skimage.transform import hough_circle, hough_circle_peaks
-from skimage.morphology import convex_hull_image
-
-import matplotlib.pyplot as plt
 
 
 def fit_circle(image, name):

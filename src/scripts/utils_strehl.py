@@ -1,4 +1,3 @@
-
 import numpy as np
 import urllib
 import sep
@@ -6,7 +5,6 @@ from astropy.nddata import Cutout2D
 from skimage.registration import phase_cross_correlation
 
 import hcipy as hp
-import numpy as np
 from astropy.io import fits
 
 from astropy.utils.data import download_file
@@ -40,7 +38,11 @@ def find_peak(image, xc, yc, boxsize, oversamp=8):
         boxsize
         * np.fft.fft(fftsinc, norm="forward")
         * np.exp(
-            1j * np.pi * (oversamp - 1) * np.roll(np.arange(-ext / 2, ext / 2), int(ext / 2)) / ext
+            1j
+            * np.pi
+            * (oversamp - 1)
+            * np.roll(np.arange(-ext / 2, ext / 2), int(ext / 2))
+            / ext
         )
     )
     sinc = sinc.real
@@ -75,7 +77,9 @@ def find_peak(image, xc, yc, boxsize, oversamp=8):
     return peak
 
 
-def measure_strehl(image, psf_model, pos=None, phot_rad=0.5, peak_search_rad=0.1, pxscale=5.9):
+def measure_strehl(
+    image, psf_model, pos=None, phot_rad=0.5, peak_search_rad=0.1, pxscale=5.9
+):
     ## Step 1: find approximate location of PSF in image
 
     # If no position given, start at the nan-max
@@ -102,7 +106,9 @@ def measure_strehl(image, psf_model, pos=None, phot_rad=0.5, peak_search_rad=0.1
         err=np.sqrt(np.maximum(image, 0)),
     )
     peak_search_rad_px = peak_search_rad / (pxscale * 1e-3)
-    image_peak = find_peak(image, refined_center[0], refined_center[1], peak_search_rad_px)
+    image_peak = find_peak(
+        image, refined_center[0], refined_center[1], peak_search_rad_px
+    )
 
     ## Step 3: Calculate flux of PSF model
     # note: our models are alrady centered
@@ -115,7 +121,9 @@ def measure_strehl(image, psf_model, pos=None, phot_rad=0.5, peak_search_rad=0.1
         aper_rad_px,
         err=np.sqrt(np.maximum(psf_model, 0)),
     )
-    model_peak = find_peak(psf_model, model_center[0], model_center[1], peak_search_rad_px)
+    model_peak = find_peak(
+        psf_model, model_center[0], model_center[1], peak_search_rad_px
+    )
 
     ## Step 4: Calculate Strehl via normalized ratio
     image_norm_peak = image_peak / image_flux[0]
@@ -157,7 +165,9 @@ def create_synth_psf(filt, npix=30, output_directory=None, nwave=7, **kwargs):
     pupil_field = hp.Field(pupil_data.ravel(), pupil_grid)
     # create detector grid
     plate_scale = np.deg2rad(5.9 / 1e3 / 60 / 60)  # mas/px -> rad/px
-    focal_grid = hp.make_uniform_grid((npix, npix), (plate_scale * npix, plate_scale * npix))
+    focal_grid = hp.make_uniform_grid(
+        (npix, npix), (plate_scale * npix, plate_scale * npix)
+    )
     prop = hp.FraunhoferPropagator(pupil_grid, focal_grid)
 
     obs_filt = load_vampires_filter(filt)
@@ -176,6 +186,7 @@ def create_synth_psf(filt, npix=30, output_directory=None, nwave=7, **kwargs):
         fits.writeto(outfile, normed_field, overwrite=True)
     return normed_field
 
+
 VAMP_FILT_KEY = "1FHGh3tLlDUwATP6smFGz0nk2e0NF14rywTUjFTUT1OY"
 VAMP_FILT_NAME = urllib.parse.quote("VAMPIRES Filter Curves")
 VAMPIRES_FILTER_URL = f"https://docs.google.com/spreadsheets/d/{VAMP_FILT_KEY}/gviz/tq?tqx=out:csv&sheet={VAMP_FILT_NAME}"
@@ -183,7 +194,10 @@ VAMPIRES_FILTER_URL = f"https://docs.google.com/spreadsheets/d/{VAMP_FILT_KEY}/g
 
 def load_vampires_filter(name: str):
     csv_path = download_file(VAMPIRES_FILTER_URL, cache=True)
-    return SpectralElement.from_file(csv_path, wave_unit="nm", include_names=["wave", name])
+    return SpectralElement.from_file(
+        csv_path, wave_unit="nm", include_names=["wave", name]
+    )
+
 
 def generate_pupil(
     n: int = 256,
@@ -281,4 +295,3 @@ def generate_pupil(
 
     pupil = hp.evaluate_supersampled(rotated_pupil_field, grid, oversample)
     return pupil.shaped
-

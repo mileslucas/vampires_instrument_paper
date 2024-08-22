@@ -2,9 +2,9 @@ import paths
 import proplot as pro
 import numpy as np
 
-pro.rc["legend.fontsize"] = 7
+pro.rc["legend.fontsize"] = 8
 pro.rc["cycle"] = "ggplot"
-pro.rc["font.size"] = 8
+pro.rc["font.size"] = 9
 pro.rc["image.origin"] = "lower"
 pro.rc["axes.grid"] = False
 
@@ -31,7 +31,6 @@ def get_emccd_noise(photons, texp, emgain=300):
 
 
 def get_emccd_snr(photons, texp, emgain=300):
-    ave_qe = 0.85
     signal = photons * texp
     noise_e = get_emccd_noise(photons, texp, emgain)
     return signal / noise_e
@@ -54,10 +53,10 @@ def get_cmos_noise(photons, texp, mode: str):
 
 
 def get_cmos_snr(photons, texp, mode: str = "slow"):
-    ave_qe = 0.678
     signal = photons * texp
     noise_e = get_cmos_noise(photons, texp, mode)
     return signal / noise_e
+
 
 photons = np.geomspace(1e-3, 10, 10000)
 texp = np.geomspace(1, 1800, 10000)
@@ -67,7 +66,7 @@ photons_grid, texp_grid = np.meshgrid(photons, texp)
 snr_emccd = get_emccd_snr(photons_grid, texp_grid, emgain=300)
 snr_cmos = get_cmos_snr(photons_grid, texp_grid, mode="slow")
 
-ratio = (snr_cmos / snr_emccd)
+ratio = snr_cmos / snr_emccd
 
 fig, axes = pro.subplots(width="3.5in", refheight="1.5in", aspect="equal")
 
@@ -122,7 +121,7 @@ axes.format(
     yscale="log",
     xformatter="log",
     xscale="log",
-    aspect="auto"
+    aspect="auto",
 )
 
 # save output

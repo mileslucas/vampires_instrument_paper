@@ -4,13 +4,13 @@ import numpy as np
 import pandas as pd
 from scipy import interpolate
 
-pro.rc["legend.fontsize"] = 6
-pro.rc["font.size"] = 8
+pro.rc["legend.fontsize"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 
 fig, axes = pro.subplots(
     width="3.5in",
-    height="2.5in",
+    height="2.6in",
 )
 
 names = {
@@ -98,7 +98,7 @@ axes[0].dualx(
 )
 axes.legend(ncols=1, frame=False)
 axes.format(
-    grid=True, xlabel="separation (mas)", ylabel="normalized throughput", xlim=(0, 255)
+    grid=True, xlabel="separation (mas)", ylabel="normalized throughput", xlim=(0, 275)
 )
 
 # save output

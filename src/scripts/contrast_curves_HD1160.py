@@ -2,10 +2,9 @@ import paths
 import proplot as pro
 import numpy as np
 import pandas as pd
-from astropy.io import fits
 
-pro.rc["legend.fontsize"] = 7
-pro.rc["font.size"] = 8
+pro.rc["legend.fontsize"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
 pro.rc["cycle"] = "ggplot"
@@ -31,14 +30,18 @@ def plot_cc(dataframe, ax, **kwargs):
     cc = dataframe.query(f"distance >= {iwa_px}")
     rad_arc = cc["distance"] * plate_scale
     contr = cc["contrast_corr"]
-    ax.plot(rad_arc.values, contr.values, **kwargs,)
+    ax.plot(
+        rad_arc.values,
+        contr.values,
+        **kwargs,
+    )
+
 
 for i in range(len(labels)):
     plot_cc(adi_dfs[i], axes[0], label=labels[i], c=cycle[i], lw=1)
 
 plot_cc(sdi_dfs[1], axes[0], label="ADI+Mean", c="0.2", lw=1)
 plot_cc(sdi_dfs[0], axes[0], label="ADI+SDI", c="0.2", ls="--", lw=1)
-
 
 
 exp_sep = 135.18
@@ -52,7 +55,7 @@ axes[0].text(
     1.5e-5,
     "HD 1160B",
     color="0.3",
-    fontsize=6,
+    fontsize=8,
     ha="left",
     va="top",
 )
@@ -67,6 +70,7 @@ axes[0].format(
     yscale="log",
     yformatter="log",
     xlim=(0, 1.4),
+    ylim=(2e-7, 2e-2),
 )
 # pro.show()
 fig.savefig(

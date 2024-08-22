@@ -5,6 +5,7 @@ import sep
 from astropy.nddata import Cutout2D
 import proplot as pro
 
+
 def aperture_phot(frame, frame_err, x, y, a, b, theta):
     _frame = np.nan_to_num(frame.astype("=f4"))
     _err = np.nan_to_num(frame_err.astype("=f4"))
@@ -123,7 +124,7 @@ def fit_moffat(data, err=None, guess=None, window=25, plot=False):
     if guess is None:
         cy, cx = np.unravel_index(np.nanargmax(data), data.shape)
         guess = (cx, cy)
-        
+
     cutout = Cutout2D(data, guess, window)
     frame = cutout.data
     if err is not None:
@@ -167,8 +168,21 @@ def fit_moffat(data, err=None, guess=None, window=25, plot=False):
     if plot:
         fig, axes = pro.subplots(ncols=3)
         axes[0].imshow(frame, cmap="bone", origin="lower")
-        axes[1].imshow(fit_model(xs, ys), vmin=frame.min(), vmax=frame.max(), cmap="bone", origin="lower")
-        axes[2].imshow(frame - fit_model(xs, ys), vmin=-frame.max()/10, vmax=frame.max()/10, norm="div", origin="lower", cmap="div")
+        axes[1].imshow(
+            fit_model(xs, ys),
+            vmin=frame.min(),
+            vmax=frame.max(),
+            cmap="bone",
+            origin="lower",
+        )
+        axes[2].imshow(
+            frame - fit_model(xs, ys),
+            vmin=-frame.max() / 10,
+            vmax=frame.max() / 10,
+            norm="div",
+            origin="lower",
+            cmap="div",
+        )
         axes.format(xtickloc="none", ytickloc="none", grid=False)
         pro.show(block=True)
     # re-offset position

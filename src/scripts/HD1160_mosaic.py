@@ -5,21 +5,30 @@ import numpy as np
 from astropy.nddata import Cutout2D
 from matplotlib import patches
 
-pro.rc["legend.fontsize"] = 6
-pro.rc["font.size"] = 8
+pro.rc["legend.fontsize"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
 
 names = ("F610", "F670", "F720", "F760")
-resid_cube, header = fits.getdata(paths.data / "20230711_HD1160" / "20230711_HD1160_GreeDS20_speccube.fits", header=True)
+resid_cube, header = fits.getdata(
+    paths.data / "20230711_HD1160" / "20230711_HD1160_GreeDS20_speccube.fits",
+    header=True,
+)
 
 sdi_names = ("ADI+Mean", "ADI+SDI")
 
-adi_frame, header = fits.getdata(paths.data / "20230711_HD1160" / "20230711_HD1160_GreeDS20_all.fits", header=True)
-adisdi_frame, header = fits.getdata(paths.data / "20230711_HD1160" / "20230711_HD1160_GreeDS20_ASDI.fits", header=True)
+adi_frame, header = fits.getdata(
+    paths.data / "20230711_HD1160" / "20230711_HD1160_GreeDS20_all.fits", header=True
+)
+adisdi_frame, header = fits.getdata(
+    paths.data / "20230711_HD1160" / "20230711_HD1160_GreeDS20_ASDI.fits", header=True
+)
 
 plate_scale = 5.9  # mas / px
-fig, axes = pro.subplots([[1, 2, 5], [3, 4, 6]], width="7in", wspace=[0.25, 0.75], hspace=0.25, spanx=False)
+fig, axes = pro.subplots(
+    [[1, 2, 5], [3, 4, 6]], width="7in", wspace=[0.25, 0.75], hspace=0.25, spanx=False
+)
 
 exp_sep = 135.18
 exp_pa = 245.1
@@ -37,10 +46,12 @@ for i, ax in enumerate(axes[:-2]):
         (cx - xext[0]) * plate_scale / 1e3,
         (cx - xext[1]) * plate_scale / 1e3,
         (yext[0] - cy) * plate_scale / 1e3,
-        (yext[1] - cy) * plate_scale / 1e3
+        (yext[1] - cy) * plate_scale / 1e3,
     )
     ax.imshow(cutout.data, extent=ext, cmap="magma", origin="lower")
-    ax.text(0.05, 0.95, names[i], c="w", va="top", ha="left", fontsize=9, transform="axes")
+    ax.text(
+        0.05, 0.95, names[i], c="w", va="top", ha="left", fontsize=9, transform="axes"
+    )
 
 
 cutout = Cutout2D(adi_frame, (cx + dx, cy + dy), 40)
@@ -49,14 +60,18 @@ ext = (
     (cx - xext[0]) * plate_scale / 1e3,
     (cx - xext[1]) * plate_scale / 1e3,
     (yext[0] - cy) * plate_scale / 1e3,
-    (yext[1] - cy) * plate_scale / 1e3
+    (yext[1] - cy) * plate_scale / 1e3,
 )
 axes[4].imshow(cutout.data, extent=ext, cmap="magma", origin="lower")
-axes[4].text(0.05, 0.95, sdi_names[0], c="w", va="top", ha="left", fontsize=9, transform="axes")
+axes[4].text(
+    0.05, 0.95, sdi_names[0], c="w", va="top", ha="left", fontsize=9, transform="axes"
+)
 
 cutout = Cutout2D(adisdi_frame, (cx + dx, cy + dy), 40)
 axes[5].imshow(cutout.data, extent=ext, cmap="magma", origin="lower")
-axes[5].text(0.05, 0.95, sdi_names[1], c="w", va="top", ha="left", fontsize=9, transform="axes")
+axes[5].text(
+    0.05, 0.95, sdi_names[1], c="w", va="top", ha="left", fontsize=9, transform="axes"
+)
 
 axes.format(
     grid=False,
@@ -74,7 +89,7 @@ axes[2].add_patch(rect)
 axes[2].text(
     -0.63 - bar_width_arc / 2,
     -0.43 + 0.01,
-    f'{bar_width_arc*1e3:.0f} mas',
+    f"{bar_width_arc*1e3:.0f} mas",
     c="white",
     ha="center",
     fontsize=8,

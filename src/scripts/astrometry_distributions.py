@@ -4,8 +4,8 @@ import numpy as np
 from uncertainties import ufloat, unumpy as unp
 from astropy.stats import circstats
 
-pro.rc["legend.fontsize"] = 7
-pro.rc["font.size"] = 8
+pro.rc["legend.fontsize"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
 pro.rc["cycle"] = "ggplot"
@@ -17,8 +17,8 @@ hd1160_meas = {"sep": ufloat(135.181, 0.052), "pa": ufloat(245.073, 0.017)}
 derot_offset = -40.9 + 180 - 39
 hd1160_meas["pa"] -= derot_offset
 hd1160_res = {
-    "sep": hd1160_sept["sep"]*1e3/hd1160_meas["sep"], 
-    "pa":hd1160_sept["pa"] - hd1160_meas["pa"]
+    "sep": hd1160_sept["sep"] * 1e3 / hd1160_meas["sep"],
+    "pa": hd1160_sept["pa"] - hd1160_meas["pa"],
 }
 
 cam1_results = {
@@ -47,12 +47,14 @@ def _weighted_mean(values):
     sigma = np.sqrt(1 / np.sum(weights))
     return ufloat(mu, sigma)
 
+
 def _weighted_circular_mean(values):
     ang_rads = values * np.pi / 180
-    weights = 1 / unp.std_devs(ang_rads)**2
+    weights = 1 / unp.std_devs(ang_rads) ** 2
     mean_rad = circstats.circmean(unp.nominal_values(ang_rads), weights=weights)
     sig_rad = np.sqrt(1 / np.sum(weights))
     return ufloat(mean_rad, sig_rad) * 180 / np.pi
+
 
 def weighted_mean(results: dict):
     seps = np.array([res["sep"] for res in results.values()])
@@ -61,43 +63,107 @@ def weighted_mean(results: dict):
     output["pad"] = output["pa"] + 219 - 360
     return output
 
+
 cam1_mean = weighted_mean(cam1_results)
 cam2_mean = weighted_mean(cam2_results)
 print(f"VCAM1: {cam1_mean}")
 print(f"VCAM2: {cam2_mean}")
-print((cam1_mean["pa"] - cam1_results["HD 1160"]["pa"]).nominal_value / cam1_results["HD 1160"]["pa"].std_dev)
+print(
+    (cam1_mean["pa"] - cam1_results["HD 1160"]["pa"]).nominal_value
+    / cam1_results["HD 1160"]["pa"].std_dev
+)
 
 fig, axes = pro.subplots(
-    nrows=2, ncols=2, width="3.5in", height="2in", spanx=False, hspace=0, wspace=0.5
+    nrows=2, ncols=2, width="3.5in", height="2.3in", spanx=False, hspace=0, wspace=0.5
 )
 
 
 ys = dict(zip(cam1_results.keys(), range(len(cam1_results))))
 for key, y in ys.items():
     axes[0, 0].errorbar(
-        cam1_results[key]["sep"].nominal_value, y=y, xerr=cam1_results[key]["sep"].std_dev, c="C0", marker="o", zorder=100
+        cam1_results[key]["sep"].nominal_value,
+        y=y,
+        xerr=cam1_results[key]["sep"].std_dev,
+        c="C0",
+        marker="o",
+        zorder=100,
     )
     axes[0, 1].errorbar(
-        cam1_results[key]["pa"].nominal_value, y=y, xerr=cam1_results[key]["pa"].std_dev, c="C1", marker="o", zorder=100
+        cam1_results[key]["pa"].nominal_value,
+        y=y,
+        xerr=cam1_results[key]["pa"].std_dev,
+        c="C1",
+        marker="o",
+        zorder=100,
     )
     if key in cam2_results:
         axes[1, 0].errorbar(
-            cam2_results[key]["sep"].nominal_value, y=y, xerr=cam2_results[key]["sep"].std_dev, c="C0", marker="^", zorder=100
+            cam2_results[key]["sep"].nominal_value,
+            y=y,
+            xerr=cam2_results[key]["sep"].std_dev,
+            c="C0",
+            marker="^",
+            zorder=100,
         )
         axes[1, 1].errorbar(
-            cam2_results[key]["pa"].nominal_value, y=y, xerr=cam2_results[key]["pa"].std_dev, c="C1", marker="^", zorder=100
+            cam2_results[key]["pa"].nominal_value,
+            y=y,
+            xerr=cam2_results[key]["pa"].std_dev,
+            c="C1",
+            marker="^",
+            zorder=100,
         )
 
 ymin = -0.75
 ymax = len(cam1_results) - 1 + 0.75
 axes[0, 0].axvline(cam1_mean["sep"].nominal_value, c="0.3")
-axes[0, 0].fill_between([cam1_mean["sep"].nominal_value - cam1_mean["sep"].std_dev, cam1_mean["sep"].nominal_value + cam1_mean["sep"].std_dev], ymin, ymax, c="0.3", alpha=0.2, zorder=0)
+axes[0, 0].fill_between(
+    [
+        cam1_mean["sep"].nominal_value - cam1_mean["sep"].std_dev,
+        cam1_mean["sep"].nominal_value + cam1_mean["sep"].std_dev,
+    ],
+    ymin,
+    ymax,
+    c="0.3",
+    alpha=0.2,
+    zorder=0,
+)
 axes[0, 1].axvline(cam1_mean["pa"].nominal_value, c="0.3")
-axes[0, 1].fill_between([cam1_mean["pa"].nominal_value - cam1_mean["pa"].std_dev, cam1_mean["pa"].nominal_value + cam1_mean["pa"].std_dev], ymin, ymax, c="0.3", alpha=0.2, zorder=0)
+axes[0, 1].fill_between(
+    [
+        cam1_mean["pa"].nominal_value - cam1_mean["pa"].std_dev,
+        cam1_mean["pa"].nominal_value + cam1_mean["pa"].std_dev,
+    ],
+    ymin,
+    ymax,
+    c="0.3",
+    alpha=0.2,
+    zorder=0,
+)
 axes[1, 0].axvline(cam2_mean["sep"].nominal_value, c="0.3")
-axes[1, 0].fill_between([cam2_mean["sep"].nominal_value - cam2_mean["sep"].std_dev, cam2_mean["sep"].nominal_value + cam2_mean["sep"].std_dev], ymin, ymax, c="0.3", alpha=0.2, zorder=0)
+axes[1, 0].fill_between(
+    [
+        cam2_mean["sep"].nominal_value - cam2_mean["sep"].std_dev,
+        cam2_mean["sep"].nominal_value + cam2_mean["sep"].std_dev,
+    ],
+    ymin,
+    ymax,
+    c="0.3",
+    alpha=0.2,
+    zorder=0,
+)
 axes[1, 1].axvline(cam2_mean["pa"].nominal_value, c="0.3")
-axes[1, 1].fill_between([cam2_mean["pa"].nominal_value - cam2_mean["pa"].std_dev, cam2_mean["pa"].nominal_value + cam2_mean["pa"].std_dev], ymin, ymax, c="0.3", alpha=0.2, zorder=0)
+axes[1, 1].fill_between(
+    [
+        cam2_mean["pa"].nominal_value - cam2_mean["pa"].std_dev,
+        cam2_mean["pa"].nominal_value + cam2_mean["pa"].std_dev,
+    ],
+    ymin,
+    ymax,
+    c="0.3",
+    alpha=0.2,
+    zorder=0,
+)
 
 axes[1, 0].format(xlabel="plate scale (mas/px)")
 axes[1, 1].format(xlabel="PA offset (°)")

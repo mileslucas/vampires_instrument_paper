@@ -8,10 +8,9 @@ from astropy.visualization import simple_norm
 from skimage.registration import phase_cross_correlation
 from matplotlib.ticker import MaxNLocator
 from scipy.ndimage import shift
-import sep
 
-pro.rc["legend.fontsize"] = 6
-pro.rc["font.size"] = 8
+pro.rc["legend.fontsize"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
 pro.rc["axes.grid"] = False
@@ -22,14 +21,24 @@ def dft_centroid(frame, psf, guess=None, f=30):
     # get refined centroid first
     if guess is None:
         guess = np.unravel_index(np.nanargmax(frame), frame.shape)
-    cutout = Cutout2D(frame, (guess[1], guess[0]), psf.shape, mode="partial", fill_value=0)
+    cutout = Cutout2D(
+        frame, (guess[1], guess[0]), psf.shape, mode="partial", fill_value=0
+    )
 
-    dft_off, _, _ = phase_cross_correlation(psf, cutout.data, upsample_factor=f, normalization=None)
+    dft_off, _, _ = phase_cross_correlation(
+        psf, cutout.data, upsample_factor=f, normalization=None
+    )
     # need to update with center of frame
-    ctr_off = np.array(cutout.shape)/2 - 0.5 - dft_off
-    return np.array((ctr_off[0] + cutout.slices_original[0].start, ctr_off[1] + cutout.slices_original[1].start))
+    ctr_off = np.array(cutout.shape) / 2 - 0.5 - dft_off
+    return np.array(
+        (
+            ctr_off[0] + cutout.slices_original[0].start,
+            ctr_off[1] + cutout.slices_original[1].start,
+        )
+    )
 
-plate_scale = 5.9 # mas/px
+
+plate_scale = 5.9  # mas/px
 
 raw_cube = fits.getdata(paths.data / "20230831_HR718_calib_LWE.fits")
 # cut off trailing frames which have a vignetting
@@ -50,10 +59,14 @@ centroids = np.array([dft_centroid(frame, psf, ctr_guess) for frame in cube])
 offsets = ctr[None, :] - centroids
 
 print("Aligning cube")
-registered_cube = np.array([shift(frame, offset) for frame, offset in zip(cube, offsets)])
+registered_cube = np.array(
+    [shift(frame, offset) for frame, offset in zip(cube, offsets)]
+)
 
 print("Measuring Strehl ratios")
-strehls = np.array([strehl.measure_strehl(frame, psf, ctr) for frame in registered_cube])
+strehls = np.array(
+    [strehl.measure_strehl(frame, psf, ctr) for frame in registered_cube]
+)
 
 print("Coadding")
 select_pcts = (0, 30, 60, 90)
@@ -74,19 +87,42 @@ ext = (side_length, -side_length, -side_length, side_length)
 fig, axes = pro.subplots(nrows=2, ncols=5, wspace=0, hspace=0.5, width="7in")
 
 
-axes[0, 0].imshow(long_exp_shifted, norm=simple_norm(long_exp_shifted, "log"), cmap="magma", extent=ext)
-axes[0, 1].imshow(images[0], norm=simple_norm(images[0], "log"), cmap="magma", extent=ext)
-axes[0, 2].imshow(images[1], norm=simple_norm(images[1], "log"), cmap="magma", extent=ext)
-axes[0, 3].imshow(images[2], norm=simple_norm(images[2], "log"), cmap="magma", extent=ext)
-axes[0, 4].imshow(images[3], norm=simple_norm(images[3], "log"), cmap="magma", extent=ext)
+axes[0, 0].imshow(
+    long_exp_shifted,
+    norm=simple_norm(long_exp_shifted, "log"),
+    cmap="magma",
+    extent=ext,
+)
+axes[0, 1].imshow(
+    images[0], norm=simple_norm(images[0], "log"), cmap="magma", extent=ext
+)
+axes[0, 2].imshow(
+    images[1], norm=simple_norm(images[1], "log"), cmap="magma", extent=ext
+)
+axes[0, 3].imshow(
+    images[2], norm=simple_norm(images[2], "log"), cmap="magma", extent=ext
+)
+axes[0, 4].imshow(
+    images[3], norm=simple_norm(images[3], "log"), cmap="magma", extent=ext
+)
 
 # strehls
 txt_kwargs = dict(fontsize=8, c="w", transform="axes")
-axes[0, 0].text(0.95, 0.05, f"SR={final_strehls[0]*100:.0f}%", ha="right", va="bottom", **txt_kwargs)
-axes[0, 1].text(0.95, 0.05, f"SR={final_strehls[1]*100:.0f}%", ha="right", va="bottom", **txt_kwargs)
-axes[0, 2].text(0.95, 0.05, f"SR={final_strehls[2]*100:.0f}%", ha="right", va="bottom", **txt_kwargs)
-axes[0, 3].text(0.95, 0.05, f"SR={final_strehls[3]*100:.0f}%", ha="right", va="bottom", **txt_kwargs)
-axes[0, 4].text(0.95, 0.05, f"SR={final_strehls[4]*100:.0f}%", ha="right", va="bottom", **txt_kwargs)
+axes[0, 0].text(
+    0.95, 0.05, f"SR={final_strehls[0]*100:.0f}%", ha="right", va="bottom", **txt_kwargs
+)
+axes[0, 1].text(
+    0.95, 0.05, f"SR={final_strehls[1]*100:.0f}%", ha="right", va="bottom", **txt_kwargs
+)
+axes[0, 2].text(
+    0.95, 0.05, f"SR={final_strehls[2]*100:.0f}%", ha="right", va="bottom", **txt_kwargs
+)
+axes[0, 3].text(
+    0.95, 0.05, f"SR={final_strehls[3]*100:.0f}%", ha="right", va="bottom", **txt_kwargs
+)
+axes[0, 4].text(
+    0.95, 0.05, f"SR={final_strehls[4]*100:.0f}%", ha="right", va="bottom", **txt_kwargs
+)
 
 #######
 ####### Lower S/N cube
@@ -109,10 +145,14 @@ centroids = np.array([dft_centroid(frame, psf, ctr_guess) for frame in cube])
 offsets = ctr[None, :] - centroids
 
 print("Aligning cube")
-registered_cube = np.array([shift(frame, offset) for frame, offset in zip(cube, offsets)])
+registered_cube = np.array(
+    [shift(frame, offset) for frame, offset in zip(cube, offsets)]
+)
 
 print("Measuring Strehl ratios")
-strehls = np.array([strehl.measure_strehl(frame, psf, ctr) for frame in registered_cube])
+strehls = np.array(
+    [strehl.measure_strehl(frame, psf, ctr) for frame in registered_cube]
+)
 
 print("Coadding")
 select_pcts = (0, 30, 60, 90)
@@ -130,19 +170,41 @@ side_length = cube.shape[-1] * plate_scale * 1e-3 / 2
 ext = (side_length, -side_length, -side_length, side_length)
 
 
-
-axes[1, 0].imshow(long_exp_shifted, norm=simple_norm(long_exp_shifted, "log"), cmap="magma", extent=ext)
-axes[1, 1].imshow(images[0], norm=simple_norm(images[0], "log"), cmap="magma", extent=ext)
-axes[1, 2].imshow(images[1], norm=simple_norm(images[1], "log"), cmap="magma", extent=ext)
-axes[1, 3].imshow(images[2], norm=simple_norm(images[2], "log"), cmap="magma", extent=ext)
-axes[1, 4].imshow(images[3], norm=simple_norm(images[3], "log"), cmap="magma", extent=ext)
+axes[1, 0].imshow(
+    long_exp_shifted,
+    norm=simple_norm(long_exp_shifted, "log"),
+    cmap="magma",
+    extent=ext,
+)
+axes[1, 1].imshow(
+    images[0], norm=simple_norm(images[0], "log"), cmap="magma", extent=ext
+)
+axes[1, 2].imshow(
+    images[1], norm=simple_norm(images[1], "log"), cmap="magma", extent=ext
+)
+axes[1, 3].imshow(
+    images[2], norm=simple_norm(images[2], "log"), cmap="magma", extent=ext
+)
+axes[1, 4].imshow(
+    images[3], norm=simple_norm(images[3], "log"), cmap="magma", extent=ext
+)
 
 # strehls
-axes[1, 0].text(0.95, 0.05, f"SR={final_strehls[0]*100:.0f}%", ha="right", va="bottom", **txt_kwargs)
-axes[1, 1].text(0.95, 0.05, f"SR={final_strehls[1]*100:.0f}%", ha="right", va="bottom", **txt_kwargs)
-axes[1, 2].text(0.95, 0.05, f"SR={final_strehls[2]*100:.0f}%", ha="right", va="bottom", **txt_kwargs)
-axes[1, 3].text(0.95, 0.05, f"SR={final_strehls[3]*100:.0f}%", ha="right", va="bottom", **txt_kwargs)
-axes[1, 4].text(0.95, 0.05, f"SR={final_strehls[4]*100:.0f}%", ha="right", va="bottom", **txt_kwargs)
+axes[1, 0].text(
+    0.95, 0.05, f"SR={final_strehls[0]*100:.0f}%", ha="right", va="bottom", **txt_kwargs
+)
+axes[1, 1].text(
+    0.95, 0.05, f"SR={final_strehls[1]*100:.0f}%", ha="right", va="bottom", **txt_kwargs
+)
+axes[1, 2].text(
+    0.95, 0.05, f"SR={final_strehls[2]*100:.0f}%", ha="right", va="bottom", **txt_kwargs
+)
+axes[1, 3].text(
+    0.95, 0.05, f"SR={final_strehls[3]*100:.0f}%", ha="right", va="bottom", **txt_kwargs
+)
+axes[1, 4].text(
+    0.95, 0.05, f"SR={final_strehls[4]*100:.0f}%", ha="right", va="bottom", **txt_kwargs
+)
 
 
 axes.format(
@@ -152,7 +214,13 @@ axes.format(
     ylabel=r'$\Delta$DEC (")',
     ylocator=MaxNLocator(3, prune="both"),
     xlocator=MaxNLocator(3, prune="both"),
-    toplabels=("Long Exp.", "Shift-and-add", "Discard 30%", "Discard 60%", "Discard 90%")
+    toplabels=(
+        "Long Exp.",
+        "Shift-and-add",
+        "Discard 30%",
+        "Discard 60%",
+        "Discard 90%",
+    ),
 )
 axes[0, :].format(xtickloc="none")
 axes[:, 1:].format(ytickloc="none")

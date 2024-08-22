@@ -1,6 +1,5 @@
 import paths
 import pandas as pd
-import numpy as np
 from uncertainties import unumpy
 
 df_open = pd.read_csv(

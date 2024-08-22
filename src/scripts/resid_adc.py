@@ -62,9 +62,7 @@ axes[1, 0].text(
 ## compass rose
 arrow_length = 0.07
 theta = -np.deg2rad(header["D_IMRPAP"] + header["INST-PA"])
-rot_mat = np.array(
-    [[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]]
-)
+rot_mat = np.array([[np.cos(theta), np.sin(theta)], [-np.sin(theta), np.cos(theta)]])
 delta = rot_mat @ np.array((0, -arrow_length))
 axes[1, 1].plot((-0.26, delta[0] - 0.26), (-0.34, delta[1] - 0.34), color="w", lw=1)
 axes[1, 1].text(

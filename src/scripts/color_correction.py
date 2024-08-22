@@ -14,9 +14,9 @@ from synphot import SpectralElement, Empirical1D
 import astropy.units as u
 
 pro.rc["axes.grid"] = True
-pro.rc["font.size"] = 8
-pro.rc["title.size"] = 8
-pro.rc["legend.fontsize"] = 7
+pro.rc["font.size"] = 9
+pro.rc["title.size"] = 9
+pro.rc["legend.fontsize"] = 8
 
 
 def color_corr(sptype, src_filter, vamp_filter):
@@ -130,7 +130,6 @@ axes[2].plot(
 axes[2].plot(color_df["sptype"], color_df["Open"], c="0.3", label="G - Open")
 
 axes[2].legend(ncols=2, order="F", frame=False)
-
 
 
 xticks = axes[2].get_xticks()

@@ -7,8 +7,8 @@ from matplotlib.ticker import MaxNLocator
 from photutils.profiles import RadialProfile
 from scipy.optimize import minimize_scalar
 
-pro.rc["legend.fontsize"] = 7
-pro.rc["font.size"] = 8
+pro.rc["legend.fontsize"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["cmap"] = "bone"
 pro.rc["image.origin"] = "lower"
@@ -74,7 +74,9 @@ ext = (side_length, -side_length, -side_length, side_length)
 
 ### Mosaic plots
 
-fig, axes = pro.subplots([[1, 2, 5], [3, 4, 6]], width="7in", hspace=0.25, wspace=[0.25, 0.75], spanx=False)
+fig, axes = pro.subplots(
+    [[1, 2, 5], [3, 4, 6]], width="7in", hspace=0.25, wspace=[0.25, 0.75], spanx=False
+)
 
 for Qphi, ax, title in zip(Qphi_frames, axes, titles):
     im = ax.imshow(Qphi, extent=ext, vmin=0, vmax=0.9 * np.nanmax(Qphi))
@@ -164,7 +166,7 @@ axes.format(
     xlabel=r'$\Delta$RA (")',
     ylabel=r'$\Delta$DEC (")',
     ylocator=MaxNLocator(5, prune="both"),
-    xlocator=MaxNLocator(5, prune="both")
+    xlocator=MaxNLocator(5, prune="both"),
 )
 axes[:, 1].format(ytickloc="none")
 axes[0, :].format(xtickloc="none")

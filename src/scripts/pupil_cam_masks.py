@@ -4,8 +4,8 @@ import proplot as pro
 import numpy as np
 import pandas as pd
 from astropy.nddata import Cutout2D
-from astropy.visualization import simple_norm
 import tqdm.auto as tqdm
+import matplotlib.pyplot as plt
 
 from skimage import measure
 from skimage import morphology
@@ -37,9 +37,6 @@ for path in (paths.data / "pupil_flats" / "vpupcam").glob("*.fits"):
 
 threshold = 1e3
 bin_dict = {k: (d > threshold).astype(int) for k, d in data_dict.items()}
-
-
-import matplotlib.pyplot as plt
 
 
 def fit_circle(image, name):

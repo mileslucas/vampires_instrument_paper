@@ -9,7 +9,7 @@ import utils_psf_fitting as psf_fitting
 
 pro.rc["legend.fontsize"] = 8
 pro.rc["legend.frameon"] = True
-pro.rc["font.size"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["cycle"] = "ggplot"
 
@@ -51,7 +51,9 @@ radprof_good, cog_good = get_profiles(mbi_cube[2], mbi_error[2])
 good_norm = np.nansum(radprof_good.profile)
 good_fit = psf_fitting.fit_moffat(mbi_cube[2])
 print(f"Good FWHM: {radprof_good.gaussian_fwhm * 5.9:.01f} mas")
-print(f"Good FWHM: {np.sqrt(0.5 *(good_fit.fwhmx**2 + good_fit.fwhmy**2)) * 5.9:.01f} mas")
+print(
+    f"Good FWHM: {np.sqrt(0.5 *(good_fit.fwhmx**2 + good_fit.fwhmy**2)) * 5.9:.01f} mas"
+)
 
 good_strehl = strehl.measure_strehl(mbi_cube[2], ideal_psf)
 print(f"Good Strehl est: {good_strehl*100:.01f}%")
@@ -62,15 +64,12 @@ mbi_cube, hdr_fuzzy = fits.getdata(
 radprof_fuzzy, cog_fuzzy = get_profiles(filters.gaussian(mbi_cube[2] + 11, 4))
 fuzzy_norm = np.nansum(radprof_fuzzy.profile)
 fuzzy_fit = psf_fitting.fit_moffat(mbi_cube[2])
+print(f"Bad FWHM: {radprof_fuzzy.gaussian_fwhm * 5.9:.01f} mas")
 print(
-    f"Bad FWHM: {radprof_fuzzy.gaussian_fwhm * 5.9:.01f} mas"
+    f"Bad FWHM: {np.sqrt(0.5 *(fuzzy_fit.fwhmx**2 + fuzzy_fit.fwhmy**2)) * 5.9:.01f} mas"
 )
-print(f"Bad FWHM: {np.sqrt(0.5 *(fuzzy_fit.fwhmx**2 + fuzzy_fit.fwhmy**2)) * 5.9:.01f} mas")
 fuzzy_strehl = strehl.measure_strehl(mbi_cube[2], ideal_psf)
-print(
-    f"Bad Strehl est: {fuzzy_strehl*100:.01f}%"
-)
-
+print(f"Bad Strehl est: {fuzzy_strehl*100:.01f}%")
 
 
 # with fits.open(paths.data / "HD102438_adi_cube.fits") as hdul:

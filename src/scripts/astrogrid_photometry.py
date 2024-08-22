@@ -9,9 +9,9 @@ import tqdm.auto as tqdm
 from astropy.modeling import models, fitting
 
 
-pro.rc["legend.fontsize"] = 6
+pro.rc["legend.fontsize"] = 7
 pro.rc["title.size"] = 8
-pro.rc["font.size"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["cmap"] = "bone"
 
@@ -154,6 +154,7 @@ tbl_save["F760_diff_err"] = unp.std_devs(np.array(diff_fluxes)[:, 3])
 
 tbl_save.to_csv(paths.data / "astrogrid_diff_photometry.csv")
 
+
 def phot_model(amp, wave, c=1, c1=0):
     opd = amp / wave
     return c * opd**2 + c1 * opd
@@ -168,7 +169,9 @@ PhotModel = models.custom_model(phot_model, fit_deriv=phot_deriv)
 
 fitter = fitting.LevMarLSQFitter(calc_uncertainties=True)
 
-fig, axes = pro.subplots(nrows=3, width="3.5in", height="4in", hspace=0.5, sharey=1)
+fig, axes = pro.subplots(
+    nrows=3, width="3.5in", refheight="1.5in", hspace=0.5, sharey=1
+)
 
 
 cycle = pro.Colormap("boreal_r")(np.linspace(0.3, 0.7, 7))
@@ -182,7 +185,7 @@ for key, group in subtbl.groupby("X_GRDSEP"):
     init_model = PhotModel(c=1)
     z = np.array([unp.nominal_values(a) for a in group["relflux"]])
     z_err = np.array([unp.std_devs(a) for a in group["relflux"]])
-    fit_model = fitter(init_model, aps, wvs, z, weights=1 / z_err, maxiter=1000)
+    fit_model = fitter(init_model, aps, wvs, z, maxiter=1000)
     chi2 = np.sum((fit_model(aps, wvs) - z) ** 2)
     stds = np.sqrt(fit_model.cov_matrix.cov_matrix.diagonal())
     print(
@@ -190,6 +193,7 @@ for key, group in subtbl.groupby("X_GRDSEP"):
     )
     c_samps = np.random.normal(loc=fit_model.c.value, scale=stds[0], size=1000)
     c1_samps = np.random.normal(loc=fit_model.c1.value, scale=stds[1], size=1000)
+    # c2_samps = np.random.normal(loc=fit_model.c2.value, scale=stds[2], size=1000)
     pred_values = []
     test_wvs, test_aps = np.meshgrid(test_waves, group["X_GRDAMP"] * 1e3)
     for i in range(1000):
@@ -214,28 +218,42 @@ for i, (key, group) in enumerate(subtbl.groupby("X_GRDSEP")):
         axes[i].plot(
             test_waves,
             unp.nominal_values(ys),
-            shadedata=unp.std_devs(ys),
+            fadedata=unp.std_devs(ys) / 2,
             c=colors[row["X_GRDAMP"]],
             alpha=0.7,
             lw=1,
         )
-    axes[i].set_ylim(
-        0.1 * unp.nominal_values(row["relflux"]).min(),
-        4 * unp.nominal_values(row["relflux"]).max(),
-    )
+        # axes[i].set_ylim(
+        #     0.1 * unp.nominal_values(row["relflux"]).min(),
+        #     4 * unp.nominal_values(row["relflux"]).max(),
+        # )
     axes[i].format(title=str(key) + r" $\lambda/D$", titleloc="ur")
     axes[i].legend(ncols=3, loc="ul", frame=False)
 
-axes[2].set_ylim(8e-4, 2e-2)
+
+axes[0].set_ylim(5e-4, 4e-1)
+axes[1].set_ylim(3e-4, 2e-1)
+axes[2].set_ylim(9e-4, 2e-2)
 xlim = axes[0].get_xlim()
 axes.format(
     xlabel=r"$\lambda$ (nm)",
     ylabel="relative flux",
+    xlim=xlim,
     yscale="log",
     yformatter="log",
-    xlim=xlim,
 )
 axes[:-1].format(xtickloc="none")
 
 
 fig.savefig(paths.figures / "astrogrid_photometry.pdf", dpi=300)
+
+
+# fig, axes = pro.subplots()
+
+# axes[0].plot(
+#     test_waves,
+#     PhotModel(c=14.061, c1=-0.097)(10, test_waves)
+# )
+# axes.format(
+# )
+# pro.show(block=True)

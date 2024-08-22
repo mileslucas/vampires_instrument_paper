@@ -6,8 +6,8 @@ from scipy import stats
 from astropy.io import fits
 from scipy.signal import find_peaks
 
-pro.rc["legend.fontsize"] = 7
-pro.rc["font.size"] = 8
+pro.rc["legend.fontsize"] = 8
+pro.rc["font.size"] = 9
 pro.rc["cycle"] = "ggplot"
 pro.rc["image.origin"] = "lower"
 

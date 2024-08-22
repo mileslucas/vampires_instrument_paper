@@ -6,10 +6,9 @@ from astropy.nddata import Cutout2D
 from astropy.visualization import simple_norm
 from photutils.profiles import RadialProfile
 import utils_strehl as strehl
-from scipy.signal import savgol_filter
 
-pro.rc["legend.fontsize"] = 6
-pro.rc["font.size"] = 8
+pro.rc["legend.fontsize"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
 pro.rc["cmap"] = "mono_r"
@@ -74,7 +73,7 @@ for ax, key in zip(axes[0, :], mask_names):
         c="w",
         va="top",
         ha="left",
-        fontsize=7,
+        fontsize=8,
         transform="axes",
     )
 
@@ -105,7 +104,9 @@ cy, cx = np.array(ideal_psf.shape) / 2 - 0.5
 prof_ideal = RadialProfile(ideal_psf, (cx, cy), radii)
 prof_ideal.normalize()
 axes[1, :].plot(prof.radius * plate_scale / 1e3, prof.profile, label="RAP", zorder=999)
-axes[1, :].plot(prof_ideal.radius * plate_scale / 1e3, prof_ideal.profile, label="PSF", c="C3")
+axes[1, :].plot(
+    prof_ideal.radius * plate_scale / 1e3, prof_ideal.profile, label="PSF", c="C3"
+)
 
 
 axes[1, :].legend()

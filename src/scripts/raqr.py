@@ -7,8 +7,8 @@ from astropy.visualization import simple_norm
 import utils_psf_fitting as psf_fitting
 import utils_strehl as strehl
 
-pro.rc["legend.fontsize"] = 7
-pro.rc["font.size"] = 8
+pro.rc["legend.fontsize"] = 8
+pro.rc["font.size"] = 9
 pro.rc["legend.title_fontsize"] = 8
 pro.rc["image.origin"] = "lower"
 pro.rc["cmap"] = "magma"
@@ -29,8 +29,8 @@ hacont_frame, hacont_header = fits.getdata(
 hacont_psf = strehl.create_synth_psf("Ha-Cont", npix=51)
 hacont_strehl = strehl.measure_strehl(hacont_frame, hacont_psf)
 
-halpha_frame = halpha_frame / header["EXPTIME"] * header["GAIN"]# * 3.6e-5
-hacont_frame = hacont_frame / header["EXPTIME"] * header["GAIN"]# * 1.6e-5
+halpha_frame = halpha_frame / header["EXPTIME"] * header["GAIN"]  # * 3.6e-5
+hacont_frame = hacont_frame / header["EXPTIME"] * header["GAIN"]  # * 1.6e-5
 plate_scale = 5.9e-3  # mas / px
 vmin = 0
 # vmax=np.nanmax(stokes_cube[:, 3])
@@ -92,7 +92,9 @@ axes[0].text(
 )
 # fig.colorbar(im, loc="r", label=r"mJy / sq. arcsec")
 
-axes[0].text(0.97, 0.97, r"Halpha", transform="axes", c="white", ha="right", va="top", fontsize=9)
+axes[0].text(
+    0.97, 0.97, r"Halpha", transform="axes", c="white", ha="right", va="top", fontsize=9
+)
 ## sup title
 axes.format(
     xlim=(0.55, -0.6),
@@ -141,8 +143,10 @@ ctr = np.array(hacont_frame.shape) / 2 - 0.5
 # radprof = RadialProfile(hacont_frame, ctr[::-1], np.arange(0, 150))
 # fwhm = radprof.gaussian_fwhm * plate_scale * 1e3
 prof = psf_fitting.fit_moffat(hacont_frame, guess=ctr)
-fwhm = np.sqrt(0.5 *(prof.fwhmx**2 + prof.fwhmy**2)) * plate_scale * 1e3
-print(f"RAqr Ha-Cont FWHM: {fwhm:.01f} mas ({fwhm/hacont_header['RESELEM']:.02f} l/D) {hacont_strehl*100:.01f}% Strehl")
+fwhm = np.sqrt(0.5 * (prof.fwhmx**2 + prof.fwhmy**2)) * plate_scale * 1e3
+print(
+    f"RAqr Ha-Cont FWHM: {fwhm:.01f} mas ({fwhm/hacont_header['RESELEM']:.02f} l/D) {hacont_strehl*100:.01f}% Strehl"
+)
 axes[0].text(0.95, 0.9, r"Halpha", transform="axes", c="white", ha="right", fontsize=9)
 im = axes[1].imshow(
     hacont_frame,
@@ -157,7 +161,9 @@ bar_width_au = bar_width_arc / plx
 
 wd_ra = 0.0392
 wd_dec = -0.0055
-circ = patches.Circle([wd_ra, wd_dec], fwhm * 1e-3 / 2, ec="white", fc="none", lw=1, alpha=0.6)
+circ = patches.Circle(
+    [wd_ra, wd_dec], fwhm * 1e-3 / 2, ec="white", fc="none", lw=1, alpha=0.6
+)
 axes[0].add_patch(circ)
 axes[0].scatter([wd_ra], [wd_dec], m="+", ms=50, c="w", lw=1, alpha=0.6)
 
