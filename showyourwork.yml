@@ -57,6 +57,7 @@ overleaf:
     - src/tex/abstract.tex
     - src/tex/acknowledgements.tex
     - src/tex/authors.tex
+    - src/tex/array.sty
     - src/tex/bib.bib
     - src/tex/ms.tex
     - src/tex/sections/01_intro.tex
