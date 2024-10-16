@@ -3,7 +3,7 @@
 One of the key parameters of a high-contrast imaging instrument is the instrumental point-spread function (PSF) and how close the on-sky performance reaches the ideal PSF. The observed VAMPIRES PSF quality varies depending on the residual wavefront error and the exposure time. Because the PSF fluctuates rapidly from residual atmospheric wavefront errors, integrating longer than the speckle coherence time ($\sim$\SI{4}{\milli\second}, \citealp{kooten_climate_2022}) blurs the PSF. The speckled diffraction pattern can be ``frozen'' with fast exposure times, enabling lucky imaging. The high-speed detectors in VAMPIRES can easily take exposures faster than the coherence timescale, which makes it well-suited for this technique.
 
 
-An annotated PSF in the F720 filter of HD 191195 after post-processing is shown in \autoref{fig:onsky_psf}. This data has a FWHM of \SI{20}{\mas} and a Strehl ratio\footnote{The Strehl ratio is measured using a broadband synthetic PSF normalized to the photometric flux in an \ang{;;0.5} radius aperture. The peak is subsampled with a Fourier transform, as in method seven (7) of \citet{roberts_is_2004}.} of $\sim$52\%.
+An annotated PSF in the F720 filter of HD 191195 after post-processing is shown in \autoref{fig:onsky_psf}. This data has a FWHM of \SI{20}{\mas} and a Strehl ratio\footnote{The Strehl ratio is measured using a broadband synthetic PSF normalized to the photometric flux in a \ang{;;0.5} radius aperture. The peak is subsampled with a Fourier transform, as in method seven (7) of \citet{roberts_is_2004}.} of $\sim$52\%, which is typical performance for SCExAO in average conditions (seeing of \ang{;;0.8}).
 
 \begin{figure}
     \centering
@@ -20,7 +20,7 @@ The PSF contains two large, bright diffraction spikes from the secondary mirror 
 The SCExAO deformable mirror has 45 actuators across the pupil, which limits the highest spatial frequency corrected by the AO loop to $\sim$22.5$\lambda/D$. Typically, this is referred to as the control radius or ``dark hole,'' visible in the PSF image (CR). The dark hole is closer to a square in this image, determined by the modal basis used for wavefront sensing and control. The DM also acts like a diffractive element due to the gridding of the surface, which creates copies of the stellar PSF at four locations orthogonal to the orientation of the DM (G1-G4).
 
 \subsection{Seeing and the Low-Wind Effect}
-The low-wind effect (LWE) is caused by piston wavefront discontinuities across the telescope pupil spiders  \citep{milli_low_2018}. The effect in the focal plane is ``splitting'' of the PSF (\autoref{fig:bad_psfs}). Current wavefront sensors struggle to detect LWE, which periodically occurs in almost every VAMPIRES observation, although it can be mitigated to an extent through frame selection. The other PSF image is of a faint star ($m_{\rm R}=$8.1) with \SI{0.5}{\second} exposures. The PSF is fuzzy with a FWHM of \SI{75}{\mas} and low S/N resulting from the blurring of the residual speckle pattern throughout the integration.
+The low-wind effect (LWE) is caused by piston wavefront discontinuities across the telescope pupil spiders  \citep{milli_low_2018}. The effect in the focal plane is ``splitting'' of the PSF (\autoref{fig:bad_psfs}). Current wavefront sensors struggle to detect LWE, which periodically occurs in almost every VAMPIRES observation, although it can be mitigated to an extent through frame selection. The other PSF image is of a fainter star ($m_{\rm R}=$8.1) with \SI{0.5}{\second} exposures. The PSF is fuzzy with a FWHM of \SI{75}{\mas} and low S/N resulting from the blurring of the residual speckle pattern throughout the integration.
 
 \begin{figure}
     \centering
@@ -37,7 +37,7 @@ The low-wind effect (LWE) is caused by piston wavefront discontinuities across t
     \centering
     \script{lucky_imaging.py}
     \includegraphics[width=\textwidth]{figures/lucky_imaging_mosaic.pdf}
-    \caption{Post-processing data with lucky imaging. Each frame is shown with a log stretch and separate limits. (Top) high-framerate (\SI{500}{\hertz}) data in median seeing conditions. (Bottom) low-framerate (\SI{2}{\hertz}) data in mediocre seeing conditions. (Long Exp.) a mean combination without alignment, simulating a long exposure. (Shift-and-add) co-registering each frame before collapsing. (Discarding X\%) same as shift-and-add but discarding a percentage of data based on the Strehl ratio.\label{fig:lucky_imaging}}
+    \caption{Post-processing data with lucky imaging. Each frame is shown with a log stretch and separate limits. (Top) high-framerate (\SI{500}{\hertz}) data in median seeing conditions ($m_{\rm R}=4.3$). (Bottom) low-framerate (\SI{2}{\hertz}) data in mediocre seeing conditions ($m_{\rm V}=9.2$). (Long Exp.) a mean combination without alignment, simulating a long exposure. (Shift-and-add) co-registering each frame before collapsing. (Discarding X\%) same as shift-and-add but discarding a percentage of data based on the Strehl ratio.\label{fig:lucky_imaging}}
 \end{figure*}
 
 \subsection{Radial Profiles}

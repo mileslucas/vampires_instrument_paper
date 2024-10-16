@@ -48,7 +48,7 @@ H$\alpha$-Cont & 647.7 & 646.7 - 648.6 & 1.9 & 0.07 & 6.0 & 70 & 20.9 & \num{2.3
 SII & 672.7 & 671.2 - 674.1 & 2.9 & 0.05 & 10.8 & 67 & 21.8 & \num{5.5e+08} & 3090 & \num{5.7e-06} \\
 SII-Cont & 681.5 & 680.0 - 683.0 & 3.0 & 0.05 & 8.9 & 66 & 21.6 & \num{4.3e+08} & 3040 & \num{7.0e-06}
 \enddata
-\tablecomments{$\lambda_\mathrm{ave}$: average wavelength, $\lambda_\mathrm{min}$: minimum wavelength with at least 50\% throughput, $\lambda_\mathrm{max}$: maximum wavelength with at least 50\% throughput, FWHM: full width at half-maximum, $k$: average atmospheric extinction from \citet{buton_atmospheric_2013}, Through: estimated instrument throughput (without beamsplitter or FLC), $\mathrm{QE}_\mathrm{ave}$: average detector quantum efficiency, $C_{FD}$: flux density conversion factor. Zero points are in Vega magnitudes and map to instrument flux without a beamsplitter in \si{\electron/s}. Zero points, instrument throughput, and conversion factors were estimated from spectrophotometric standard stars. All values assume there is no beamsplitter.}
+\tablecomments{$\lambda_\mathrm{ave}$: average wavelength, $\lambda_\mathrm{min}$: minimum wavelength with at least 50\% throughput, $\lambda_\mathrm{max}$: maximum wavelength with at least 50\% throughput, FWHM: full width at half-maximum, $k$: average atmospheric extinction from \citet{buton_atmospheric_2013}, Through: estimated instrument throughput (includes: telescope, excludes: beamsplitter, FLC, atmosphere), $\mathrm{QE}_\mathrm{ave}$: average detector quantum efficiency, $C_{FD}$: flux density conversion factor. Zero points are in Vega magnitudes and map to instrument flux without a beamsplitter in \si{\electron/s}. Zero points, instrument throughput, and conversion factors were estimated from spectrophotometric standard stars. All values assume there is no beamsplitter.}
 \end{deluxetable*}
 
 \subsection{Neutral Density Filters}
@@ -64,7 +64,7 @@ Two broadband reflective neutral density filters in the pupil mask wheel of VAMP
 
 \subsection{Beamsplitter Throughput}
 
-VAMPIRES has two beamsplitters: a wire-grid polarizing beamsplitter cube (PBS) and a non-polarizing beamsplitter cube (NPBS). The beamsplitter throughput was measured in the Open filter and compared to the flux without a beamsplitter (\autoref{tbl:bs}). To avoid polarization biases, a linear polarizer was inserted after the internal source and rotated in steps of \ang{5} from \ang{0} to \ang{180}.
+VAMPIRES has two beamsplitters: a wire-grid polarizing beamsplitter cube (PBS) and a non-polarizing beamsplitter cube (NPBS). The beamsplitter throughput was measured in the Open filter and compared to the flux without a beamsplitter (\autoref{tbl:bs}). To avoid polarization biases, a linear polarizer was inserted after the internal source and rotated in steps of \ang{5} from \ang{0} to \ang{180}, taking the average value from this range as the throughput.
 
 \begin{deluxetable}{lccc}
 \tablehead{
@@ -94,7 +94,7 @@ The Pickles stellar models \citep{pickles_stellar_1998} were used to measure the
     \centering
     \script{color_correction.py}
     \includegraphics[width=\columnwidth]{figures/color_correction.pdf}
-    \caption{Color correction values for selected filters into the VAMPIRES filters. All correction values are tabulated from main-sequence Pickles stellar models. The spectral types are labeled on the x-axis. (Top) Johnson-Cousins V (Middle) Johnson-Cousins R (Bottom) Gaia G.\label{fig:color_correction}}
+    \caption{Color correction values for selected filters into the VAMPIRES bandpass filters. All correction values are tabulated from main-sequence Pickles stellar models. The spectral types are labeled on the x-axis. (Top) Johnson-Cousins V (Middle) Johnson-Cousins R (Bottom) Gaia G.\label{fig:color_correction}}
 \end{figure}
 
 \subsection{Absolute Flux Calibration}
@@ -123,6 +123,6 @@ The accuracy of the zero points and conversion factors is constrained by atmosph
 
 \subsection{Limiting Magnitudes}
 
-Under excellent conditions, the detector integration time and saturation limit set the brighter end of the magnitude range. The fastest detector integration time is \SI{7.2}{\micro\second} in ``fast'' mode and \SI{48}{\milli\second} in ``slow'' mode (for the standard imaging mode with a \ang{;;3}x\ang{;;3} FOV). For these calculations, the peak count limit is set to \SI{60000}{adu}, and it is assumed that the brightest pixel in the PSF will be 30\% the full aperture flux. The highest-throughput scenario (``Open'' filter, no beamsplitter, no FLC; \autoref{tbl:filters}) translates the limiting instrumental flux into $m_{\rm Open}$ = 2.1 in ``fast'' mode and $m_{\rm Open}$ = 11.7 in ``slow'' mode. The AO wavefront sensors constrain the faint observing limits: the current guider limits of AO188 are $m_{\rm R}$ $<$ 16 and the wavefront sensor limits for diffraction-limited imaging are rough $m_{\rm R}$ $<$ 12 \citep{minowa_performance_2010}.
+Under excellent conditions, the detector integration time and saturation limit set the brighter end of the magnitude range. The fastest detector integration time is \SI{7.2}{\micro\second} in ``fast'' mode and \SI{48}{\milli\second} in ``slow'' mode (for the standard imaging mode with a \ang{;;3}x\ang{;;3} FOV). For these calculations, the peak count limit is set to \SI{60000}{adu}, and it is assumed that the brightest pixel in the PSF will be 30\% the full aperture flux. The highest-throughput scenario (``Open'' filter, no beamsplitter, no FLC; \autoref{tbl:filters}) translates the limiting instrumental flux into $m_{\rm Open}$ = 2.1 in ``fast'' mode and $m_{\rm Open}$ = 11.7 in ``slow'' mode. The AO wavefront sensors constrain the faint observing limits: the current guider limits of AO188 are $m_{\rm R}$ $<$ 16, and the wavefront sensor limits for diffraction-limited imaging at visible wavelengths with SCExAO are roughly $m_{\rm R}$ $<$ 10 \citep{ahn_development_2023}.
 
-The sky background above Maunakea at zenith (any lunar phase) is $\Sigma_{\rm R}=$\SI{17.9}{mag/arcsec^2} \citep{roth_measurements_2016}. Assuming, again, the highest-throughput observing configuration and using a pixel size of \SI{5.9}{mas}, this corresponds to an instrument flux of \SI{5e-2}{\electron/\pixel/\second}. This is an order of magnitude higher than the dark signal (\autoref{tbl:detectors}) and is the limiting noise term for exposures longer than \SI{1.2}{\second}.
+The lunar phase primarily determines the sky background above Maunakea in the visible. The peak surface brightness is $\Sigma_{\rm R}=$\SI{17.9}{mag/arcsec^2} \citep{roth_measurements_2016}. Assuming, again, the highest-throughput observing configuration and using a pixel size of \SI{5.9}{mas}, this corresponds to an instrument flux of \SI{5e-2}{\electron/\pixel/\second}. This is an order of magnitude higher than the dark signal (\autoref{tbl:detectors}) and is the limiting noise term for exposures longer than \SI{1.2}{\second}.

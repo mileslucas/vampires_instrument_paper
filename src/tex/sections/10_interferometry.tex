@@ -1,11 +1,5 @@
 \section{Polarimetric Differential Interferometry}\label{sec:interferometry}
 
-
- 
-%subdiffraction limited, high angular resolution, imaging beyond diff limit, sep
-%observable quanitties intrinsically robust against seeing - not directly effected in seeing. Each pair of holes is an interfereomtry - start more general - does a thing thats good, plausible argument that it makes good observables, to understand detail see XY
- 
-
 VAMPIRES features a single telescope interferometric mode through non-redundant aperture masking (NRM). NRM is implemented by placing an opaque mask with a sparse array of sub-apertures in the pupil plane of the instrument. Four masks are available for use with VAMPIRES (\autoref{fig:nrm_masks}).
 
 
@@ -31,58 +25,3 @@ The interferometric observables are the differential, polarimetric analogs of st
 The VAMPIRES upgrades provide several key improvements for NRM. First, the MBI (\autoref{sec:mbi}) mode enables simultaneous measurement of differential observables (e.g., spectral differential phase), allowing for the high-precision characterization of circumstellar dust grain size and species. This improves observing efficiency by a factor of four, compared to repeating observations for different filters. Since the time-varying wavefront error is simultaneously sampled across wavelengths, direct interferometric phase measurements between spectral components can be produced. The increased observing efficiency enables the observer to accumulate more parallactic angle coverage, which is critical for characterizing non-azimuthal scattering symmetries. The new qCMOS detectors have a higher dynamic range and faster framerate than the previous EMCCDs \autoref{sec:detectors}, which creates sharper fringes without saturation for sufficiently bright targets. The qCMOS detectors also have better sensitivity in the photon-starved regime, as they do not suffer from the excess noise of electron multiplication from which EMCCDs suffer (\autoref{fig:detector_snr_relative}). 
 %Insert quantifying number from Barnaby. 
 The development and characterization of the NRM mode are ongoing, and a comprehensive analysis will be published in the near future (Lilley et al., 2024).
-
-
- 
-%We have characterized both the polarimetric calibration precision, as well as the signal-to-noise ratio for the 4 masks available to the VAMPIRES instrument (Table \ref{tbl:nrm_masks}). The systematic polarimetric calibration limit is 10e-3. Based on polarimetric calibration precision calculations, the sensitivity provided by VAMPIRES is XX. (adapt). This means that a circumstellar disk at contrast 4e-2 around a 5 mag star, assuming a 1 parameter model, would have a 4 sigma detection within 15 minutes. 
-
-%Then quantitative numbers, in terms of both raw visibility or closure phase precision for a given stellar mag / integration time, and the polarised-differential-visibilty calibration accuracy.
- 
-%\begin{deluxetable*}{lccccc}
-% TODO - mask throughput, SNR for 0 mag 1s (or similar), time to achieve desired precision (10^-3 error) for typical star mag
-%\tablehead{\colhead{Name} & \colhead{N Holes} & \colhead{Hole Radius (m)} & \colhead{Num Baselines} & \colhead{Throughput (\%)} & \colhead{S/N} }
-%\tablecaption{VAMPIRES NRM mask specifications.\label{tbl:nrm_masks}}
-%\startdata
-%SAM-18  & 18 & 0.162  & 153    & 0.74 & %XX\\ %3400
-%SAM-9   & 9  & 0.32   &  36    & 1.4  & %XX\\ %18750
-%SAM-7   & 7  & 0.55   &   28   & 3.1  & %XX\\%83000 
-%SAM-Ann & 4  & XX     &  XX    & XX   & XX
-%\enddata
-%\tablecomments{S/N is calculated for 10 ms exposures, 100 frames (1 second total %integration time), for a 0 mag star}
-%\end{deluxetable*} 
-%\vspace{3mm}
- 
-  
-
-
-
-%are obscured by the inner-working angle of the coronagraph
-
-
-%Unlike the coronagraphic mode (cite section), there is no strict inner-working angle to the NRM mode - rather, the NRM mode has an outer working angle dictated by its shortest baseline length, and is limited within this field only by contrast. By design (?) 
-
-%, for example, innermost circumstellar environments. VAMPIRES is able to probe these regions at scales of down to 10 mas, at arbitrarily close distances from the stellar surface. The observation of inner circumstellar envelopes is crucial for understanding the physics of evolved star mass loss, which characterises the end stage of life of evolved stars, yet remains an incompletely understood phenomena (reference).
-
-
-
-
-
-%Calibration precision etc. With enough light - precision / measurement. Diff vis cal in 1/10e3, sd is 10e-3 with no noise, 1 parameter, normally distributed noise, 100 baslines, 1 degree of freedom, measure total parameter in 1/10e4. what does it correspond . Disks, decrease contrasts, when mag of wiggle is same as sd of measurement - 1 sigma measurement. variance of signal == variance of noise. when is sd of signal comparable with sd of systematics. 1 sigma detection. Sd of visibilities vs sd of noise. When is SNR 1. Fit model with 1 parameter - scale that. Perfect disk of contrast of 10e-4 would be a 1 sigma detection.
-
- 
-
-%, and is responsible for some of the highest resolution %images in modern astronomy (reference). 
- 
-
-
-
-
- 
- %The target is required to be appropriate for NRM - it must have sufficient brightness and its angular extent must be comparable with the longest NRM mask baseline length to ensure there is sufficient coherence for observable interference.
-
- 
- 
-%The mask generates an interference pattern on the detector, the contrast of the interference fringes has a mathematical relationship to the underlying source distribution and can to reconstruct images \citep{labeyrie_introduction_2014}. 
- 
-
-%The more sub-apertures, the better the Fourier coverage, but the less photons or throughput (this comes as a consequence of requiring smaller holes as more are added, to maintain signal to noise in Fourier space).
